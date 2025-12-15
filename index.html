@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matplotlib Teach</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    .wrap { height: 100%; display: flex; flex-direction: column; }
+    .topbar {
+      padding: 8px 12px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+    }
+    .frame { flex: 1; }
+    iframe { width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      如果 iframe 被浏览器/网络策略拦截：
+      <a href="https://matplotlib-teach.streamlit.app/" target="_blank" rel="noopener">
+        点这里新窗口打开
+      </a>
+    </div>
+
+    <!-- 推荐：?embed=true 适配嵌入；如需可加 embed_options 参数 -->
+    <div class="frame">
+      <iframe
+        title="Matplotlib Teach App"
+        src="https://matplotlib-teach.streamlit.app/?embed=true"
+        allow="clipboard-read; clipboard-write"
+        referrerpolicy="no-referrer-when-downgrade"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+</body>
+</html>
