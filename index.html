@@ -5,53 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matplotlib Teach</title>
   <style>
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-      background:#fafafa;
-    }
-    .card{
-      width:min(720px, 92vw);
-      background:white;
-      border:1px solid #e5e7eb;
-      border-radius:14px;
-      padding:28px;
-      box-shadow:0 10px 25px rgba(0,0,0,.06);
-    }
-    h1{ font-size:22px; margin:0 0 10px; }
-    p{ margin:0 0 18px; color:#374151; line-height:1.6; }
-    .btn{
-      display:inline-block;
-      padding:12px 16px;
-      border-radius:10px;
-      border:1px solid #111827;
-      background:#111827;
-      color:#fff;
-      text-decoration:none;
-      font-weight:600;
-    }
-    .sub{
-      margin-top:12px;
-      font-size:13px;
-      color:#6b7280;
-    }
-    .sub a{ color:#6b7280; }
+    html, body { height: 100%; margin: 0; }
+    iframe { width: 100%; height: 100%; border: 0; display: block; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Matplotlib Teach</h1>
-    <p>点击下面按钮进入交互式课程应用。</p>
-    <a class="btn" href="https://matplotlib-teach.streamlit.app/" target="_blank" rel="noopener">
-      打开应用
-    </a>
-    <div class="sub">
-      说明：由于安全策略限制，应用无法在本域名内嵌显示，因此采用新窗口打开。
-    </div>
-  </div>
+  <iframe
+    title="Matplotlib Teach App"
+    src="https://matplotlib-teach.streamlit.app/?embed=true"
+    allow="clipboard-read; clipboard-write"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
 </body>
 </html>
