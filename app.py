@@ -80,7 +80,7 @@ if menu == "1. 生态全景 (The Landscape)":
     st.image(
     "https://matplotlib.org/stable/_static/logo2_compressed.png",
     width=200,
-    caption="我们将重点攻克 Matplotlib，它是所有可视化的基础。"
+    caption="我们重点关注Matplotlib，它是Python所有可视化的基础。"
 )
 
 # --- 章节 2: Matplotlib 核心解构 ---
@@ -88,7 +88,7 @@ elif menu == "2. Matplotlib 核心解构 (The Core)":
     st.title("Matplotlib 从零到精通")
     
     st.markdown("### 1. 两种创作风格：Pyplot vs 面向对象 (OO)")
-    st.write("课件中强调：**坚持使用面向对象（OO）模式**，实现对图表的完全掌控。")
+    st.write("**推荐使用面向对象（OO）模式**，实现对图表的完全掌控。")
     
     col_demo, col_code = st.columns([1, 1])
     
