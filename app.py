@@ -11,7 +11,7 @@ import altair as alt
 from mpl_toolkits.mplot3d import Axes3D
 
 # --- 页面配置 ---
-st.set_page_config(page_title="计算社会学可视化教学(SEU哲学)", layout="wide", page_icon="🎨")
+st.set_page_config(page_title="计算社会学可视化教学", layout="wide", page_icon="🎨")
 
 # --- CSSHack: 强制调整代码块字体大小为 12pt (约16px) ---
 st.markdown("""
@@ -29,7 +29,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- 侧边栏导航 ---
-st.sidebar.title("🎨 Python 可视化大师班")
+st.sidebar.title("计算社会学可视化教学")
 st.sidebar.info("Code & Visuals Interactive Learning")
 
 menu = st.sidebar.radio(
@@ -596,4 +596,4 @@ ax.xaxis.set_major_formatter(formatter)
 
 # --- 页脚 ---
 st.sidebar.markdown("---")
-st.sidebar.caption("Created with Python & Streamlit")
+st.sidebar.caption("Bin Wang, SEU")
