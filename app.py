@@ -77,7 +77,7 @@ if menu == "1. 生态全景 (The Landscape)":
         st.error("**核心特征：Grammar (语法)**\n\n描述“通过什么数据映射到什么视觉元素”。代码极简，适合快速构建图表逻辑。")
 
     st.markdown("---")
-    st.image("https://matplotlib.org/stable/_static/logo2_compressed.svg", width=200, caption="我们将重点攻克 Matplotlib，它是所有可视化的基础。")
+    st.image(caption="我们将重点攻克 Matplotlib，它是所有可视化的基础。")
 
 # --- 章节 2: Matplotlib 核心解构 ---
 elif menu == "2. Matplotlib 核心解构 (The Core)":
