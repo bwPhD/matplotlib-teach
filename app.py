@@ -282,13 +282,58 @@ st.markdown("""
         visibility: hidden;
         height: 0;
     }
+    
+    /* ========== 隐藏右下角固定元素 ========== */
+    /* 隐藏右下角的固定按钮/菜单 */
+    [data-testid="stDecoration"] {
+        visibility: hidden;
+        height: 0;
+        display: none;
+    }
+    /* 隐藏固定定位的右下角元素 */
+    div[data-testid="stDecoration"] {
+        visibility: hidden;
+        display: none;
+    }
+    /* 隐藏所有固定定位在右下角的元素 */
+    .stApp > div:last-child {
+        position: relative;
+    }
+    /* 隐藏包含 "Manage app" 的元素 */
+    [class*="manage"],
+    [id*="manage"],
+    [data-testid*="manage"] {
+        visibility: hidden;
+        display: none;
+    }
+    /* 隐藏所有固定定位的元素 */
+    [style*="position: fixed"][style*="bottom"],
+    [style*="position:fixed"][style*="bottom"] {
+        visibility: hidden;
+        display: none;
+    }
+    /* 隐藏右下角的导航栏 */
+    nav[style*="position: fixed"],
+    nav[style*="position:fixed"] {
+        visibility: hidden;
+        display: none;
+    }
+    /* 更通用的右下角元素隐藏 */
+    .stApp > div:last-child > div:last-child {
+        position: relative !important;
+    }
+    /* 隐藏 Streamlit 装饰性元素 */
+    .stDecoration {
+        visibility: hidden;
+        display: none;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 侧边栏导航 ---
 st.sidebar.markdown("""
 <div style='text-align: center; padding: 1rem 0;'>
-    <h1 style='margin: 0; color: #1f2937;'>计算社会学课程网络实验室</h1>
+    <h1 style='margin: 0; color: #1f2937;'>计算社会学课程<br>网络实验室</h1>
     <p style='color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;'>东南大学汪斌</p>
 </div>
 """, unsafe_allow_html=True)
