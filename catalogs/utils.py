@@ -30,7 +30,10 @@ def setup_chinese_font():
     # 查找第一个可用的中文字体
     for font in chinese_fonts:
         if font in available_fonts:
-            plt.rcParams['font.sans-serif'] = [font] + plt.rcParams['font.sans-serif']
+            # 确保字体在列表最前面，避免被覆盖
+            current_fonts = plt.rcParams['font.sans-serif']
+            if font not in current_fonts or current_fonts[0] != font:
+                plt.rcParams['font.sans-serif'] = [font] + [f for f in current_fonts if f != font]
             plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
             return font
     
@@ -43,11 +46,12 @@ def setup_chinese_font():
 _chinese_font_initialized = False
 
 def ensure_chinese_font():
-    """确保中文字体已配置"""
+    """确保中文字体已配置（每次调用都会检查并设置）"""
     global _chinese_font_initialized
-    if not _chinese_font_initialized:
-        setup_chinese_font()
-        _chinese_font_initialized = True
+    # 总是调用 setup_chinese_font() 以确保字体正确设置
+    # 这样可以处理字体设置被重置的情况
+    setup_chinese_font()
+    _chinese_font_initialized = True
 
 @st.cache_data
 def get_matplotlib_version() -> str:

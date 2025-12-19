@@ -11,7 +11,7 @@ import altair as alt
 from mpl_toolkits.mplot3d import Axes3D
 
 # --- 配置中文字体（必须在导入后立即设置）---
-from catalogs.utils import setup_chinese_font, generate_sample_data
+from catalogs.utils import setup_chinese_font, generate_sample_data, ensure_chinese_font
 setup_chinese_font()
 
 # --- 页面配置 ---
@@ -625,6 +625,7 @@ ax.grid(True)
         """, unsafe_allow_html=True)
         
         # 可视化层级结构
+        ensure_chinese_font()
         fig_hierarchy, ax_hierarchy = plt.subplots(figsize=(10, 6))
         ax_hierarchy.axis('off')
         
@@ -699,6 +700,7 @@ ax.grid(True)
                                  ["linear (线性)", "log (对数)", "symlog (对称对数)", "logit (逻辑)", "function (函数)"],
                                  key="axis_scale_type")
         
+        ensure_chinese_font()
         fig_scale, ax_scale = plt.subplots(figsize=(8, 5))
         x = np.linspace(1, 1000, 1000)
         y = np.exp(x / 100)
@@ -912,6 +914,7 @@ elif menu == "3. 基础笔触":
                 x = np.linspace(0, 10, 50)
                 y = np.cos(x)
             
+            ensure_chinese_font()
             fig, ax = plt.subplots(figsize=(8, 5))
             
             # 构建 plot 参数
@@ -1049,6 +1052,7 @@ plt.show()
         with col_view:
             st.markdown("#### 📊 实时预览")
             
+            ensure_chinese_font()
             fig, ax = plt.subplots(figsize=(8, 5))
             code_str = ""
             plot_kwargs = {}
@@ -1487,6 +1491,7 @@ plt.show()
                     'marker': marker_scatter,
                 }
                 
+                ensure_chinese_font()
                 sc = ax.scatter(x, y, **scatter_kwargs)
                 
                 # scatter() 不支持 fillstyle 参数，但我们可以通过 PathCollection 的属性来模拟部分效果
@@ -2008,6 +2013,7 @@ plt.show()
                     render_fontfamily_gallery()
         
         with col_view:
+            ensure_chinese_font()
             fig, ax = plt.subplots(figsize=(8, 5))
             x = np.linspace(0, 10, 50)
             y = np.sin(x)
@@ -2073,6 +2079,7 @@ plt.show()
         
         with col_view:
             x, y = generate_sample_data(50)
+            ensure_chinese_font()
             fig, ax = plt.subplots(figsize=(8, 5))
             ax.plot(x, y, linewidth=2, color='#2c3e50')
             ax.set_xlim(x_min, x_max)
@@ -2243,6 +2250,7 @@ ax.legend(frameon=True,      # 显示边框
         with annotation_tabs[0]:
             col_anno_demo, col_anno_code = st.columns([1, 1])
             with col_anno_demo:
+                ensure_chinese_font()
                 fig_anno, ax_anno = plt.subplots(figsize=(6, 4))
                 x = np.linspace(0, 10, 100)
                 y = np.sin(x)
