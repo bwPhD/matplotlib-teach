@@ -223,6 +223,65 @@ st.markdown("""
     ::-webkit-scrollbar-thumb:hover {
         background: #94a3b8;
     }
+    
+    /* ========== 隐藏 Streamlit 底部标识 ========== */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    /* 隐藏 "Built with Streamlit" 文本 */
+    footer:after {
+        content: '';
+        visibility: hidden;
+    }
+    /* 更彻底地隐藏页脚 */
+    .stApp > footer {
+        visibility: hidden;
+        height: 0;
+        position: fixed;
+        bottom: 0;
+    }
+    /* 隐藏包含 "Built with Streamlit" 的元素 */
+    [data-testid="stAppViewContainer"] > footer {
+        visibility: hidden;
+        height: 0;
+    }
+    
+    /* ========== 隐藏 Streamlit 顶部菜单栏 ========== */
+    /* 隐藏顶部工具栏 */
+    [data-testid="stHeader"] {
+        visibility: hidden;
+        height: 0;
+    }
+    /* 隐藏顶部工具栏容器 */
+    header[data-testid="stHeader"] {
+        visibility: hidden;
+        height: 0;
+    }
+    /* 隐藏右上角菜单按钮 */
+    [data-testid="stToolbar"] {
+        visibility: hidden;
+        height: 0;
+    }
+    /* 隐藏 Share 按钮和所有工具栏按钮 */
+    button[kind="header"] {
+        visibility: hidden;
+        display: none;
+    }
+    /* 隐藏顶部所有按钮 */
+    .stApp header button {
+        visibility: hidden;
+        display: none;
+    }
+    /* 隐藏顶部工具栏区域 */
+    .stApp > header {
+        visibility: hidden;
+        height: 0;
+    }
+    /* 更彻底地隐藏整个顶部区域 */
+    [data-testid="stHeader"] > div {
+        visibility: hidden;
+        height: 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
