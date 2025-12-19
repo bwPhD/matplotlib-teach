@@ -642,7 +642,7 @@ ax.grid(True)
         """
         ax_hierarchy.text(0.1, 0.5, hierarchy_text, fontsize=14, family='monospace',
                          verticalalignment='center', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-        ax_hierarchy.set_title("Matplotlib 对象层级结构", fontsize=16, fontweight='bold', pad=20)
+        ax_hierarchy.set_title("Matplotlib Object Hierarchy", fontsize=16, fontweight='bold', pad=20)
         st.pyplot(fig_hierarchy)
     
     with core_tabs[1]:
@@ -708,24 +708,24 @@ ax.grid(True)
         if scale_type == "linear (线性)":
             ax_scale.plot(x, y)
             ax_scale.set_xscale('linear')
-            ax_scale.set_title("Linear Scale (线性刻度)", fontweight='bold')
+            ax_scale.set_title("Linear Scale", fontweight='bold')
         elif scale_type == "log (对数)":
             ax_scale.plot(x, y)
             ax_scale.set_xscale('log')
             ax_scale.set_yscale('log')
-            ax_scale.set_title("Log Scale (对数刻度)", fontweight='bold')
+            ax_scale.set_title("Log Scale", fontweight='bold')
         elif scale_type == "symlog (对称对数)":
             x_sym = np.linspace(-100, 100, 200)
             y_sym = np.sign(x_sym) * np.log10(1 + np.abs(x_sym))
             ax_scale.plot(x_sym, y_sym)
             ax_scale.set_xscale('symlog')
-            ax_scale.set_title("Symlog Scale (对称对数刻度)", fontweight='bold')
+            ax_scale.set_title("Symlog Scale", fontweight='bold')
         elif scale_type == "logit (逻辑)":
             x_logit = np.linspace(0.01, 0.99, 100)
             y_logit = x_logit
             ax_scale.plot(x_logit, y_logit)
             ax_scale.set_xscale('logit')
-            ax_scale.set_title("Logit Scale (逻辑刻度)", fontweight='bold')
+            ax_scale.set_title("Logit Scale", fontweight='bold')
         else:  # function
             def forward(x):
                 return x ** 2
@@ -733,7 +733,7 @@ ax.grid(True)
                 return np.sqrt(x)
             ax_scale.plot(x, y)
             ax_scale.set_xscale('function', functions=(forward, inverse))
-            ax_scale.set_title("Function Scale (函数刻度)", fontweight='bold')
+            ax_scale.set_title("Function Scale", fontweight='bold')
         
         ax_scale.grid(True, alpha=0.3)
         st.pyplot(fig_scale)
@@ -939,14 +939,14 @@ elif menu == "3. 基础笔触":
             
             # 如果线宽较小，显示提示信息
             if line_width < 3 and (capstyle != 'butt' or joinstyle != 'miter'):
-                tip_text = "💡 线宽较小时，某些效果可能不明显"
+                tip_text = "💡 Some effects may not be obvious when line width is small"
                 ax.text(0.02, 0.98, tip_text, 
                        transform=ax.transAxes, fontsize=8, verticalalignment='top',
                        bbox=dict(boxstyle='round', facecolor='#fff3cd', alpha=0.8))
             
-            ax.set_title("线条效果预览", fontsize=14, fontweight='bold')
-            ax.set_xlabel("X 轴", fontsize=12)
-            ax.set_ylabel("Y 轴", fontsize=12)
+            ax.set_title("Line Style Preview", fontsize=14, fontweight='bold')
+            ax.set_xlabel("X Axis", fontsize=12)
+            ax.set_ylabel("Y Axis", fontsize=12)
             ax.grid(True, alpha=0.3)
             st.pyplot(fig)
             
@@ -984,9 +984,9 @@ fig, ax = plt.subplots(figsize=(8, 5))
 ax.plot(x, y, 
 {code_params}
 )
-ax.set_title("线条效果预览", fontsize=14, fontweight='bold')
-ax.set_xlabel("X 轴", fontsize=12)
-ax.set_ylabel("Y 轴", fontsize=12)
+ax.set_title("Line Style Preview", fontsize=14, fontweight='bold')
+ax.set_xlabel("X Axis", fontsize=12)
+ax.set_ylabel("Y Axis", fontsize=12)
 ax.grid(True, alpha=0.3)
 plt.show()
             """, language='python')
@@ -1065,9 +1065,9 @@ plt.show()
                     plot_kwargs['edgecolor'] = edge_color
                     plot_kwargs['linewidth'] = edge_width
                 ax.bar(categories, values, **plot_kwargs)
-                ax.set_title("Bar Chart (垂直条形图)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("类别", fontsize=12)
-                ax.set_ylabel("数值", fontsize=12)
+                ax.set_title("Bar Chart", fontsize=14, fontweight='bold')
+                ax.set_xlabel("Category", fontsize=12)
+                ax.set_ylabel("Value", fontsize=12)
                 code_str = f"ax.bar(categories, values, color='{patch_color}', alpha={patch_alpha}"
                 if use_edge:
                     code_str += f", edgecolor='{edge_color}', linewidth={edge_width}"
@@ -1081,9 +1081,9 @@ plt.show()
                     plot_kwargs['edgecolor'] = edge_color
                     plot_kwargs['linewidth'] = edge_width
                 ax.barh(categories, values, **plot_kwargs)
-                ax.set_title("Barh Chart (水平条形图)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("数值", fontsize=12)
-                ax.set_ylabel("类别", fontsize=12)
+                ax.set_title("Barh Chart", fontsize=14, fontweight='bold')
+                ax.set_xlabel("Value", fontsize=12)
+                ax.set_ylabel("Category", fontsize=12)
                 code_str = f"ax.barh(categories, values, color='{patch_color}', alpha={patch_alpha}"
                 if use_edge:
                     code_str += f", edgecolor='{edge_color}', linewidth={edge_width}"
@@ -1109,9 +1109,9 @@ plt.show()
                 ax.bar(categories, values1, width, label='系列1', **plot_kwargs1)
                 ax.bar(categories, values2, width, bottom=values1, label='系列2', **plot_kwargs2)
                 ax.bar(categories, values3, width, bottom=np.array(values1)+np.array(values2), label='系列3', **plot_kwargs3)
-                ax.set_title("Stacked Bar (堆叠条形图)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("类别", fontsize=12)
-                ax.set_ylabel("数值", fontsize=12)
+                ax.set_title("Stacked Bar", fontsize=14, fontweight='bold')
+                ax.set_xlabel("Category", fontsize=12)
+                ax.set_ylabel("Value", fontsize=12)
                 ax.legend()
                 code_str = f"""ax.bar(categories, values1, width, label='系列1', color='#3b82f6', alpha={patch_alpha})
 ax.bar(categories, values2, width, bottom=values1, label='系列2', color='#10b981', alpha={patch_alpha})
@@ -1125,9 +1125,9 @@ ax.bar(categories, values3, width, bottom=np.array(values1)+np.array(values2), l
                     plot_kwargs['edgecolor'] = edge_color
                     plot_kwargs['linewidth'] = edge_width
                 ax.hist(data, **plot_kwargs)
-                ax.set_title("Histogram (直方图)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("数值", fontsize=12)
-                ax.set_ylabel("频数", fontsize=12)
+                ax.set_title("Histogram", fontsize=14, fontweight='bold')
+                ax.set_xlabel("Value", fontsize=12)
+                ax.set_ylabel("Frequency", fontsize=12)
                 code_str = f"ax.hist(data, bins={bins}, color='{patch_color}', alpha={patch_alpha}"
                 if use_edge:
                     code_str += f", edgecolor='{edge_color}', linewidth={edge_width}"
@@ -1144,7 +1144,7 @@ ax.bar(categories, values3, width, bottom=np.array(values1)+np.array(values2), l
                 # 设置透明度
                 for w in wedges:
                     w.set_alpha(patch_alpha)
-                ax.set_title("Pie Chart (饼图)", fontsize=14, fontweight='bold')
+                ax.set_title("Pie Chart", fontsize=14, fontweight='bold')
                 # 保存变量供代码生成使用
                 pie_explode_values = explode_values
                 pie_colors_list = colors_list
@@ -1164,9 +1164,9 @@ for w in wedges:
                 for patch in bp['boxes']:
                     patch.set_facecolor(patch_color)
                     patch.set_alpha(patch_alpha)
-                ax.set_title("Box Plot (箱线图)", fontsize=14, fontweight='bold')
-                ax.set_xticklabels(['组1', '组2', '组3', '组4'])
-                ax.set_ylabel("数值", fontsize=12)
+                ax.set_title("Box Plot", fontsize=14, fontweight='bold')
+                ax.set_xticklabels(['Group 1', 'Group 2', 'Group 3', 'Group 4'])
+                ax.set_ylabel("Value", fontsize=12)
                 code_str = f"""bp = ax.boxplot(data, patch_artist=True)
 for patch in bp['boxes']:
     patch.set_facecolor('{patch_color}')
@@ -1178,10 +1178,10 @@ for patch in bp['boxes']:
                 for pc in parts['bodies']:
                     pc.set_facecolor(patch_color)
                     pc.set_alpha(patch_alpha)
-                ax.set_title("Violin Plot (小提琴图)", fontsize=14, fontweight='bold')
+                ax.set_title("Violin Plot", fontsize=14, fontweight='bold')
                 ax.set_xticks(range(1, 5))
-                ax.set_xticklabels(['组1', '组2', '组3', '组4'])
-                ax.set_ylabel("数值", fontsize=12)
+                ax.set_xticklabels(['Group 1', 'Group 2', 'Group 3', 'Group 4'])
+                ax.set_ylabel("Value", fontsize=12)
                 code_str = f"""parts = ax.violinplot(data, positions=range(1, 5), showmeans=True)
 for pc in parts['bodies']:
     pc.set_facecolor('{patch_color}')
@@ -1194,9 +1194,9 @@ for pc in parts['bodies']:
                 xerr = [0.1, 0.1, 0.1, 0.1, 0.1]
                 ax.errorbar(x, y, yerr=yerr, xerr=xerr, fmt='o', color=patch_color, 
                            alpha=patch_alpha, capsize=5, capthick=2)
-                ax.set_title("Errorbar (误差棒图)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("X 轴", fontsize=12)
-                ax.set_ylabel("Y 轴", fontsize=12)
+                ax.set_title("Errorbar", fontsize=14, fontweight='bold')
+                ax.set_xlabel("X Axis", fontsize=12)
+                ax.set_ylabel("Y Axis", fontsize=12)
                 ax.grid(True, alpha=0.3)
                 code_str = f"ax.errorbar(x, y, yerr=yerr, xerr=xerr, fmt='o', color='{patch_color}', alpha={patch_alpha}, capsize=5)"
                 
@@ -1207,9 +1207,9 @@ for pc in parts['bodies']:
                 ax.plot(x, y1, color='#3b82f6', label='sin(x)')
                 ax.plot(x, y2, color='#10b981', label='cos(x)')
                 ax.fill_between(x, y1, y2, where=(y1 > y2), color=patch_color, alpha=patch_alpha, label='填充区域')
-                ax.set_title("Fill Between (填充区域)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("X 轴", fontsize=12)
-                ax.set_ylabel("Y 轴", fontsize=12)
+                ax.set_title("Fill Between", fontsize=14, fontweight='bold')
+                ax.set_xlabel("X Axis", fontsize=12)
+                ax.set_ylabel("Y Axis", fontsize=12)
                 ax.legend()
                 ax.grid(True, alpha=0.3)
                 code_str = f"ax.fill_between(x, y1, y2, where=(y1 > y2), color='{patch_color}', alpha={patch_alpha})"
@@ -1221,9 +1221,9 @@ for pc in parts['bodies']:
                 y3 = np.sin(x) * 0.5
                 ax.stackplot(x, y1, y2, y3, labels=['系列1', '系列2', '系列3'], 
                            colors=[patch_color, '#10b981', '#f59e0b'], alpha=patch_alpha)
-                ax.set_title("Stackplot (堆叠面积图)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("X 轴", fontsize=12)
-                ax.set_ylabel("Y 轴", fontsize=12)
+                ax.set_title("Stackplot", fontsize=14, fontweight='bold')
+                ax.set_xlabel("X Axis", fontsize=12)
+                ax.set_ylabel("Y Axis", fontsize=12)
                 ax.legend()
                 ax.grid(True, alpha=0.3)
                 code_str = f"ax.stackplot(x, y1, y2, y3, labels=['系列1', '系列2', '系列3'], colors=['{patch_color}', '#10b981', '#f59e0b'], alpha={patch_alpha})"
@@ -1246,8 +1246,8 @@ values = [23, 45, 56, 78, 32]
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
 ax.set_title("{chart_type.split('(')[0].strip()}", fontsize=14, fontweight='bold')
-ax.set_xlabel("类别" if "垂直" in chart_type else "数值", fontsize=12)
-ax.set_ylabel("数值" if "垂直" in chart_type else "类别", fontsize=12)
+ax.set_xlabel("Category" if "垂直" in chart_type else "Value", fontsize=12)
+ax.set_ylabel("Value" if "垂直" in chart_type else "Category", fontsize=12)
 ax.grid(True, alpha=0.3)
 plt.show()
 """
@@ -1264,9 +1264,9 @@ width = 0.6
 
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
-ax.set_title("堆叠条形图", fontsize=14, fontweight='bold')
-ax.set_xlabel("类别", fontsize=12)
-ax.set_ylabel("数值", fontsize=12)
+ax.set_title("Stacked Bar", fontsize=14, fontweight='bold')
+ax.set_xlabel("Category", fontsize=12)
+ax.set_ylabel("Value", fontsize=12)
 ax.legend()
 ax.grid(True, alpha=0.3)
 plt.show()
@@ -1280,9 +1280,9 @@ data = np.random.randn(1000)
 
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
-ax.set_title("直方图", fontsize=14, fontweight='bold')
-ax.set_xlabel("数值", fontsize=12)
-ax.set_ylabel("频数", fontsize=12)
+ax.set_title("Histogram", fontsize=14, fontweight='bold')
+ax.set_xlabel("Value", fontsize=12)
+ax.set_ylabel("Frequency", fontsize=12)
 ax.grid(True, alpha=0.3)
 plt.show()
 """
@@ -1304,7 +1304,7 @@ wedges, texts, autotexts = ax.pie(sizes, explode=explode, labels=labels,
     colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
 for w in wedges:
     w.set_alpha({patch_alpha})
-ax.set_title("饼图", fontsize=14, fontweight='bold')
+ax.set_title("Pie Chart", fontsize=14, fontweight='bold')
 plt.show()
 """
             elif chart_type == "Box Plot (箱线图)":
@@ -1316,9 +1316,9 @@ data = [np.random.normal(0, std, 100) for std in range(1, 5)]
 
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
-ax.set_title("箱线图", fontsize=14, fontweight='bold')
-ax.set_xticklabels(['组1', '组2', '组3', '组4'])
-ax.set_ylabel("数值", fontsize=12)
+ax.set_title("Box Plot", fontsize=14, fontweight='bold')
+ax.set_xticklabels(['Group 1', 'Group 2', 'Group 3', 'Group 4'])
+ax.set_ylabel("Value", fontsize=12)
 ax.grid(True, alpha=0.3)
 plt.show()
 """
@@ -1331,10 +1331,10 @@ data = [np.random.normal(0, std, 100) for std in range(1, 5)]
 
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
-ax.set_title("小提琴图", fontsize=14, fontweight='bold')
+ax.set_title("Violin Plot", fontsize=14, fontweight='bold')
 ax.set_xticks(range(1, 5))
-ax.set_xticklabels(['组1', '组2', '组3', '组4'])
-ax.set_ylabel("数值", fontsize=12)
+ax.set_xticklabels(['Group 1', 'Group 2', 'Group 3', 'Group 4'])
+ax.set_ylabel("Value", fontsize=12)
 ax.grid(True, alpha=0.3)
 plt.show()
 """
@@ -1350,9 +1350,9 @@ xerr = [0.1, 0.1, 0.1, 0.1, 0.1]
 
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
-ax.set_title("误差棒图", fontsize=14, fontweight='bold')
-ax.set_xlabel("X 轴", fontsize=12)
-ax.set_ylabel("Y 轴", fontsize=12)
+ax.set_title("Errorbar", fontsize=14, fontweight='bold')
+ax.set_xlabel("X Axis", fontsize=12)
+ax.set_ylabel("Y Axis", fontsize=12)
 ax.grid(True, alpha=0.3)
 plt.show()
 """
@@ -1369,9 +1369,9 @@ fig, ax = plt.subplots(figsize=(8, 5))
 ax.plot(x, y1, color='#3b82f6', label='sin(x)')
 ax.plot(x, y2, color='#10b981', label='cos(x)')
 {code_str}
-ax.set_title("填充区域", fontsize=14, fontweight='bold')
-ax.set_xlabel("X 轴", fontsize=12)
-ax.set_ylabel("Y 轴", fontsize=12)
+ax.set_title("Fill Between", fontsize=14, fontweight='bold')
+ax.set_xlabel("X Axis", fontsize=12)
+ax.set_ylabel("Y Axis", fontsize=12)
 ax.legend()
 ax.grid(True, alpha=0.3)
 plt.show()
@@ -1388,9 +1388,9 @@ y3 = np.sin(x) * 0.5
 
 fig, ax = plt.subplots(figsize=(8, 5))
 {code_str}
-ax.set_title("堆叠面积图", fontsize=14, fontweight='bold')
-ax.set_xlabel("X 轴", fontsize=12)
-ax.set_ylabel("Y 轴", fontsize=12)
+ax.set_title("Stackplot", fontsize=14, fontweight='bold')
+ax.set_xlabel("X Axis", fontsize=12)
+ax.set_ylabel("Y Axis", fontsize=12)
 ax.legend()
 ax.grid(True, alpha=0.3)
 plt.show()
@@ -1507,11 +1507,11 @@ plt.show()
                 # 注意：'left', 'right', 'top', 'bottom' 等部分填充效果在 scatter 中无法直接实现
                 # 这些效果主要用于 plot() 函数
                 
-                ax.set_title("散点图效果预览", fontsize=14, fontweight='bold')
-                ax.set_xlabel("X 轴", fontsize=12)
-                ax.set_ylabel("Y 轴", fontsize=12)
+                ax.set_title("Scatter Plot Preview", fontsize=14, fontweight='bold')
+                ax.set_xlabel("X Axis", fontsize=12)
+                ax.set_ylabel("Y Axis", fontsize=12)
                 cbar = fig.colorbar(sc, ax=ax)
-                cbar.set_label("颜色映射", fontsize=10)
+                cbar.set_label("Color Mapping", fontsize=10)
                 st.pyplot(fig)
                 
                 st.markdown("#### 💻 生成代码")
@@ -1537,11 +1537,11 @@ area = (30 * np.random.rand(n_points))**2
 fig, ax = plt.subplots(figsize=(8, 5))
 sc = ax.scatter(x, y, s=area, c=colors, alpha={alpha_scatter}, 
                 cmap='{cmap_choice}', marker='{marker_scatter}'){fillstyle_note}
-ax.set_title("散点图效果预览", fontsize=14, fontweight='bold')
-ax.set_xlabel("X 轴", fontsize=12)
-ax.set_ylabel("Y 轴", fontsize=12)
+ax.set_title("Scatter Plot Preview", fontsize=14, fontweight='bold')
+ax.set_xlabel("X Axis", fontsize=12)
+ax.set_ylabel("Y Axis", fontsize=12)
 cbar = plt.colorbar(sc, ax=ax)
-cbar.set_label("颜色映射", fontsize=10)
+cbar.set_label("Color Mapping", fontsize=10)
 plt.show()
                 """, language='python')
                 
@@ -1584,9 +1584,9 @@ plt.show()
                 
                 ax_lc.add_collection(lc)
                 ax_lc.autoscale()
-                ax_lc.set_title("LineCollection (线段集合)", fontsize=14, fontweight='bold')
-                ax_lc.set_xlabel("X 轴", fontsize=12)
-                ax_lc.set_ylabel("Y 轴", fontsize=12)
+                ax_lc.set_title("LineCollection", fontsize=14, fontweight='bold')
+                ax_lc.set_xlabel("X Axis", fontsize=12)
+                ax_lc.set_ylabel("Y Axis", fontsize=12)
                 ax_lc.grid(True, alpha=0.3)
                 if use_colormap:
                     plt.colorbar(lc, ax=ax_lc)
@@ -1650,9 +1650,9 @@ plt.show()
                 pc.set_array(np.array(colors_poly))
                 ax_pc.add_collection(pc)
                 ax_pc.autoscale()
-                ax_pc.set_title("PolyCollection (多边形集合)", fontsize=14, fontweight='bold')
-                ax_pc.set_xlabel("X 轴", fontsize=12)
-                ax_pc.set_ylabel("Y 轴", fontsize=12)
+                ax_pc.set_title("PolyCollection", fontsize=14, fontweight='bold')
+                ax_pc.set_xlabel("X Axis", fontsize=12)
+                ax_pc.set_ylabel("Y Axis", fontsize=12)
                 ax_pc.grid(True, alpha=0.3)
                 plt.colorbar(pc, ax=ax_pc)
                 st.pyplot(fig_pc)
@@ -1709,9 +1709,9 @@ plt.show()
                                     lineoffset=0, linelength=0.5, 
                                     color='red', linewidth=2)
                 ax_ec.add_collection(evt)
-                ax_ec.set_title("EventCollection (事件集合)", fontsize=14, fontweight='bold')
-                ax_ec.set_xlabel("X 轴", fontsize=12)
-                ax_ec.set_ylabel("Y 轴", fontsize=12)
+                ax_ec.set_title("EventCollection", fontsize=14, fontweight='bold')
+                ax_ec.set_xlabel("X Axis", fontsize=12)
+                ax_ec.set_ylabel("Y Axis", fontsize=12)
                 ax_ec.legend()
                 ax_ec.grid(True, alpha=0.3)
                 st.pyplot(fig_ec)
@@ -1747,7 +1747,7 @@ plt.show()
         """, unsafe_allow_html=True)
         
         image_type = st.selectbox("选择图像类型", 
-                                 ["imshow (图像显示)", "pcolormesh (网格着色)", "matshow (矩阵显示)", "imread (读取图像)"],
+                                 ["imshow", "pcolormesh", "matshow", "imread"],
                                  key="image_type")
         
         col_ctrl, col_view = st.columns([1.2, 2])
@@ -1775,13 +1775,13 @@ plt.show()
         with col_view:
             st.markdown("#### 📊 实时预览")
             
-            if image_type == "imshow (图像显示)":
+            if image_type == "imshow":
                 data = np.random.rand(30, 30)
                 fig, ax = plt.subplots(figsize=(8, 6))
                 im = ax.imshow(data, interpolation=interpolation, cmap=cmap_img, 
                              aspect=aspect_ratio, origin=origin_pos)
                 fig.colorbar(im, ax=ax)
-                ax.set_title("imshow (图像显示)", fontsize=14, fontweight='bold')
+                ax.set_title("imshow", fontsize=14, fontweight='bold')
                 st.pyplot(fig)
                 
                 st.markdown("#### 💻 生成代码")
@@ -1795,11 +1795,11 @@ fig, ax = plt.subplots(figsize=(8, 6))
 im = ax.imshow(data, interpolation='{interpolation}', cmap='{cmap_img}', 
                aspect='{aspect_ratio}', origin='{origin_pos}')
 fig.colorbar(im, ax=ax)
-ax.set_title("imshow (图像显示)")
+ax.set_title("imshow")
 plt.show()
                 """, language='python')
             
-            elif image_type == "pcolormesh (网格着色)":
+            elif image_type == "pcolormesh":
                 x = np.linspace(0, 10, 20)
                 y = np.linspace(0, 10, 20)
                 X, Y = np.meshgrid(x, y)
@@ -1807,9 +1807,9 @@ plt.show()
                 fig, ax = plt.subplots(figsize=(8, 6))
                 mesh = ax.pcolormesh(X, Y, Z, cmap=cmap_img, shading='auto')
                 fig.colorbar(mesh, ax=ax)
-                ax.set_title("pcolormesh (网格着色)", fontsize=14, fontweight='bold')
-                ax.set_xlabel("X 轴", fontsize=12)
-                ax.set_ylabel("Y 轴", fontsize=12)
+                ax.set_title("pcolormesh", fontsize=14, fontweight='bold')
+                ax.set_xlabel("X Axis", fontsize=12)
+                ax.set_ylabel("Y Axis", fontsize=12)
                 st.pyplot(fig)
                 
                 st.markdown("#### 💻 生成代码")
@@ -1825,16 +1825,16 @@ Z = np.sin(X) * np.cos(Y)
 fig, ax = plt.subplots(figsize=(8, 6))
 mesh = ax.pcolormesh(X, Y, Z, cmap='{cmap_img}', shading='auto')
 fig.colorbar(mesh, ax=ax)
-ax.set_title("pcolormesh (网格着色)")
+ax.set_title("pcolormesh")
 plt.show()
                 """, language='python')
             
-            elif image_type == "matshow (矩阵显示)":
+            elif image_type == "matshow":
                 data = np.random.rand(10, 10)
                 fig, ax = plt.subplots(figsize=(8, 6))
                 mat = ax.matshow(data, cmap=cmap_img)
                 fig.colorbar(mat, ax=ax)
-                ax.set_title("matshow (矩阵显示)", fontsize=14, fontweight='bold')
+                ax.set_title("matshow", fontsize=14, fontweight='bold')
                 st.pyplot(fig)
                 
                 st.markdown("#### 💻 生成代码")
@@ -1847,7 +1847,7 @@ data = np.random.rand(10, 10)
 fig, ax = plt.subplots(figsize=(8, 6))
 mat = ax.matshow(data, cmap='{cmap_img}')
 fig.colorbar(mat, ax=ax)
-ax.set_title("matshow (矩阵显示)")
+ax.set_title("matshow")
 plt.show()
                 """, language='python')
             
@@ -1869,7 +1869,7 @@ plt.show()
                 # 模拟一个图像（使用随机数据）
                 img_data = np.random.rand(100, 100, 3)  # RGB图像
                 ax.imshow(img_data)
-                ax.set_title("imread 示例 (模拟RGB图像)", fontsize=14, fontweight='bold')
+                ax.set_title("imread Example (Simulated RGB Image)", fontsize=14, fontweight='bold')
                 st.pyplot(fig)
                 
                 st.markdown("#### 💻 生成代码")
@@ -1882,7 +1882,7 @@ img = imread('your_image.png')  # 替换为实际图像路径
 
 fig, ax = plt.subplots(figsize=(8, 6))
 ax.imshow(img)
-ax.set_title("读取的图像")
+ax.set_title("Loaded Image")
 plt.show()
                 """, language='python')
 
@@ -1919,8 +1919,8 @@ elif menu == "4. 布局与美学":
                 axes_flat = axes.flatten()
                 
             for i, ax in enumerate(axes_flat):
-                ax.plot(np.random.rand(10), label=f"线条 {i+1}")
-                ax.set_title(f"子图 {i+1}", fontsize=12, fontweight='bold')
+                ax.plot(np.random.rand(10), label=f"Line {i+1}")
+                ax.set_title(f"Subplot {i+1}", fontsize=12, fontweight='bold')
                 ax.legend(loc='upper right', fontsize='small')
                 ax.grid(True, alpha=0.3)
             st.pyplot(fig)
@@ -1944,7 +1944,7 @@ else:
 
 for i, ax in enumerate(axes_flat):
     ax.plot(data)
-    ax.set_title(f"子图 {{i+1}}", fontsize=12, fontweight='bold')
+    ax.set_title(f"Subplot {{i+1}}", fontsize=12, fontweight='bold')
     ax.grid(True, alpha=0.3)
 plt.show()
 """
@@ -1977,10 +1977,10 @@ plt.show()
                 fig, ax = plt.subplots(figsize=(8, 5))
                 x = np.linspace(0, 10, 100)
                 for i in range(1, 4):
-                    ax.plot(x, np.sin(x + i * .5) * (7 - i), label=f"波形 {i}")
-                ax.set_title(f"样式预览: {style_select}", fontsize=14, fontweight='bold')
-                ax.set_xlabel("X 轴", fontsize=12)
-                ax.set_ylabel("Y 轴", fontsize=12)
+                    ax.plot(x, np.sin(x + i * .5) * (7 - i), label=f"Wave {i}")
+                ax.set_title(f"Style Preview: {style_select}", fontsize=14, fontweight='bold')
+                ax.set_xlabel("X Axis", fontsize=12)
+                ax.set_ylabel("Y Axis", fontsize=12)
                 ax.legend()
                 ax.grid(True, alpha=0.3)
                 st.pyplot(fig)
@@ -2018,9 +2018,9 @@ plt.show()
             x = np.linspace(0, 10, 50)
             y = np.sin(x)
             ax.plot(x, y, linewidth=2, color='#2c3e50')
-            ax.set_title("标题示例", fontsize=fontsize_val, fontweight=fontweight_val, fontfamily=fontfamily_val)
-            ax.set_xlabel("X 轴标签", fontsize=fontsize_val-2, fontfamily=fontfamily_val)
-            ax.set_ylabel("Y 轴标签", fontsize=fontsize_val-2, fontfamily=fontfamily_val)
+            ax.set_title("Title Example", fontsize=fontsize_val, fontweight=fontweight_val, fontfamily=fontfamily_val)
+            ax.set_xlabel("X Axis Label", fontsize=fontsize_val-2, fontfamily=fontfamily_val)
+            ax.set_ylabel("Y Axis Label", fontsize=fontsize_val-2, fontfamily=fontfamily_val)
             ax.grid(True, alpha=0.3)
             st.pyplot(fig)
             
@@ -2034,12 +2034,12 @@ y = np.sin(x)
 
 fig, ax = plt.subplots(figsize=(8, 5))
 ax.plot(x, y, linewidth=2)
-ax.set_title("标题示例", fontsize={fontsize_val}, 
+ax.set_title("Title Example", fontsize={fontsize_val}, 
              fontweight='{fontweight_val}', 
              fontfamily='{fontfamily_val}')
-ax.set_xlabel("X 轴标签", fontsize={fontsize_val-2}, 
+ax.set_xlabel("X Axis Label", fontsize={fontsize_val-2}, 
               fontfamily='{fontfamily_val}')
-ax.set_ylabel("Y 轴标签", fontsize={fontsize_val-2}, 
+ax.set_ylabel("Y Axis Label", fontsize={fontsize_val-2}, 
               fontfamily='{fontfamily_val}')
 ax.grid(True, alpha=0.3)
 plt.show()
@@ -2090,9 +2090,9 @@ plt.show()
                 ax.spines['top'].set_visible(False)
             if hide_right:
                 ax.spines['right'].set_visible(False)
-            ax.set_title("坐标轴设置预览", fontsize=14, fontweight='bold')
-            ax.set_xlabel("X 轴", fontsize=12)
-            ax.set_ylabel("Y 轴", fontsize=12)
+            ax.set_title("Axes Settings Preview", fontsize=14, fontweight='bold')
+            ax.set_xlabel("X Axis", fontsize=12)
+            ax.set_ylabel("Y Axis", fontsize=12)
             st.pyplot(fig)
             
             st.markdown("#### 💻 生成代码")
@@ -2110,9 +2110,9 @@ ax.set_ylim({y_min}, {y_max})
 {'ax.grid(True, alpha=' + str(grid_alpha) + ')' if show_grid else '# ax.grid(False)'}
 {'ax.spines[\'top\'].set_visible(False)' if hide_top else ''}
 {'ax.spines[\'right\'].set_visible(False)' if hide_right else ''}
-ax.set_title("坐标轴设置预览", fontsize=14, fontweight='bold')
-ax.set_xlabel("X 轴", fontsize=12)
-ax.set_ylabel("Y 轴", fontsize=12)
+ax.set_title("Axes Settings Preview", fontsize=14, fontweight='bold')
+ax.set_xlabel("X Axis", fontsize=12)
+ax.set_ylabel("Y Axis", fontsize=12)
 plt.show()
             """, language='python')
         st.caption("调整下方的滑块，查看代码如何动态变化以适应不同的子图布局。")
@@ -2258,14 +2258,14 @@ ax.legend(frameon=True,      # 显示边框
                 # 找到最大值点
                 max_idx = np.argmax(y)
                 max_x, max_y = x[max_idx], y[max_idx]
-                ax_anno.annotate('最大值', xy=(max_x, max_y), xytext=(max_x+2, max_y+0.3),
+                ax_anno.annotate('Maximum', xy=(max_x, max_y), xytext=(max_x+2, max_y+0.3),
                                arrowprops=dict(arrowstyle='->', color='red', lw=2))
                 ax_anno.plot(max_x, max_y, 'ro', markersize=10)
                 ax_anno.grid(True, alpha=0.3)
                 st.pyplot(fig_anno)
             with col_anno_code:
                 st.code("""
-ax.annotate('最大值', 
+ax.annotate('Maximum', 
             xy=(max_x, max_y),      # 箭头指向的点
             xytext=(max_x+2, max_y+0.3),  # 文字位置
             arrowprops=dict(arrowstyle='->', color='red', lw=2))
@@ -2281,7 +2281,7 @@ ax.annotate('最大值',
             ax_arrow.plot(x, y)
             max_idx = np.argmax(y)
             max_x, max_y = x[max_idx], y[max_idx]
-            ax_arrow.annotate(f'样式: {arrow_style}', xy=(max_x, max_y), 
+            ax_arrow.annotate(f'Style: {arrow_style}', xy=(max_x, max_y), 
                             xytext=(max_x+2, max_y+0.3),
                             arrowprops=dict(arrowstyle=arrow_style, color='red', lw=2))
             ax_arrow.plot(max_x, max_y, 'ro', markersize=10)
@@ -2297,10 +2297,10 @@ ax.annotate('最大值',
                 y = np.sin(x)
                 ax_anno_adv.plot(x, y, label='sin(x)')
                 # 多个注解
-                ax_anno_adv.annotate('起点', xy=(0, 0), xytext=(1, 0.5),
+                ax_anno_adv.annotate('Start Point', xy=(0, 0), xytext=(1, 0.5),
                                    arrowprops=dict(arrowstyle='->', connectionstyle='arc3'),
                                    bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.5))
-                ax_anno_adv.annotate('中点', xy=(5, np.sin(5)), xytext=(6, 0.5),
+                ax_anno_adv.annotate('Mid Point', xy=(5, np.sin(5)), xytext=(6, 0.5),
                                    arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.3'),
                                    bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5))
                 ax_anno_adv.grid(True, alpha=0.3)
@@ -2308,13 +2308,13 @@ ax.annotate('最大值',
             with col_anno_adv_code:
                 st.code("""
 # 连接样式示例
-ax.annotate('起点', xy=(0, 0), xytext=(1, 0.5),
+ax.annotate('Start Point', xy=(0, 0), xytext=(1, 0.5),
            arrowprops=dict(arrowstyle='->', 
                           connectionstyle='arc3'),
            bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.5))
 
 # 弯曲连接
-ax.annotate('中点', xy=(5, y[50]), xytext=(6, 0.5),
+ax.annotate('Mid Point', xy=(5, y[50]), xytext=(6, 0.5),
            arrowprops=dict(arrowstyle='->', 
                           connectionstyle='arc3,rad=0.3'))
                 """, language='python')
@@ -2358,7 +2358,7 @@ elif menu == "5. 进阶画廊":
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
-        ax.set_title("3D Plotting (3D曲线)")
+        ax.set_title("3D Plotting")
         code_display = """
 from mpl_toolkits.mplot3d import Axes3D
 ax = fig.add_subplot(111, projection='3d')
@@ -2379,7 +2379,7 @@ ax.set_zlabel('Z')
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
-        ax.set_title("3D Surface (3D曲面)")
+        ax.set_title("3D Surface")
         code_display = """
 ax = fig.add_subplot(111, projection='3d')
 X, Y = np.meshgrid(x, y)
@@ -2399,7 +2399,7 @@ fig.colorbar(surf, ax=ax)
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
-        ax.set_title("3D Scatter (3D散点)")
+        ax.set_title("3D Scatter")
         code_display = """
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(x, y, z, c=colors, cmap='viridis', s=50)
@@ -2410,7 +2410,7 @@ ax.scatter(x, y, z, c=colors, cmap='viridis', s=50)
         theta = np.linspace(0, 2*np.pi, 100)
         r = 2 * np.sin(4*theta)
         ax.plot(theta, r, color='crimson', linewidth=2)
-        ax.set_title("Polar Plot (极坐标 - 玫瑰曲线)", pad=20)
+        ax.set_title("Polar Plot (Rose Curve)", pad=20)
         code_display = """
 ax = fig.add_subplot(111, projection='polar')
 ax.plot(theta, r) # 极坐标绘图
@@ -2422,7 +2422,7 @@ ax.plot(theta, r) # 极坐标绘图
         u = np.cos(x)
         v = np.sin(y)
         q = ax.quiver(x, y, u, v, scale=20)
-        ax.set_title("Quiver Plot (矢量场)")
+        ax.set_title("Quiver Plot")
         code_display = """
 x, y = np.meshgrid(np.arange(0, 2*np.pi, .2), np.arange(0, 2*np.pi, .2))
 u, v = np.cos(x), np.sin(y)
@@ -2437,7 +2437,7 @@ ax.quiver(x, y, u, v, scale=20)
         U = np.cos(X)
         V = np.sin(Y)
         ax.streamplot(X, Y, U, V, density=1.5, color=U, linewidth=2, cmap='viridis')
-        ax.set_title("Streamplot (流线图)")
+        ax.set_title("Streamplot")
         code_display = """
 X, Y = np.meshgrid(x, y)
 U, V = np.cos(X), np.sin(Y)
@@ -2452,7 +2452,7 @@ ax.streamplot(X, Y, U, V, density=1.5, color=U, cmap='viridis')
         Z = np.exp(-(X**2 + Y**2))
         contour = ax.contour(X, Y, Z, levels=10, cmap='viridis')
         ax.clabel(contour, inline=True, fontsize=8)
-        ax.set_title("Contour Plot (等高线)")
+        ax.set_title("Contour Plot")
         code_display = """
 X, Y = np.meshgrid(x, y)
 Z = np.exp(-(X**2 + Y**2))
@@ -2465,7 +2465,7 @@ ax.clabel(contour, inline=True, fontsize=8)
         data = np.random.rand(10, 10)
         im = ax.imshow(data, cmap='viridis', aspect='auto')
         fig.colorbar(im, ax=ax)
-        ax.set_title("Heatmap (热力图)")
+        ax.set_title("Heatmap")
         code_display = """
 data = np.random.rand(10, 10)
 im = ax.imshow(data, cmap='viridis', aspect='auto')
@@ -2617,7 +2617,7 @@ combined = chart1 | chart2  # 水平组合
             fig_pd_bar, ax_pd_bar = plt.subplots(figsize=(8, 5))
             df.groupby('species')['sepal_length'].mean().plot(kind='bar', ax=ax_pd_bar)
             ax_pd_bar.set_title("Pandas Bar Plot", fontweight='bold')
-            ax_pd_bar.set_ylabel("平均 Sepal Length")
+            ax_pd_bar.set_ylabel("Average Sepal Length")
             st.pyplot(fig_pd_bar)
             st.code("df.groupby('species')['sepal_length'].mean().plot(kind='bar')", language='python')
         
@@ -2839,24 +2839,24 @@ ax.xaxis.set_major_formatter(formatter)
             x = np.linspace(0, 10, 100)
             ax_main.plot(x, np.sin(x), label='sin(x)')
             ax_main.plot(x, np.cos(x), label='cos(x)')
-            ax_main.set_title("主图 (2x2)", fontweight='bold')
+            ax_main.set_title("Main Plot (2x2)", fontweight='bold')
             ax_main.legend()
             ax_main.grid(True, alpha=0.3)
             
             # 右上角小图
             ax_top = fig_gspec.add_subplot(gs[0, 2])
             ax_top.hist(np.random.randn(100), bins=20)
-            ax_top.set_title("直方图", fontsize=9)
+            ax_top.set_title("Histogram", fontsize=9)
             
             # 右中小图
             ax_mid = fig_gspec.add_subplot(gs[1, 2])
             ax_mid.scatter(np.random.rand(50), np.random.rand(50))
-            ax_mid.set_title("散点图", fontsize=9)
+            ax_mid.set_title("Scatter Plot", fontsize=9)
             
             # 底部横跨3列
             ax_bottom = fig_gspec.add_subplot(gs[2, :])
             ax_bottom.bar(['A', 'B', 'C', 'D'], [10, 20, 15, 25])
-            ax_bottom.set_title("底部条形图 (跨3列)", fontweight='bold')
+            ax_bottom.set_title("Bottom Bar Chart (Spanning 3 Columns)", fontweight='bold')
             
             st.pyplot(fig_gspec)
         
@@ -2951,7 +2951,7 @@ plt.show()
             ax_anim_preview.plot(x_preview, y_preview, lw=2)
             ax_anim_preview.set_xlim(0, 2*np.pi)
             ax_anim_preview.set_ylim(-1, 1)
-            ax_anim_preview.set_title("动画预览（静态帧）", fontweight='bold')
+            ax_anim_preview.set_title("Animation Preview (Static Frame)", fontweight='bold')
             ax_anim_preview.grid(True, alpha=0.3)
             st.pyplot(fig_anim_preview)
         

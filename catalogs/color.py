@@ -206,7 +206,7 @@ def render_color_gallery():
     ax4.set_xlim(-1, 12)
     ax4.set_ylim(-1.5, 1.8)
     ax4.legend(loc='upper right', fontsize=8, ncol=2)
-    ax4.set_title("不同颜色形式示例", fontsize=11, fontweight='bold')
+    ax4.set_title("Color Format Examples", fontsize=11, fontweight='bold')
     ax4.grid(True, alpha=0.3)
     st.pyplot(fig4)
     
