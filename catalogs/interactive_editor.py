@@ -15,9 +15,8 @@ from catalogs.text import get_fontweight_options, get_fontstyle_options, get_fon
 def get_all_available_styles() -> List[str]:
     """
     获取所有可用的样式表，包括matplotlib内置的和第三方库的样式表
-    
+
     支持的第三方库：
-    - matplotlib-stylelib: 提供更多样式表
     - seaborn: 提供seaborn样式（如果已安装）
     """
     styles = []
@@ -29,27 +28,6 @@ def get_all_available_styles() -> List[str]:
     except Exception:
         pass
     
-    # 2. 尝试导入matplotlib-stylelib
-    # matplotlib-stylelib有多种导入方式
-    stylelib_imported = False
-    try:
-        import stylelib
-        stylelib_imported = True
-    except ImportError:
-        try:
-            import matplotlib_stylelib as stylelib
-            stylelib_imported = True
-        except ImportError:
-            pass
-    
-    if stylelib_imported:
-        # stylelib会自动注册样式到matplotlib
-        # 重新获取可用样式（可能已包含stylelib的样式）
-        try:
-            updated_styles = list(plt.style.available)
-            styles = list(set(styles + updated_styles))  # 去重
-        except Exception:
-            pass
     
     # 3. 尝试导入seaborn样式（seaborn已安装但样式可能需要单独注册）
     try:
@@ -88,7 +66,7 @@ def generate_code(params: Dict) -> str:
     if style_sheet != 'default':
         code_lines.append(f"# 应用样式表")
         # 检查是否是第三方样式库的样式
-        third_party_styles = ['seaborn', 'stylelib']
+        third_party_styles = ['seaborn']
         is_third_party = any(style in style_sheet.lower() for style in third_party_styles)
         
         if is_third_party:
@@ -97,10 +75,6 @@ def generate_code(params: Dict) -> str:
                 code_lines.append("# 注意：此样式需要安装 seaborn 库")
                 code_lines.append("# pip install seaborn")
                 code_lines.append("import seaborn as sns  # 导入seaborn会自动注册样式")
-            elif 'stylelib' in style_sheet.lower() or style_sheet not in plt.style.available:
-                code_lines.append("# 注意：此样式可能需要安装 matplotlib-stylelib 库")
-                code_lines.append("# pip install matplotlib-stylelib")
-                code_lines.append("# import stylelib  # 取消注释以使用stylelib样式")
         
         code_lines.append(f"plt.style.use('{style_sheet}')")
         code_lines.append("")
@@ -351,18 +325,6 @@ def render_plot(params: Dict) -> plt.Figure:
     # 尝试导入第三方样式库（如果样式需要）
     # 这确保在运行时也能使用第三方样式
     if style_sheet != 'default':
-        try:
-            # 尝试导入stylelib（如果样式可能需要它）
-            if 'stylelib' in style_sheet.lower() or style_sheet not in plt.style.available:
-                try:
-                    import stylelib
-                except ImportError:
-                    try:
-                        import matplotlib_stylelib as stylelib
-                    except ImportError:
-                        pass
-        except Exception:
-            pass
         
         # 尝试导入seaborn（如果样式可能需要它）
         if 'seaborn' in style_sheet.lower():
@@ -677,7 +639,6 @@ def render_interactive_editor():
                 **内置样式表**：Matplotlib自带的样式表
                 
                 **扩展样式表**：通过安装以下库可获得更多样式：
-                - `pip install matplotlib-stylelib` - 提供更多专业样式
                 - `pip install seaborn` - 提供seaborn系列样式（已包含）
                 
                 安装后刷新页面即可看到新样式。
@@ -695,7 +656,7 @@ def render_interactive_editor():
                 available_styles, 
                 index=style_idx, 
                 key='style_sheet',
-                help="选择图表样式。安装matplotlib-stylelib可获得更多样式选项。"
+                help="选择图表样式。Matplotlib内置提供多种样式选项。"
             )
         
         # 使用expander组织参数
