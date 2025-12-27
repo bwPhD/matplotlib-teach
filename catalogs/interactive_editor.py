@@ -17,6 +17,7 @@ def get_all_available_styles() -> List[str]:
     获取所有可用的样式表，包括matplotlib内置的和第三方库的样式表
 
     支持的第三方库：
+    - matplotlib-stylelib: 提供更多样式表
     - seaborn: 提供seaborn样式（如果已安装）
     """
     styles = []
@@ -639,6 +640,7 @@ def render_interactive_editor():
                 **内置样式表**：Matplotlib自带的样式表
                 
                 **扩展样式表**：通过安装以下库可获得更多样式：
+                - `pip install matplotlib-stylelib` - 提供更多专业样式
                 - `pip install seaborn` - 提供seaborn系列样式（已包含）
                 
                 安装后刷新页面即可看到新样式。
@@ -656,7 +658,7 @@ def render_interactive_editor():
                 available_styles, 
                 index=style_idx, 
                 key='style_sheet',
-                help="选择图表样式。Matplotlib内置提供多种样式选项。"
+                help="选择图表样式。安装matplotlib-stylelib可获得更多样式选项。"
             )
         
         # 使用expander组织参数

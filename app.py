@@ -548,6 +548,8 @@ if menu == "1. 生态全景":
         with col1:
             st.subheader("🎨 Style库")
             st.info("""
+            **matplotlib-stylelib**: 扩展样式库
+
             **prettyplotlib**: 美化Matplotlib图表
             
             **seaborn-style**: Seaborn样式扩展

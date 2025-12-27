@@ -2,24 +2,28 @@ name: Wake Up Streamlit App
 
 on:
   schedule:
-    - cron: '0 */4 * * *'
-  workflow_dispatch:
+    # 每11小时唤醒一次 (UTC时间)
+    - cron: '0 0 * * *'     # UTC 0点 = 北京时间 8点
+    - cron: '0 11 * * *'    # UTC 11点 = 北京时间 19点
+    - cron: '0 22 * * *'    # UTC 22点 = 北京时间 次日6点
+  workflow_dispatch:  # 支持手动触发
 
 jobs:
   wake-up:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
     
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.11'
     
-    # 👇 添加这一步：安装 Chrome 浏览器
-    - name: Install Chrome
+    # 使用官方 Action 安装 Chrome（更稳定）
+    - name: Setup Chrome
       uses: browser-actions/setup-chrome@v1
       with:
         chrome-version: 'stable'
@@ -27,9 +31,22 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install selenium webdriver-manager
+        pip install selenium webdriver-manager requests
     
-    - name: Run wake-up script
+    - name: Verify Chrome installation
+      run: |
+        google-chrome --version || chrome --version || echo "Chrome version check failed"
+    
+    - name: Run wake up script
       env:
         STREAMLIT_URL: ${{ secrets.STREAMLIT_URL }}
-      run: python .github/scripts/wake_up_app.py
+      run: |
+        python .github/scripts/wake_up_app.py
+    
+    - name: Upload logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: wake-up-logs-${{ github.run_number }}
+        path: .github/logs/
+        retention-days: 7
