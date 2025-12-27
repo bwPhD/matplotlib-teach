@@ -12,6 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # --- 配置中文字体（必须在导入后立即设置）---
 from catalogs.utils import setup_chinese_font, generate_sample_data, ensure_chinese_font
+from catalogs.interactive_editor import render_interactive_editor
 setup_chinese_font()
 
 # --- 页面配置 ---
@@ -348,7 +349,8 @@ menu = st.sidebar.radio(
         "4. 布局与美学",
         "5. 进阶画廊",
         "6. 其他库实战",
-        "7. 进阶挑战：大师之路 🚀"
+        "7. 进阶挑战：大师之路",
+        "8. 小白交互编辑练习"
     ]
 )
 
@@ -374,7 +376,7 @@ if menu == "1. 生态全景":
     """, unsafe_allow_html=True)
     
     # 使用Tabs组织不同类别的库
-    lib_tabs = st.tabs(["🎯 核心库", "📊 统计库", "🌐 Web库", "🔧 工具库"])
+    lib_tabs = st.tabs(["🎯 核心库", "📊 统计库", "🌈 颜色", "🔧 工具库"])
     
     with lib_tabs[0]:
         col1, col2 = st.columns([1, 1])
@@ -466,49 +468,78 @@ if menu == "1. 生态全景":
         col1, col2 = st.columns([1, 1])
         
         with col1:
-            st.subheader("🖱️ Plotly: 交互为王")
-            st.warning("""
-            **核心特征：Interaction (交互)**
+            st.subheader("🎨 颜色系统")
+            st.info("""
+            **Matplotlib 颜色系统**
             
-            独立的库，专为Web设计。支持悬停、缩放、平移等交互。
+            Matplotlib 提供了多种颜色表示方式，满足不同场景需求。
+            
+            **颜色形式**：
+            - **颜色名称**：CSS4标准颜色（148个）
+            - **单字符**：Base颜色（8个：r/g/b/c/m/y/k/w）
+            - **CN颜色**：C0-C9（自动循环）
+            - **HEX**：十六进制颜色码
+            - **RGB/RGBA**：元组形式（值范围0-1）
             
             **适用场景**：
-            - 仪表盘
-            - 网页报告
-            - 交互式探索
-            
-            **优势**：丰富的交互功能
-            **劣势**：文件较大
+            - 单色图表元素
+            - 线条、标记点、填充区域
+            - 需要精确控制颜色的场景
             """)
             
-            st.subheader("📜 Altair: 声明式语法")
-            st.error("""
-            **核心特征：Grammar (语法)**
+            st.subheader("🌈 颜色映射 (Colormap)")
+            st.success("""
+            **颜色映射系统**
             
-            描述"通过什么数据映射到什么视觉元素"。
+            将数值数据映射到颜色，用于可视化连续或分类数据。
+            
+            **主要类型**：
+            - **Sequential**：连续映射（如viridis, plasma）
+            - **Diverging**：发散映射（如coolwarm, RdBu）
+            - **Qualitative**：定性映射（如tab10, Set1）
+            - **Cyclic**：循环映射（如hsv, twilight）
             
             **适用场景**：
-            - 快速构建图表逻辑
-            - 数据探索
-            - 简洁的代码
-            
-            **优势**：代码极简，逻辑清晰
-            **劣势**：复杂图表可能受限
+            - 散点图（根据数值着色）
+            - 热力图、等高线图
+            - 需要表示数据大小的场景
             """)
         
         with col2:
-            st.subheader("🌐 Dash: Web应用框架")
+            st.subheader("💡 颜色选择建议")
+            st.warning("""
+            **科学可视化最佳实践**
+            
+            1. **避免使用jet**：虽然常见但不推荐，对色盲不友好
+            
+            2. **推荐使用感知均匀的colormap**：
+               - `viridis`：默认推荐
+               - `plasma`：高对比度
+               - `inferno`：深色背景友好
+               - `magma`：深色到亮色
+            
+            3. **分类数据**：使用`tab10`、`Set1`等定性colormap
+            
+            4. **有中心值的数据**：使用`coolwarm`、`RdBu`等发散colormap
+            
+            5. **颜色盲友好**：避免红绿对比，使用蓝黄对比
+            """)
+            
+            st.subheader("📚 学习路径")
             st.info("""
-            **核心特征：Application (应用)**
+            **颜色学习建议**
             
-            基于Plotly的Web应用框架。
+            1. **基础**：掌握颜色名称、HEX、RGB三种基本形式
             
-            **适用场景**：
-            - 数据仪表盘
-            - 交互式Web应用
-            - 实时数据展示
+            2. **进阶**：理解CN颜色循环机制
             
-            **优势**：纯Python构建Web应用
+            3. **高级**：选择合适的colormap进行数据可视化
+            
+            4. **实践**：在"布局与美学"→"颜色"模块中深入学习
+            
+            **相关章节**：
+            - 本章：颜色系统概述
+            - 第4章：布局与美学 → 颜色（详细教程）
             """)
     
     with lib_tabs[3]:
@@ -542,6 +573,7 @@ if menu == "1. 生态全景":
     </div>
     """, unsafe_allow_html=True)
 
+# --- 章节 2: Matplotlib 核心解构 ---
 # --- 章节 2: Matplotlib 核心解构 ---
 elif menu == "2. Matplotlib 核心解构":
     st.title("Matplotlib 从零到精通")
@@ -827,9 +859,6 @@ elif menu == "3. 基础笔触":
             # color 参数
             with st.expander("🎨 颜色 (color)", expanded=True):
                 color = st.color_picker("选择颜色", "#FF5733", key="line_color")
-                if st.button("📚 查看颜色选项", key="btn_color"):
-                    from catalogs.color import render_color_gallery
-                    render_color_gallery()
             
             # marker 参数
             with st.expander("📍 标记 (marker)", expanded=True):
@@ -1036,9 +1065,6 @@ plt.show()
             # 通用参数
             with st.expander("🎨 颜色 (color)", expanded=True):
                 patch_color = st.color_picker("选择颜色", "#3b82f6", key="patch_color")
-                if st.button("📚 查看颜色选项", key="btn_patch_color"):
-                    from catalogs.color import render_color_gallery
-                    render_color_gallery()
             
             with st.expander("📏 透明度 (alpha)", expanded=True):
                 patch_alpha = st.slider("透明度", 0.0, 1.0, 0.8, 0.1, key="patch_alpha")
@@ -1898,7 +1924,7 @@ elif menu == "4. 布局与美学":
     """, unsafe_allow_html=True)
     
     # 使用 Tab 组织不同类别
-    style_tabs = st.tabs(["📐 子图布局", "🎨 样式与颜色", "📝 文本样式", "📊 坐标轴设置"])
+    style_tabs = st.tabs(["📐 子图布局", "🎨 样式", "🌈 颜色", "📝 文本样式", "📊 坐标轴设置"])
     
     with style_tabs[0]:
         st.subheader("子图布局 (Subplots)")
@@ -1951,7 +1977,7 @@ plt.show()
             st.code(code_str, language='python')
     
     with style_tabs[1]:
-        st.subheader("样式与颜色")
+        st.subheader("样式")
         
         col_ctrl, col_view = st.columns([1.2, 2])
         
@@ -1963,14 +1989,6 @@ plt.show()
                 index=plt.style.available.index('ggplot') if 'ggplot' in plt.style.available else 0,
                 key="style_select"
             )
-            
-            if st.button("📚 查看颜色选项", key="btn_style_color"):
-                from catalogs.color import render_color_gallery
-                render_color_gallery()
-            
-            if st.button("📚 查看颜色映射", key="btn_style_cmap"):
-                from catalogs.color import render_colormap_gallery
-                render_colormap_gallery()
         
         with col_view:
             with plt.style.context(style_select):
@@ -1986,6 +2004,623 @@ plt.show()
                 st.pyplot(fig)
     
     with style_tabs[2]:
+        st.subheader("颜色")
+        st.markdown("""
+        <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                    color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;'>
+            <p style='margin: 0; text-align: center; font-weight: 500;'>
+                🎨 掌握 Matplotlib 颜色系统，让你的图表更加专业和美观
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # 使用子Tab组织内容
+        color_subtabs = st.tabs(["🎨 颜色基础", "🌈 颜色映射", "💡 最佳实践", "📚 完整参考"])
+        
+        with color_subtabs[0]:
+            st.markdown("### 🎨 颜色基础")
+            st.caption("学习 Matplotlib 中颜色的基本用法和表示形式")
+            
+            col_left, col_right = st.columns([1.2, 2])
+            
+            with col_left:
+                st.markdown("#### 📝 颜色表示形式")
+                
+                color_form_tabs = st.tabs(["单色", "多色"])
+                
+                with color_form_tabs[0]:
+                    st.markdown("**选择颜色形式**")
+                    color_form = st.radio(
+                        "颜色形式",
+                        ["颜色名称", "单字符", "CN颜色", "HEX", "RGB"],
+                        key="color_form_demo"
+                    )
+                    
+                    if color_form == "颜色名称":
+                        common_colors_list = ['red', 'blue', 'green', 'orange', 'purple', 'brown', 'pink', 'gray', 
+                                             'black', 'yellow', 'cyan', 'magenta', 'lime', 'navy', 'maroon', 'olive']
+                        selected_color = st.selectbox("选择颜色", common_colors_list, key="color_name_demo")
+                        color_value = selected_color
+                        color_code = f"'{selected_color}'"
+                    elif color_form == "单字符":
+                        base_chars = ['r', 'g', 'b', 'c', 'm', 'y', 'k', 'w']
+                        selected_char = st.selectbox("选择颜色", base_chars, key="color_char_demo")
+                        color_value = selected_char
+                        color_code = f"'{selected_char}'"
+                    elif color_form == "CN颜色":
+                        cn_list = [f'C{i}' for i in range(10)]
+                        selected_cn = st.selectbox("选择颜色", cn_list, key="color_cn_demo")
+                        color_value = selected_cn
+                        color_code = f"'{selected_cn}'"
+                    elif color_form == "HEX":
+                        hex_color = st.color_picker("选择颜色", "#FF5733", key="color_hex_demo")
+                        color_value = hex_color
+                        color_code = f"'{hex_color}'"
+                    else:  # RGB
+                        col_r, col_g, col_b = st.columns(3)
+                        with col_r:
+                            r_val = st.slider("R", 0.0, 1.0, 1.0, 0.01, key="rgb_r_demo")
+                        with col_g:
+                            g_val = st.slider("G", 0.0, 1.0, 0.34, 0.01, key="rgb_g_demo")
+                        with col_b:
+                            b_val = st.slider("B", 0.0, 1.0, 0.2, 0.01, key="rgb_b_demo")
+                        color_value = (r_val, g_val, b_val)
+                        color_code = f"({r_val}, {g_val}, {b_val})"
+                    
+                    st.markdown("---")
+                    st.markdown("**透明度 (Alpha)**")
+                    alpha_val = st.slider("透明度", 0.0, 1.0, 1.0, 0.1, key="alpha_demo")
+                
+                with color_form_tabs[1]:
+                    st.markdown("**多系列颜色**")
+                    st.info("""
+                    当绘制多条线或多个系列时，可以使用：
+                    - **CN颜色循环**：自动使用C0, C1, C2...
+                    - **颜色列表**：手动指定每个系列的颜色
+                    """)
+                    
+                    use_cn_cycle = st.checkbox("使用CN颜色循环", value=True, key="use_cn_cycle")
+                    if not use_cn_cycle:
+                        num_series = st.slider("系列数量", 2, 8, 3, key="num_series")
+                        st.caption(f"将使用前{num_series}个CN颜色")
+            
+            with col_right:
+                st.markdown("#### 📊 实时预览")
+                
+                try:
+                    ensure_chinese_font()
+                    fig, ax = plt.subplots(figsize=(10, 5))
+                    x = np.linspace(0, 10, 100)
+                    
+                    if use_cn_cycle:
+                        # 使用CN颜色循环
+                        for i in range(3):
+                            ax.plot(x, np.sin(x + i * 0.5) * (3 - i), 
+                                   color=f'C{i}', linewidth=2.5, alpha=alpha_val,
+                                   label=f"Series {i+1} (C{i})")
+                    else:
+                        # 使用选定的颜色
+                        for i in range(num_series):
+                            if isinstance(color_value, tuple):
+                                # RGB颜色，为每个系列添加轻微变化
+                                r, g, b = color_value
+                                series_color = (min(1.0, r + i*0.1), min(1.0, g + i*0.1), min(1.0, b + i*0.1))
+                            else:
+                                series_color = color_value
+                            ax.plot(x, np.sin(x + i * 0.5) * (3 - i), 
+                                   color=series_color, linewidth=2.5, alpha=alpha_val,
+                                   label=f"Series {i+1}")
+                    
+                    ax.set_title(f"Color Example: {color_form}", fontsize=14, fontweight='bold')
+                    ax.set_xlabel("X Axis", fontsize=12)
+                    ax.set_ylabel("Y Axis", fontsize=12)
+                    ax.legend(loc='upper right')
+                    ax.grid(True, alpha=0.3)
+                    st.pyplot(fig)
+                    plt.close(fig)
+                    
+                    st.markdown("#### 💻 代码示例")
+                    if use_cn_cycle:
+                        code_example = f"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+fig, ax = plt.subplots(figsize=(8, 5))
+
+# 使用CN颜色循环（自动）
+for i in range(3):
+    ax.plot(x, np.sin(x + i * 0.5) * (3 - i), 
+           color=f'C{{i}}', linewidth=2.5, alpha={alpha_val},
+           label=f"Series {{i+1}}")
+
+ax.set_title("Color Example")
+ax.legend()
+ax.grid(True, alpha=0.3)
+plt.show()
+"""
+                    else:
+                        code_example = f"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+fig, ax = plt.subplots(figsize=(8, 5))
+
+# 使用指定颜色
+color = {color_code}
+for i in range({num_series}):
+    ax.plot(x, np.sin(x + i * 0.5) * (3 - i), 
+           color=color, linewidth=2.5, alpha={alpha_val},
+           label=f"Series {{i+1}}")
+
+ax.set_title("Color Example")
+ax.legend()
+ax.grid(True, alpha=0.3)
+plt.show()
+"""
+                    st.code(code_example, language='python')
+                except Exception as e:
+                    st.error(f"渲染错误: {str(e)}")
+            
+            st.markdown("---")
+            st.markdown("#### 📋 颜色形式对比表")
+            
+            color_comparison_data = {
+                '形式': ['颜色名称', '单字符', 'CN颜色', 'HEX', 'RGB', 'RGBA'],
+                '示例': ["'red'", "'r'", "'C0'", "'#FF5733'", "(1.0, 0.0, 0.0)", "(1.0, 0.0, 0.0, 0.8)"],
+                '优点': [
+                    '直观易读，148种CSS4颜色',
+                    '简洁快速，8种基础颜色',
+                    '自动循环，适合多系列',
+                    '精确控制，支持透明度',
+                    '精确控制RGB值',
+                    '支持透明度控制'
+                ],
+                '适用场景': [
+                    '一般用途，需要直观颜色名',
+                    '快速原型，简单图表',
+                    '多系列图表（推荐）',
+                    'Web设计，精确颜色',
+                    '精确颜色控制',
+                    '需要透明度的场景'
+                ]
+            }
+            st.dataframe(pd.DataFrame(color_comparison_data), use_container_width=True, hide_index=True)
+        
+        with color_subtabs[1]:
+            st.markdown("### 🌈 颜色映射 (Colormap)")
+            st.caption("学习如何使用颜色映射将数值数据映射到颜色")
+            
+            col_left, col_right = st.columns([1.2, 2])
+            
+            with col_left:
+                st.markdown("#### 🎨 Colormap 选择")
+                
+                cmap_category = st.selectbox(
+                    "Colormap 类别",
+                    ["Perceptually Uniform", "Sequential", "Diverging", "Qualitative", "Cyclic"],
+                    key="cmap_category_demo"
+                )
+                
+                # 根据类别选择colormap
+                if cmap_category == "Perceptually Uniform":
+                    cmap_options = ['viridis', 'plasma', 'inferno', 'magma', 'cividis']
+                    cmap_desc = "感知均匀，适合科学可视化（推荐）"
+                elif cmap_category == "Sequential":
+                    cmap_options = ['Blues', 'Greens', 'Reds', 'Oranges', 'Purples', 'Greys']
+                    cmap_desc = "连续映射，适合有序数据"
+                elif cmap_category == "Diverging":
+                    cmap_options = ['coolwarm', 'RdBu', 'RdYlBu', 'Spectral', 'seismic']
+                    cmap_desc = "发散映射，适合有中心值的数据"
+                elif cmap_category == "Qualitative":
+                    cmap_options = ['tab10', 'tab20', 'Set1', 'Set2', 'Set3', 'Pastel1']
+                    cmap_desc = "定性映射，适合分类数据"
+                else:  # Cyclic
+                    cmap_options = ['hsv', 'twilight', 'twilight_shifted']
+                    cmap_desc = "循环映射，适合周期性数据"
+                
+                selected_cmap = st.selectbox("选择 Colormap", cmap_options, key="cmap_select_demo")
+                st.caption(f"*{cmap_desc}*")
+                
+                # 反转选项
+                reverse_cmap = st.checkbox("反转 Colormap (添加 '_r' 后缀)", key="reverse_cmap")
+                if reverse_cmap:
+                    selected_cmap = selected_cmap + '_r'
+                
+                st.markdown("---")
+                st.markdown("#### 📊 应用场景")
+                cmap_application = st.selectbox(
+                    "选择应用场景",
+                    ["散点图 (Scatter)", "热力图 (Heatmap)", "等高线 (Contour)", "2D图像 (imshow)"],
+                    key="cmap_application"
+                )
+            
+            with col_right:
+                st.markdown("#### 📊 实时预览")
+                
+                try:
+                    ensure_chinese_font()
+                    fig, ax = plt.subplots(figsize=(10, 6))
+                    
+                    if cmap_application == "散点图 (Scatter)":
+                        x_scatter = np.random.rand(200) * 10
+                        y_scatter = np.random.rand(200) * 10
+                        c_scatter = np.random.rand(200)
+                        
+                        scatter = ax.scatter(x_scatter, y_scatter, c=c_scatter, 
+                                            cmap=selected_cmap, s=80, alpha=0.7, edgecolors='white', linewidths=0.5)
+                        plt.colorbar(scatter, ax=ax, label='Value')
+                        ax.set_title(f"Scatter Plot with '{selected_cmap}'", fontsize=14, fontweight='bold')
+                        ax.set_xlabel("X Axis", fontsize=12)
+                        ax.set_ylabel("Y Axis", fontsize=12)
+                        
+                    elif cmap_application == "热力图 (Heatmap)":
+                        data_heatmap = np.random.rand(15, 15)
+                        im = ax.imshow(data_heatmap, cmap=selected_cmap, aspect='auto', interpolation='nearest')
+                        plt.colorbar(im, ax=ax, label='Value')
+                        ax.set_title(f"Heatmap with '{selected_cmap}'", fontsize=14, fontweight='bold')
+                        ax.set_xticks([])
+                        ax.set_yticks([])
+                        
+                    elif cmap_application == "等高线 (Contour)":
+                        x_contour = np.linspace(-3, 3, 100)
+                        y_contour = np.linspace(-3, 3, 100)
+                        X, Y = np.meshgrid(x_contour, y_contour)
+                        Z = np.exp(-(X**2 + Y**2)) + 0.5 * np.exp(-((X-1)**2 + (Y-1)**2))
+                        
+                        contour = ax.contourf(X, Y, Z, levels=20, cmap=selected_cmap)
+                        plt.colorbar(contour, ax=ax, label='Value')
+                        ax.set_title(f"Contour Plot with '{selected_cmap}'", fontsize=14, fontweight='bold')
+                        ax.set_xlabel("X Axis", fontsize=12)
+                        ax.set_ylabel("Y Axis", fontsize=12)
+                        
+                    else:  # imshow
+                        data_2d = np.random.rand(20, 20)
+                        im = ax.imshow(data_2d, cmap=selected_cmap, aspect='auto')
+                        plt.colorbar(im, ax=ax, label='Value')
+                        ax.set_title(f"2D Image with '{selected_cmap}'", fontsize=14, fontweight='bold')
+                        ax.set_xticks([])
+                        ax.set_yticks([])
+                    
+                    ax.grid(False)
+                    st.pyplot(fig)
+                    plt.close(fig)
+                    
+                    st.markdown("#### 💻 代码示例")
+                    if cmap_application == "散点图 (Scatter)":
+                        code_cmap = f"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+x = np.random.rand(200) * 10
+y = np.random.rand(200) * 10
+c = np.random.rand(200)  # 颜色值
+
+fig, ax = plt.subplots(figsize=(8, 6))
+scatter = ax.scatter(x, y, c=c, cmap='{selected_cmap}', s=80, alpha=0.7)
+plt.colorbar(scatter, ax=ax, label='Value')
+ax.set_title("Scatter Plot with Colormap")
+plt.show()
+"""
+                    elif cmap_application == "热力图 (Heatmap)":
+                        code_cmap = f"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+data = np.random.rand(15, 15)
+
+fig, ax = plt.subplots(figsize=(8, 6))
+im = ax.imshow(data, cmap='{selected_cmap}', aspect='auto')
+plt.colorbar(im, ax=ax, label='Value')
+ax.set_title("Heatmap with Colormap")
+plt.show()
+"""
+                    elif cmap_application == "等高线 (Contour)":
+                        code_cmap = f"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+x = np.linspace(-3, 3, 100)
+y = np.linspace(-3, 3, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.exp(-(X**2 + Y**2))
+
+fig, ax = plt.subplots(figsize=(8, 6))
+contour = ax.contourf(X, Y, Z, levels=20, cmap='{selected_cmap}')
+plt.colorbar(contour, ax=ax, label='Value')
+ax.set_title("Contour Plot with Colormap")
+plt.show()
+"""
+                    else:
+                        code_cmap = f"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+data = np.random.rand(20, 20)
+
+fig, ax = plt.subplots(figsize=(8, 6))
+im = ax.imshow(data, cmap='{selected_cmap}')
+plt.colorbar(im, ax=ax, label='Value')
+ax.set_title("2D Image with Colormap")
+plt.show()
+"""
+                    st.code(code_cmap, language='python')
+                except Exception as e:
+                    st.error(f"渲染错误: {str(e)}")
+            
+            st.markdown("---")
+            st.markdown("#### 📋 Colormap 选择指南")
+            
+            cmap_guide_data = {
+                '数据类型': ['连续数据', '有中心值的数据', '分类数据', '周期性数据', '科学可视化'],
+                '推荐 Colormap': [
+                    'viridis, plasma, inferno',
+                    'coolwarm, RdBu, Spectral',
+                    'tab10, Set1, Set2',
+                    'hsv, twilight',
+                    'viridis, plasma, cividis'
+                ],
+                '特点': [
+                    '感知均匀，适合表示大小',
+                    '中心值用不同颜色，两端用对比色',
+                    '颜色区分明显，适合分类',
+                    '颜色循环，适合周期性',
+                    '色盲友好，感知均匀'
+                ]
+            }
+            st.dataframe(pd.DataFrame(cmap_guide_data), use_container_width=True, hide_index=True)
+        
+        with color_subtabs[2]:
+            st.markdown("### 💡 颜色最佳实践")
+            st.caption("学习如何选择合适的颜色，让图表更专业、更易读")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("#### ✅ 推荐做法")
+                
+                st.success("""
+                **1. 使用感知均匀的 Colormap**
+                - ✅ `viridis`：默认推荐，色盲友好
+                - ✅ `plasma`：高对比度
+                - ✅ `cividis`：适合打印
+                
+                **2. 多系列图表使用 CN 颜色**
+                ```python
+                # 自动循环使用 C0, C1, C2...
+                ax.plot(x, y1, label='Series 1')  # C0
+                ax.plot(x, y2, label='Series 2')  # C1
+                ax.plot(x, y3, label='Series 3')  # C2
+                ```
+                
+                **3. 保持颜色一致性**
+                - 同一数据系列使用相同颜色
+                - 建立颜色编码规范
+                
+                **4. 考虑色盲友好性**
+                - 避免红绿对比
+                - 使用蓝黄对比
+                - 使用形状+颜色双重编码
+                """)
+            
+            with col2:
+                st.markdown("#### ❌ 避免的做法")
+                
+                st.error("""
+                **1. 避免使用 jet colormap**
+                - ❌ `jet`：虽然常见但不推荐
+                - 问题：不感知均匀，对色盲不友好
+                - ✅ 替代：使用 `viridis`
+                
+                **2. 避免过多颜色**
+                - ❌ 超过10种颜色难以区分
+                - ✅ 使用分组或子图
+                
+                **3. 避免低对比度**
+                - ❌ 浅色背景+浅色线条
+                - ✅ 确保足够的对比度
+                
+                **4. RGB 值范围错误**
+                - ❌ `color=(255, 0, 0)`  # 错误！
+                - ✅ `color=(1.0, 0.0, 0.0)` 或 `color='red'`
+                """)
+            
+            st.markdown("---")
+            st.markdown("#### 🎯 实际应用示例")
+            
+            example_tabs = st.tabs(["对比示例", "色盲友好", "多系列配色"])
+            
+            with example_tabs[0]:
+                st.markdown("**好的 vs 不好的 Colormap 选择**")
+                
+                fig_compare, axes_compare = plt.subplots(1, 2, figsize=(14, 5))
+                
+                data_compare = np.random.rand(20, 20)
+                
+                # 不好的选择：jet
+                im1 = axes_compare[0].imshow(data_compare, cmap='jet', aspect='auto')
+                axes_compare[0].set_title("❌ jet (不推荐)", fontsize=12, fontweight='bold')
+                axes_compare[0].axis('off')
+                plt.colorbar(im1, ax=axes_compare[0])
+                
+                # 好的选择：viridis
+                im2 = axes_compare[1].imshow(data_compare, cmap='viridis', aspect='auto')
+                axes_compare[1].set_title("✅ viridis (推荐)", fontsize=12, fontweight='bold')
+                axes_compare[1].axis('off')
+                plt.colorbar(im2, ax=axes_compare[1])
+                
+                plt.tight_layout()
+                st.pyplot(fig_compare)
+                plt.close(fig_compare)
+                
+                st.info("""
+                **为什么 viridis 更好？**
+                - 感知均匀：数值变化与颜色变化一致
+                - 色盲友好：色盲用户也能区分
+                - 适合打印：灰度打印时仍能区分
+                """)
+            
+            with example_tabs[1]:
+                st.markdown("**色盲友好配色方案**")
+                
+                fig_colorblind, axes_colorblind = plt.subplots(1, 2, figsize=(14, 5))
+                
+                x_cb = np.linspace(0, 10, 100)
+                
+                # 不友好：红绿对比
+                axes_colorblind[0].plot(x_cb, np.sin(x_cb), 'r-', linewidth=2, label='Series 1')
+                axes_colorblind[0].plot(x_cb, np.cos(x_cb), 'g-', linewidth=2, label='Series 2')
+                axes_colorblind[0].set_title("❌ 红绿对比（色盲不友好）", fontsize=12, fontweight='bold')
+                axes_colorblind[0].legend()
+                axes_colorblind[0].grid(True, alpha=0.3)
+                
+                # 友好：蓝橙对比
+                axes_colorblind[1].plot(x_cb, np.sin(x_cb), 'C0', linewidth=2, label='Series 1')
+                axes_colorblind[1].plot(x_cb, np.cos(x_cb), 'C1', linewidth=2, label='Series 2')
+                axes_colorblind[1].set_title("✅ 蓝橙对比（色盲友好）", fontsize=12, fontweight='bold')
+                axes_colorblind[1].legend()
+                axes_colorblind[1].grid(True, alpha=0.3)
+                
+                plt.tight_layout()
+                st.pyplot(fig_colorblind)
+                plt.close(fig_colorblind)
+                
+                st.success("""
+                **色盲友好建议**：
+                1. 使用 `tab10` colormap（色盲友好设计）
+                2. 结合形状和颜色（如不同标记点）
+                3. 使用足够的对比度
+                4. 避免仅依赖颜色传达信息
+                """)
+            
+            with example_tabs[2]:
+                st.markdown("**多系列图表配色**")
+                
+                fig_multi, ax_multi = plt.subplots(figsize=(10, 6))
+                
+                x_multi = np.linspace(0, 10, 100)
+                
+                # 使用CN颜色循环
+                for i in range(6):
+                    ax_multi.plot(x_multi, np.sin(x_multi + i * 0.5) * (6 - i), 
+                                 color=f'C{i}', linewidth=2.5, marker='o', markersize=4,
+                                 label=f'Series {i+1} (C{i})', markevery=10)
+                
+                ax_multi.set_title("多系列图表 - 使用 CN 颜色循环", fontsize=14, fontweight='bold')
+                ax_multi.set_xlabel("X Axis", fontsize=12)
+                ax_multi.set_ylabel("Y Axis", fontsize=12)
+                ax_multi.legend(loc='upper right', ncol=2)
+                ax_multi.grid(True, alpha=0.3)
+                
+                st.pyplot(fig_multi)
+                plt.close(fig_multi)
+                
+                st.code("""
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# 使用 CN 颜色循环（自动）
+for i in range(6):
+    ax.plot(x, np.sin(x + i * 0.5) * (6 - i), 
+           color=f'C{i}', linewidth=2.5, marker='o', markersize=4,
+           label=f'Series {i+1}', markevery=10)
+
+ax.set_title("Multi-series Plot")
+ax.legend(loc='upper right', ncol=2)
+ax.grid(True, alpha=0.3)
+plt.show()
+""", language='python')
+        
+        with color_subtabs[3]:
+            st.markdown("### 📚 完整参考")
+            st.caption("查看完整的颜色和颜色映射参考文档")
+            
+            # 使用tabs组织完整参考内容
+            ref_tabs = st.tabs(["🎨 颜色完整参考", "🌈 颜色映射完整参考"])
+            
+            with ref_tabs[0]:
+                st.markdown("### 🎨 颜色 (Color) 完整参考")
+                st.info("""
+                **包含内容**：
+                - 所有颜色形式详解
+                - Base颜色、CN颜色、CSS4颜色完整列表
+                - 颜色形式对比和示例
+                - 交互式颜色预览
+                - 常见错误和解决方案
+                """)
+                
+                from catalogs.color import render_color_gallery
+                render_color_gallery()
+            
+            with ref_tabs[1]:
+                st.markdown("### 🌈 颜色映射 (Colormap) 完整参考")
+                st.info("""
+                **包含内容**：
+                - 所有 Colormap 分类展示
+                - 常用 Colormap 预览
+                - 按类别浏览（180+ 个）
+                - 交互式 Colormap 预览
+                - 选择指南和最佳实践
+                """)
+                
+                from catalogs.color import render_colormap_gallery
+                render_colormap_gallery()
+            
+            st.markdown("---")
+            st.markdown("#### 📖 快速参考表")
+            
+            # 颜色快速参考
+            st.markdown("##### 🎨 常用颜色名称")
+            common_colors_grid = st.columns(4)
+            common_colors_list = [
+                ('red', '红色'), ('blue', '蓝色'), ('green', '绿色'), ('orange', '橙色'),
+                ('purple', '紫色'), ('brown', '棕色'), ('pink', '粉色'), ('gray', '灰色'),
+                ('black', '黑色'), ('yellow', '黄色'), ('cyan', '青色'), ('magenta', '洋红'),
+                ('lime', '酸橙绿'), ('navy', '海军蓝'), ('maroon', '栗色'), ('olive', '橄榄绿')
+            ]
+            
+            for idx, (color_name, color_cn) in enumerate(common_colors_list):
+                with common_colors_grid[idx % 4]:
+                    st.markdown(f"**{color_cn}**<br>`'{color_name}'`", unsafe_allow_html=True)
+            
+            st.markdown("---")
+            st.markdown("##### 🌈 推荐 Colormap 速查")
+            
+            recommended_cmaps = {
+                '科学可视化': ['viridis', 'plasma', 'inferno', 'magma', 'cividis'],
+                '连续数据': ['Blues', 'Greens', 'Reds', 'Oranges', 'Purples'],
+                '发散数据': ['coolwarm', 'RdBu', 'RdYlBu', 'Spectral', 'seismic'],
+                '分类数据': ['tab10', 'tab20', 'Set1', 'Set2', 'Set3'],
+                '周期性数据': ['hsv', 'twilight', 'twilight_shifted']
+            }
+            
+            for category, cmaps in recommended_cmaps.items():
+                with st.expander(f"**{category}**", expanded=False):
+                    cols = st.columns(len(cmaps))
+                    for idx, cmap in enumerate(cmaps):
+                        with cols[idx]:
+                            st.markdown(f"`'{cmap}'`")
+                            # 显示颜色条预览
+                            try:
+                                fig_bar, ax_bar = plt.subplots(figsize=(2, 0.3))
+                                gradient = np.linspace(0, 1, 100).reshape(1, -1)
+                                ax_bar.imshow(gradient, cmap=cmap, aspect='auto')
+                                ax_bar.set_xticks([])
+                                ax_bar.set_yticks([])
+                                st.pyplot(fig_bar)
+                                plt.close(fig_bar)
+                            except:
+                                pass
+    
+    with style_tabs[3]:
         st.subheader("文本样式")
         st.caption("💡 学习如何设置标题、标签等文本的样式")
         
@@ -2045,7 +2680,7 @@ ax.grid(True, alpha=0.3)
 plt.show()
             """, language='python')
     
-    with style_tabs[3]:
+    with style_tabs[4]:
         st.subheader("坐标轴设置")
         st.caption("💡 学习如何控制坐标轴的范围、网格和边框")
         
@@ -2665,7 +3300,7 @@ show(p)
         """)
 
 # --- 章节 7: 进阶挑战 (大师之路) ---
-elif menu == "7. 进阶挑战：大师之路 🚀":
+elif menu == "7. 进阶挑战：大师之路":
     st.title("🏆 Matplotlib 大神进阶之路")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
@@ -3026,6 +3661,10 @@ ani.save('animation.html', writer=HTMLWriter())
             - **MP4**: 需要 `ffmpeg`，适合复杂动画
             - **HTML**: JavaScript动画，可在浏览器中播放
             """)
+
+# --- 章节 8: 小白交互编辑练习 ---
+elif menu == "8. 小白交互编辑练习":
+    render_interactive_editor()
 
 # --- 页脚 ---
 st.sidebar.markdown("---")

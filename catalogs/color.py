@@ -234,6 +234,9 @@ def render_color_gallery():
     st.markdown("### 🎛️ 交互式颜色预览")
     col1, col2 = st.columns(2)
     
+    # 初始化默认颜色值
+    color_value = 'red'  # 默认值
+    
     with col1:
         color_type = st.selectbox(
             "颜色形式",
@@ -260,16 +263,28 @@ def render_color_gallery():
                 b = st.slider("B", 0.0, 1.0, 0.2, key='rgb_b')
             color_value = (r, g, b)
     
-    fig_custom, ax_custom = plt.subplots(figsize=(10, 4))
-    x_custom, y_custom = generate_sample_data(50)
-    ax_custom.plot(x_custom, y_custom, color=color_value, linewidth=3, label=f"color={color_value}")
-    ax_custom.fill_between(x_custom, y_custom, alpha=0.3, color=color_value)
-    ax_custom.set_title(f"Color Preview: {color_value}", fontsize=11, fontweight='bold')
-    ax_custom.grid(True, alpha=0.3)
-    ax_custom.legend()
-    st.pyplot(fig_custom)
+    # 渲染预览图表
+    try:
+        fig_custom, ax_custom = plt.subplots(figsize=(10, 4))
+        x_custom, y_custom = generate_sample_data(50)
+        ax_custom.plot(x_custom, y_custom, color=color_value, linewidth=3, label=f"color={color_value}")
+        ax_custom.fill_between(x_custom, y_custom, alpha=0.3, color=color_value)
+        ax_custom.set_title(f"Color Preview: {color_value}", fontsize=11, fontweight='bold')
+        ax_custom.grid(True, alpha=0.3)
+        ax_custom.legend()
+        st.pyplot(fig_custom)
+        plt.close(fig_custom)
+    except Exception as e:
+        st.error(f"渲染图表时出错: {str(e)}")
+        st.info("请尝试选择其他颜色形式或刷新页面")
     
-    color_code = f"'{color_value}'" if isinstance(color_value, str) else str(color_value)
+    # 生成代码
+    if isinstance(color_value, str):
+        color_code = f"'{color_value}'"
+    elif isinstance(color_value, tuple):
+        color_code = str(color_value)
+    else:
+        color_code = f"'{str(color_value)}'"
     st.code(f"""
 import matplotlib.pyplot as plt
 import numpy as np
