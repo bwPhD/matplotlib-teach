@@ -348,7 +348,8 @@ menu = st.sidebar.radio(
         "4. 布局与美学",
         "5. 进阶画廊",
         "6. 其他库实战",
-        "7. 进阶挑战：大师之路 🚀"
+        "7. 进阶挑战：大师之路 🚀",
+        "8. 可视化策略与尺度"
     ]
 )
 
@@ -3026,6 +3027,106 @@ ani.save('animation.html', writer=HTMLWriter())
             - **MP4**: 需要 `ffmpeg`，适合复杂动画
             - **HTML**: JavaScript动画，可在浏览器中播放
             """)
+
+# --- 章节 8: 可视化策略与尺度 ---
+elif menu == "8. 可视化策略与尺度":
+    st.title("📏 可视化策略与尺度")
+    st.markdown("""
+    <div style='background: linear-gradient(135deg, #22c55e 0%, #14b8a6 100%); 
+                color: white; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;'>
+        <h3 style='color: white; margin: 0 0 0.5rem 0;'>从目标到尺度：让你的图既科学又美观</h3>
+        <p style='margin: 0; opacity: 0.95;'>本章节讲解可视化决策、图表尺寸、布局与导出策略，让图表在论文、幻灯片、网页中都能高效呈现。</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    tab_strategy, tab_scale, tab_output = st.tabs([
+        "策略与图表选择", "尺寸与布局", "专业输出"
+    ])
+
+    with tab_strategy:
+        st.subheader("为什么要先定策略再画图")
+        st.markdown("""
+        - **目标驱动**：明确你的图是用于探索、展示还是决策。
+        - **受众为先**：科研读者、课堂学习、报告决策、网页分享，视觉要求不同。
+        - **视觉编码优先级**：位置 > 长度 > 角度 > 颜色 > 形状。
+        - **图表选择原则**：
+          - 时间序列：`折线图`
+          - 类别比较：`柱状图` / `条形图`
+          - 数值分布：`箱线图` / `小提琴图`
+          - 两变量关系：`散点图`
+          - 组成占比：`堆积柱状图` / `圆环图`
+        """)
+
+        st.markdown("#### 视觉编码对比")
+        st.markdown("""
+        - **位置**：最有效的编码方式。优先使用坐标轴定位数据点。
+        - **长度**：适合比较大小，例如柱状图、条形图。
+        - **颜色**：用于区分类别或显示强度，但不要过度依赖。
+        - **形状**：仅在类别较少时使用，避免视觉噪声。
+        """)
+
+        st.markdown("#### 什么时候使用 Matplotlib")
+        st.markdown("""
+        - 需要**高度定制**的科学图表时
+        - 需要**出版质量**或**论文级**图像时
+        - 需要对图表元素进行**精准控制**时
+        - 需要在图中添加**专业注释、子图布局、双轴、网格、风格模板**时
+        """)
+
+    with tab_scale:
+        st.subheader("尺寸与布局的关键参数")
+        st.markdown("""
+        - `figsize=(宽, 高)`：单位为英寸，决定图像宽高比。
+        - `dpi`：每英寸点数，决定输出清晰度。
+        - `constrained_layout=True` / `tight_layout()`：自动调整子图间距。
+        - `bbox_inches='tight'`：保存时去除多余边距。
+        """)
+
+        fig, ax = plt.subplots(figsize=(10, 5), dpi=120, constrained_layout=True)
+        x = np.linspace(0, 10, 200)
+        y = np.sin(x) + 0.4 * np.cos(2 * x)
+        ax.plot(x, y, color='#2563eb', linewidth=2)
+        ax.set_title('可视化策略示例：清晰的布局与比例')
+        ax.set_xlabel('时间 / 单位')
+        ax.set_ylabel('值')
+        ax.grid(True, alpha=0.25)
+        st.pyplot(fig)
+
+        st.code("""
+fig, ax = plt.subplots(figsize=(10, 5), dpi=120, constrained_layout=True)
+ax.plot(x, y, color='#2563eb', linewidth=2)
+ax.set_title('可视化策略示例：清晰的布局与比例')
+ax.set_xlabel('时间 / 单位')
+ax.set_ylabel('值')
+ax.grid(True, alpha=0.25)
+""", language='python')
+
+        st.markdown("#### 常见尺寸建议")
+        st.markdown("""
+        - 幻灯片：`figsize=(12, 6)`，`dpi=120`
+        - 论文图：`figsize=(6, 3.5)`，`dpi=300`
+        - 网页展示：`figsize=(10, 5)`，`dpi=150`
+        """)
+
+    with tab_output:
+        st.subheader("专业图像导出")
+        st.markdown("""
+        保存图像时务必考虑用途：
+        - 论文/打印：`dpi>=300`
+        - 网页/屏幕：`dpi=120-150`
+        - 幻灯片：略宽的 `figsize` 与适度边距
+        """)
+        st.code("""
+fig.savefig('figure.png', dpi=300, bbox_inches='tight', pad_inches=0.05)
+fig.savefig('figure.pdf', bbox_inches='tight')
+""", language='python')
+
+        st.markdown("#### 发布建议")
+        st.markdown("""
+        - 论文图：避免过多图例和次要元素，保持简洁。
+        - 幻灯片：字号更大，线宽更粗，颜色更醒目。
+        - 网页：考虑响应式尺寸，并提供交互式图表作为补充。
+        """)
 
 # --- 页脚 ---
 st.sidebar.markdown("---")
