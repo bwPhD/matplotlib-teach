@@ -351,14 +351,6 @@ st.markdown("""
         box-shadow: 0 14px 40px rgba(13, 23, 38, 0.08);
     }
 
-    .must-kicker {
-        margin: 0 0 0.35rem 0;
-        color: #8f000b;
-        font-size: 0.86rem;
-        font-weight: 800;
-        letter-spacing: 0;
-    }
-
     .must-hero h1 {
         border-bottom: 0;
         margin: 0;
@@ -391,41 +383,10 @@ st.markdown("""
         font-weight: 650;
     }
 
-    .must-sidebar-card {
-        border: 1px solid rgba(143, 0, 11, 0.18);
-        border-radius: 8px;
-        padding: 1rem;
-        background: linear-gradient(135deg, rgba(143, 0, 11, 0.09), rgba(185, 151, 91, 0.08));
-    }
-
-    .must-sidebar-card h1 {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        color: #0d1726;
-        font-size: 1.15rem !important;
-        line-height: 1.28;
-        font-weight: 800;
-    }
-
-    .must-sidebar-card p {
-        margin: 0.45rem 0 0 0;
-        color: #586474;
-        font-size: 0.86rem;
-        line-height: 1.5;
-    }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 侧边栏导航 ---
-st.sidebar.markdown("""
-<div class='must-sidebar-card'>
-    <h1>东南大学AI-MUST核心课程</h1>
-    <p>大数据分析与计算社会学</p>
-    <p><strong>负责人：</strong>东南大学社会学系 汪斌</p>
-</div>
-""", unsafe_allow_html=True)
-st.sidebar.markdown("---")
 
 chapters = [
     "1. 生态全景",
@@ -435,7 +396,8 @@ chapters = [
     "5. 进阶画廊",
     "6. 其他库实战",
     "7. 进阶挑战：大师之路 🚀",
-    "8. 可视化策略与尺度"
+    "8. 可视化策略与尺度",
+    "📋 颜色速查手册",
 ]
 
 menu = st.sidebar.radio(
@@ -582,16 +544,16 @@ if menu == "1. 生态全景":
             """)
             
             st.subheader("📜 Altair: 声明式语法")
-            st.error("""
+            st.info("""
             **核心特征：Grammar (语法)**
-            
+
             描述"通过什么数据映射到什么视觉元素"。
-            
+
             **适用场景**：
             - 快速构建图表逻辑
             - 数据探索
             - 简洁的代码
-            
+
             **优势**：代码极简，逻辑清晰
             **劣势**：复杂图表可能受限
             """)
@@ -635,10 +597,104 @@ if menu == "1. 生态全景":
             """)
 
     st.markdown("---")
+
+    # ── 同数据集跨库对比可视化 ──
+    st.markdown("### 📊 同一数据集，不同库的呈现")
+    st.caption("以鸢尾花数据集为例，看看各库在代码量、交互性、风格上的差异。")
+
+    ensure_chinese_font()
+    _iris = sns.load_dataset("iris")
+    _x_iris = _iris["sepal_length"].values
+    _y_iris = _iris["sepal_width"].values
+    _hue   = _iris["species"].values
+
+    _cmp_tabs = st.tabs(["Matplotlib (原生)", "Seaborn (统计增强)", "Plotly (交互式)"])
+
+    with _cmp_tabs[0]:
+        col_v, col_c = st.columns([3, 2])
+        with col_v:
+            _fig, _ax = plt.subplots(figsize=(6, 4))
+            _palette = {"setosa": "#e74c3c", "versicolor": "#3498db", "virginica": "#2ecc71"}
+            for sp, grp in _iris.groupby("species"):
+                _ax.scatter(grp["sepal_length"], grp["sepal_width"],
+                            label=sp, color=_palette[sp], alpha=0.75, s=60)
+            _ax.set_xlabel("Sepal Length (cm)")
+            _ax.set_ylabel("Sepal Width (cm)")
+            _ax.set_title("Iris — Matplotlib scatter", fontweight="bold")
+            _ax.legend()
+            _ax.grid(True, alpha=0.3)
+            st.pyplot(_fig)
+        with col_c:
+            st.code("""
+fig, ax = plt.subplots(figsize=(6, 4))
+for sp, grp in df.groupby('species'):
+    ax.scatter(grp['sepal_length'],
+               grp['sepal_width'],
+               label=sp, alpha=0.75, s=60)
+ax.set_xlabel('Sepal Length (cm)')
+ax.set_ylabel('Sepal Width (cm)')
+ax.legend()
+ax.grid(True, alpha=0.3)
+""", language='python')
+            st.info("**代码量**：~10行\n\n**优势**：完全可控，论文级定制")
+
+    with _cmp_tabs[1]:
+        col_v, col_c = st.columns([3, 2])
+        with col_v:
+            _fig2, _ax2 = plt.subplots(figsize=(6, 4))
+            sns.scatterplot(data=_iris, x="sepal_length", y="sepal_width",
+                            hue="species", style="species", s=80, ax=_ax2)
+            _ax2.set_title("Iris — Seaborn scatterplot", fontweight="bold")
+            _ax2.grid(True, alpha=0.3)
+            st.pyplot(_fig2)
+        with col_c:
+            st.code("""
+import seaborn as sns
+
+sns.scatterplot(
+    data=df,
+    x='sepal_length',
+    y='sepal_width',
+    hue='species',
+    style='species',
+    s=80
+)
+""", language='python')
+            st.success("**代码量**：~5行\n\n**优势**：自动分组着色、图例、统计友好")
+
+    with _cmp_tabs[2]:
+        col_v, col_c = st.columns([3, 2])
+        with col_v:
+            _fig3 = px.scatter(
+                _iris, x="sepal_length", y="sepal_width",
+                color="species", symbol="species",
+                title="Iris — Plotly scatter (可交互)",
+                labels={"sepal_length": "Sepal Length (cm)", "sepal_width": "Sepal Width (cm)"},
+                height=380
+            )
+            _fig3.update_traces(marker=dict(size=8, opacity=0.8))
+            st.plotly_chart(_fig3, use_container_width=True)
+        with col_c:
+            st.code("""
+import plotly.express as px
+
+fig = px.scatter(
+    df,
+    x='sepal_length',
+    y='sepal_width',
+    color='species',
+    symbol='species',
+    title='Iris Scatter'
+)
+fig.show()
+""", language='python')
+            st.warning("**代码量**：~5行\n\n**优势**：零成本交互（缩放/悬停/筛选）")
+
+    st.markdown("---")
     st.markdown("""
     <div style='padding: 1rem; background-color: #f9fafb; border-radius: 8px; border-left: 4px solid #3b82f6;'>
         <h4 style='margin: 0 0 0.5rem 0; color: #1f2937;'>🎯 学习重点</h4>
-        <p style='margin: 0; color: #4b5563;'>我们重点关注 <strong>Matplotlib</strong>，它是Python所有可视化的基础。</p>
+        <p style='margin: 0; color: #4b5563;'>我们重点关注 <strong>Matplotlib</strong>，它是Python所有可视化的基础。掌握它，其他库都是它的语法糖。</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -927,9 +983,7 @@ elif menu == "3. 基础笔触":
             # color 参数
             with st.expander("🎨 颜色 (color)", expanded=True):
                 color = st.color_picker("选择颜色", "#FF5733", key="line_color")
-                if st.button("📚 查看颜色选项", key="btn_color"):
-                    from catalogs.color import render_color_gallery
-                    render_color_gallery()
+                st.caption("💡 完整颜色参考 → 侧边栏「📋 颜色速查手册」")
             
             # marker 参数
             with st.expander("📍 标记 (marker)", expanded=True):
@@ -1051,7 +1105,7 @@ elif menu == "3. 基础笔触":
             st.pyplot(fig)
             
             # 代码生成
-            st.markdown("#### 💻 生成代码")
+            st.markdown("---")
             marker_str = f"'{marker}'" if marker else "None"
             
             # 根据实际使用的数据生成代码
@@ -1136,9 +1190,7 @@ plt.show()
             # 通用参数
             with st.expander("🎨 颜色 (color)", expanded=True):
                 patch_color = st.color_picker("选择颜色", "#3b82f6", key="patch_color")
-                if st.button("📚 查看颜色选项", key="btn_patch_color"):
-                    from catalogs.color import render_color_gallery
-                    render_color_gallery()
+                st.caption("💡 完整颜色参考 → 侧边栏「📋 颜色速查手册」")
             
             with st.expander("📏 透明度 (alpha)", expanded=True):
                 patch_alpha = st.slider("透明度", 0.0, 1.0, 0.8, 0.1, key="patch_alpha")
@@ -1332,7 +1384,7 @@ for pc in parts['bodies']:
             st.pyplot(fig)
             
             # 代码生成
-            st.markdown("#### 💻 生成代码")
+            st.markdown("---")
             
             # 根据图表类型生成完整代码
             if chart_type in ["Bar Chart (垂直条形图)", "Barh Chart (水平条形图)"]:
@@ -1566,9 +1618,7 @@ plt.show()
                         index=0,
                         key="scatter_cmap"
                     )
-                    if st.button("📚 查看所有颜色映射", key="btn_scatter_cmap"):
-                        from catalogs.color import render_colormap_gallery
-                        render_colormap_gallery()
+                    st.caption("💡 完整色彩映射 → 侧边栏「📋 颜色速查手册」")
                 
                 alpha_scatter = st.slider("透明度 (alpha)", 0.1, 1.0, 0.5, 0.1, key="scatter_alpha")
             
@@ -1614,7 +1664,7 @@ plt.show()
                 cbar.set_label("Color Mapping", fontsize=10)
                 st.pyplot(fig)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 # scatter 不支持 fillstyle，但我们可以通过其他方式控制
                 fillstyle_note = ""
                 if marker_scatter in fillable_markers and fillstyle_scatter != 'full':
@@ -1692,7 +1742,7 @@ plt.show()
                     plt.colorbar(lc, ax=ax_lc)
                 st.pyplot(fig_lc)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code(f"""
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
@@ -1757,7 +1807,7 @@ plt.show()
                 plt.colorbar(pc, ax=ax_pc)
                 st.pyplot(fig_pc)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code(f"""
 import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
@@ -1816,7 +1866,7 @@ plt.show()
                 ax_ec.grid(True, alpha=0.3)
                 st.pyplot(fig_ec)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code(f"""
 import matplotlib.pyplot as plt
 from matplotlib.collections import EventCollection
@@ -1859,9 +1909,7 @@ plt.show()
                 cmap_img = st.selectbox("选择颜色映射", 
                                        ['viridis', 'plasma', 'inferno', 'magma', 'gray', 'hot', 'cool'],
                                        index=0, key="image_cmap")
-                if st.button("📚 查看所有颜色映射", key="btn_image_cmap"):
-                    from catalogs.color import render_colormap_gallery
-                    render_colormap_gallery()
+                st.caption("💡 完整色彩映射 → 侧边栏「📋 颜色速查手册」")
             
             with st.expander("🔄 插值方式 (interpolation)", expanded=True):
                 interpolation = st.selectbox("插值方式", 
@@ -1884,7 +1932,7 @@ plt.show()
                 ax.set_title("imshow", fontsize=14, fontweight='bold')
                 st.pyplot(fig)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code(f"""
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1912,7 +1960,7 @@ plt.show()
                 ax.set_ylabel("Y Axis", fontsize=12)
                 st.pyplot(fig)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code(f"""
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1937,7 +1985,7 @@ plt.show()
                 ax.set_title("matshow", fontsize=14, fontweight='bold')
                 st.pyplot(fig)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code(f"""
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1972,7 +2020,7 @@ plt.show()
                 ax.set_title("imread Example (Simulated RGB Image)", fontsize=14, fontweight='bold')
                 st.pyplot(fig)
                 
-                st.markdown("#### 💻 生成代码")
+                st.markdown("---")
                 st.code("""
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
@@ -1998,7 +2046,7 @@ elif menu == "4. 布局与美学":
     """, unsafe_allow_html=True)
     
     # 使用 Tab 组织不同类别
-    style_tabs = st.tabs(["📐 子图布局", "🎨 样式与颜色", "📝 文本样式", "📊 坐标轴设置"])
+    style_tabs = st.tabs(["📐 子图布局", "🎨 样式与颜色", "📝 文本样式", "📊 坐标轴 & 图例"])
     
     with style_tabs[0]:
         st.subheader("子图布局 (Subplots)")
@@ -2064,13 +2112,7 @@ plt.show()
                 key="style_select"
             )
             
-            if st.button("📚 查看颜色选项", key="btn_style_color"):
-                from catalogs.color import render_color_gallery
-                render_color_gallery()
-            
-            if st.button("📚 查看颜色映射", key="btn_style_cmap"):
-                from catalogs.color import render_colormap_gallery
-                render_colormap_gallery()
+            st.caption("💡 完整颜色与色彩映射 → 侧边栏「📋 颜色速查手册」")
         
         with col_view:
             with plt.style.context(style_select):
@@ -2124,7 +2166,7 @@ plt.show()
             ax.grid(True, alpha=0.3)
             st.pyplot(fig)
             
-            st.markdown("#### 💻 生成代码")
+            st.markdown("---")
             st.code(f"""
 import matplotlib.pyplot as plt
 import numpy as np
@@ -2195,7 +2237,7 @@ plt.show()
             ax.set_ylabel("Y Axis", fontsize=12)
             st.pyplot(fig)
             
-            st.markdown("#### 💻 生成代码")
+            st.markdown("---")
             st.code(f"""
 import matplotlib.pyplot as plt
 import numpy as np
@@ -2215,75 +2257,9 @@ ax.set_xlabel("X Axis", fontsize=12)
 ax.set_ylabel("Y Axis", fontsize=12)
 plt.show()
             """, language='python')
-        st.caption("调整下方的滑块，查看代码如何动态变化以适应不同的子图布局。")
-        
-        # 增加自由设置行列的功能
-        c1, c2 = st.columns(2)
-        rows = c1.number_input("行数 (Rows)", min_value=1, max_value=5, value=2)
-        cols = c2.number_input("列数 (Columns)", min_value=1, max_value=5, value=2)
-
-        col_img, col_code = st.columns([3, 2])
-        
-        with col_img:
-            fig, axes = plt.subplots(rows, cols, figsize=(8, 6), constrained_layout=True)
-            
-            # 统一处理 axes，因为当 rows=1, cols=1 时，axes 不是数组
-            if rows == 1 and cols == 1:
-                axes_flat = [axes]
-            else:
-                axes_flat = axes.flatten()
-                
-            for i, ax in enumerate(axes_flat):
-                ax.plot(np.random.rand(10), label=f"Line {i}")
-                ax.set_title(f"Subplot {i+1}")
-                ax.legend(loc='upper right', fontsize='small')
-            st.pyplot(fig)
-            
-        with col_code:
-            st.markdown("**实现代码：**")
-            code_str = f"""
-# {rows}行{cols}列布局，自动调整间距
-fig, axes = plt.subplots({rows}, {cols}, 
-    constrained_layout=True)
-
-# 注意：当行列数变化时，axes 的形状会变化
-# 推荐统一展平处理：
-if {rows} * {cols} > 1:
-    axes_flat = axes.flatten()
-else:
-    axes_flat = [axes]
-
-for i, ax in enumerate(axes_flat):
-    ax.plot(data)
-    ax.set_title(f"Subplot {{i+1}}")
-"""
-            st.code(code_str, language='python')
 
         st.markdown("---")
-        st.subheader("2. 全局样式 (Style Sheets)")
-        
-        style_select = st.selectbox("选择样式 (rcParams预设)", plt.style.available, index=plt.style.available.index('ggplot') if 'ggplot' in plt.style.available else 0)
-        
-        col1, col2 = st.columns([1,1])
-        with col1:
-            with plt.style.context(style_select):
-                fig, ax = plt.subplots(figsize=(6,4))
-                x = np.linspace(0, 10, 100)
-                for i in range(1, 4):
-                    ax.plot(x, np.sin(x + i * .5) * (7 - i), label=f"Wave {i}")
-                ax.set_title(f"Style: {style_select}")
-                ax.legend()
-                st.pyplot(fig)
-        with col2:
-            st.markdown("**上下文管理器代码：**")
-            st.code(f"""
-# 临时应用样式，不影响全局
-with plt.style.context('{style_select}'):
-    fig, ax = plt.subplots()
-    ax.plot(x, y)
-            """, language='python')
-                
-        st.markdown("### 3. 图例 (Legend)")
+        st.markdown("### 图例 (Legend)")
         st.caption("💡 学习如何创建和自定义图例")
         
         legend_tabs = st.tabs(["基础图例", "图例位置", "图例样式"])
@@ -3144,32 +3120,138 @@ elif menu == "8. 可视化策略与尺度":
 
     with tab_strategy:
         st.subheader("为什么要先定策略再画图")
-        st.markdown("""
-        - **目标驱动**：明确你的图是用于探索、展示还是决策。
-        - **受众为先**：科研读者、课堂学习、报告决策、网页分享，视觉要求不同。
-        - **视觉编码优先级**：位置 > 长度 > 角度 > 颜色 > 形状。
-        - **图表选择原则**：
-          - 时间序列：`折线图`
-          - 类别比较：`柱状图` / `条形图`
-          - 数值分布：`箱线图` / `小提琴图`
-          - 两变量关系：`散点图`
-          - 组成占比：`堆积柱状图` / `圆环图`
+        st.info("""
+        **核心原则**
+
+        1. **目标驱动**：探索？展示？决策？目标不同，图表不同。
+        2. **受众为先**：科研 → 精准简洁；课堂 → 直觉友好；报告 → 高亮关键数字。
+        3. **视觉编码优先级**：位置 > 长度 > 角度 > 颜色 > 面积 > 形状。
         """)
 
-        st.markdown("#### 视觉编码对比")
-        st.markdown("""
-        - **位置**：最有效的编码方式。优先使用坐标轴定位数据点。
-        - **长度**：适合比较大小，例如柱状图、条形图。
-        - **颜色**：用于区分类别或显示强度，但不要过度依赖。
-        - **形状**：仅在类别较少时使用，避免视觉噪声。
-        """)
+        st.markdown("#### 🗺️ 交互式图表选择器")
+        st.caption("根据你的数据特征，选择最合适的图表类型。")
 
-        st.markdown("#### 什么时候使用 Matplotlib")
+        _col_q1, _col_q2 = st.columns(2)
+        with _col_q1:
+            _data_type = st.selectbox(
+                "① 你的数据类型是？",
+                ["时间序列（有时间顺序）", "类别比较（分组对比）",
+                 "数值分布（单变量）", "两变量关系", "占比/组成", "空间/地理"],
+                key="ch8_data_type"
+            )
+        with _col_q2:
+            _n_groups = st.selectbox(
+                "② 分组/变量数量？",
+                ["1 个", "2–4 个", "5 个以上"],
+                key="ch8_n_groups"
+            )
+
+        # 决策矩阵
+        _recommendations = {
+            ("时间序列（有时间顺序）",   "1 个"):    ("折线图", "ax.plot(x, y)", "#3b82f6"),
+            ("时间序列（有时间顺序）",   "2–4 个"):  ("多折线图 / 面积图", "ax.plot() × n  或  ax.fill_between()", "#3b82f6"),
+            ("时间序列（有时间顺序）",   "5 个以上"): ("热力图 / 堆叠面积图", "ax.imshow()  或  ax.stackplot()", "#3b82f6"),
+            ("类别比较（分组对比）",     "1 个"):    ("竖向柱状图", "ax.bar()", "#10b981"),
+            ("类别比较（分组对比）",     "2–4 个"):  ("分组柱状图 / 水平条形图", "ax.bar(width, bottom=...)  /  ax.barh()", "#10b981"),
+            ("类别比较（分组对比）",     "5 个以上"): ("水平条形图（排序）", "ax.barh()  + 排序", "#10b981"),
+            ("数值分布（单变量）",       "1 个"):    ("直方图 + KDE", "ax.hist()  或  sns.histplot(kde=True)", "#f59e0b"),
+            ("数值分布（单变量）",       "2–4 个"):  ("箱线图 / 小提琴图", "ax.boxplot()  /  ax.violinplot()", "#f59e0b"),
+            ("数值分布（单变量）",       "5 个以上"): ("脊线图 / 箱线图矩阵", "sns.kdeplot()  ×  facet", "#f59e0b"),
+            ("两变量关系",               "1 个"):    ("散点图", "ax.scatter()", "#8b5cf6"),
+            ("两变量关系",               "2–4 个"):  ("散点矩阵 / 气泡图", "sns.pairplot()  /  ax.scatter(s=size)", "#8b5cf6"),
+            ("两变量关系",               "5 个以上"): ("热力相关矩阵", "sns.heatmap(df.corr())", "#8b5cf6"),
+            ("占比/组成",                "1 个"):    ("饼图 / 圆环图", "ax.pie()", "#ef4444"),
+            ("占比/组成",                "2–4 个"):  ("堆叠柱状图", "ax.bar(bottom=...)", "#ef4444"),
+            ("占比/组成",                "5 个以上"): ("Treemap（需 squarify）", "squarify.plot()", "#ef4444"),
+            ("空间/地理",                "1 个"):    ("地图散点", "cartopy / geopandas", "#0d9488"),
+            ("空间/地理",                "2–4 个"):  ("分层着色地图（Choropleth）", "geopandas  /  plotly.choropleth", "#0d9488"),
+            ("空间/地理",                "5 个以上"): ("动态地图 / 热力地图", "folium  /  plotly.density_mapbox", "#0d9488"),
+        }
+
+        _key = (_data_type, _n_groups)
+        if _key in _recommendations:
+            _chart_name, _chart_code, _color = _recommendations[_key]
+            st.markdown(f"""
+            <div style='margin-top:1rem; padding:1rem 1.2rem; border-radius:10px;
+                        border-left:4px solid {_color}; background:rgba(0,0,0,.03);'>
+                <p style='margin:0 0 .4rem 0; font-size:13px; color:#6b7280; font-weight:600;'>推荐图表</p>
+                <p style='margin:0; font-size:1.4rem; font-weight:800; color:{_color};'>{_chart_name}</p>
+                <code style='display:inline-block; margin-top:.5rem; font-size:13px;
+                             background:rgba(0,0,0,.06); padding:4px 10px; border-radius:6px;'>
+                    {_chart_code}
+                </code>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 示例图
+            ensure_chinese_font()
+            _np = np
+            _demo_fig, _demo_ax = plt.subplots(figsize=(8, 4))
+            if _chart_name in ("折线图", "多折线图 / 面积图"):
+                _tx = _np.linspace(0, 10, 100)
+                _demo_ax.plot(_tx, _np.sin(_tx), linewidth=2.5, color=_color, label="序列 A")
+                if _n_groups != "1 个":
+                    _demo_ax.plot(_tx, _np.cos(_tx), linewidth=2, color="#f59e0b", linestyle="--", label="序列 B")
+                    _demo_ax.legend()
+            elif _chart_name in ("竖向柱状图", "分组柱状图 / 水平条形图", "水平条形图（排序）"):
+                _cats = ["A","B","C","D","E"]
+                _vals = [34, 52, 28, 63, 41]
+                if "水平" in _chart_name:
+                    _demo_ax.barh(_cats, _vals, color=_color, alpha=0.85)
+                else:
+                    _demo_ax.bar(_cats, _vals, color=_color, alpha=0.85)
+            elif _chart_name in ("直方图 + KDE", "箱线图 / 小提琴图"):
+                _d = _np.concatenate([_np.random.normal(0,1,200), _np.random.normal(3,0.7,150)])
+                if "直方图" in _chart_name:
+                    _demo_ax.hist(_d, bins=30, color=_color, alpha=0.8, density=True, edgecolor="white")
+                else:
+                    _demo_ax.boxplot([_np.random.normal(0,s,100) for s in [0.8,1.2,1.5,0.6]],
+                                     patch_artist=True,
+                                     boxprops=dict(facecolor=_color, alpha=0.7))
+            elif _chart_name in ("散点图", "散点矩阵 / 气泡图"):
+                _sx = _np.random.randn(80); _sy = _sx * 0.6 + _np.random.randn(80)*0.5
+                _ss = (_np.abs(_sy) * 80 + 30) if "气泡" in _chart_name else 40
+                _demo_ax.scatter(_sx, _sy, s=_ss, color=_color, alpha=0.65)
+            elif "饼" in _chart_name or "圆环" in _chart_name:
+                _demo_ax.pie([30,25,20,15,10], labels=["A","B","C","D","E"],
+                             colors=[_color,"#f59e0b","#10b981","#8b5cf6","#ef4444"],
+                             autopct="%1.0f%%", startangle=90)
+            elif "堆叠柱状图" in _chart_name:
+                _cats2 = ["Q1","Q2","Q3","Q4"]
+                _v1 = [20,30,25,35]; _v2 = [15,20,30,25]; _v3 = [10,15,20,18]
+                _demo_ax.bar(_cats2, _v1, color=_color, label="产品A")
+                _demo_ax.bar(_cats2, _v2, bottom=_v1, color="#f59e0b", label="产品B")
+                _demo_ax.bar(_cats2, _v3, bottom=_np.array(_v1)+_np.array(_v2), color="#10b981", label="产品C")
+                _demo_ax.legend()
+            else:
+                _tx = _np.linspace(0, 10, 60)
+                _demo_ax.plot(_tx, _np.sin(_tx), color=_color, linewidth=2)
+            _demo_ax.set_title(f"{_chart_name} — 示例", fontweight="bold", fontsize=13)
+            _demo_ax.grid(True, alpha=0.25)
+            st.pyplot(_demo_fig)
+
+        st.markdown("---")
+        st.markdown("#### 视觉编码优先级")
+        _enc_fig, _enc_ax = plt.subplots(figsize=(8, 3))
+        _enc_ax.axis("off")
+        _enc_items = ["① 位置", "② 长度", "③ 角度", "④ 颜色", "⑤ 面积", "⑥ 形状"]
+        _enc_colors = ["#1d4ed8","#2563eb","#3b82f6","#60a5fa","#93c5fd","#bfdbfe"]
+        for i, (label, clr) in enumerate(_enc_items):
+            _enc_ax.add_patch(plt.Rectangle((i*1.45, 0), 1.2, 1.8 - i*0.22,
+                                            facecolor=clr, edgecolor="white", linewidth=1.5))
+            _enc_ax.text(i*1.45 + 0.6, 1.9 - i*0.22 + 0.1, label,
+                         ha="center", va="bottom", fontsize=9.5, fontweight="bold", color="#1f2937")
+        _enc_ax.set_xlim(-0.2, 9)
+        _enc_ax.set_ylim(-0.2, 2.4)
+        _enc_ax.set_title("视觉编码有效性（从左到右递减）", fontsize=12, fontweight="bold")
+        st.pyplot(_enc_fig)
+
+        st.markdown("#### 什么时候用 Matplotlib")
         st.markdown("""
-        - 需要**高度定制**的科学图表时
-        - 需要**出版质量**或**论文级**图像时
-        - 需要对图表元素进行**精准控制**时
-        - 需要在图中添加**专业注释、子图布局、双轴、网格、风格模板**时
+        - 需要**高度定制**的科学图表
+        - 需要**出版质量 / 论文级**输出（`dpi=300`, `savefig`）
+        - 需要对每个像素级元素进行**精准控制**
+        - 需要添加**专业注解、双轴、GridSpec 多子图**
         """)
 
     with tab_scale:
@@ -3226,6 +3308,59 @@ fig.savefig('figure.pdf', bbox_inches='tight')
         - 幻灯片：字号更大，线宽更粗，颜色更醒目。
         - 网页：考虑响应式尺寸，并提供交互式图表作为补充。
         """)
+
+# --- 章节 9: 颜色速查手册 ---
+elif menu == "📋 颜色速查手册":
+    st.title("🎨 颜色速查手册")
+    st.markdown("""
+    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;'>
+        <p style='margin: 0; text-align: center; font-weight: 500;'>
+            所有章节通用的颜色参数与色彩映射完整参考，一处查阅，全局适用。
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    color_ref_tabs = st.tabs(["🎨 颜色参数 (color)", "🌈 色彩映射 (cmap)", "📋 常用配色方案"])
+
+    with color_ref_tabs[0]:
+        from catalogs.color import render_color_gallery
+        render_color_gallery()
+
+    with color_ref_tabs[1]:
+        from catalogs.color import render_colormap_gallery
+        render_colormap_gallery()
+
+    with color_ref_tabs[2]:
+        st.subheader("学术图表常用配色方案")
+        st.caption("以下配色对色盲友好，适合论文和报告。")
+        ensure_chinese_font()
+
+        _schemes = {
+            "Tab10 (Matplotlib 默认)": [f"C{i}" for i in range(10)],
+            "Set2 (Seaborn 推荐)":     ["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"],
+            "Colorblind Safe (Wong)":   ["#000000","#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"],
+            "科研常用 (蓝-橙-绿)":      ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f"],
+        }
+
+        import matplotlib.patches as _mpatches
+        for scheme_name, colors in _schemes.items():
+            st.markdown(f"**{scheme_name}**")
+            _fig_s, _ax_s = plt.subplots(figsize=(10, 0.8))
+            _ax_s.axis("off")
+            for i, c in enumerate(colors):
+                _ax_s.add_patch(_mpatches.Rectangle(
+                    (i / len(colors), 0), 1 / len(colors), 1,
+                    facecolor=c, transform=_ax_s.transAxes, clip_on=False
+                ))
+                _ax_s.text(
+                    (i + 0.5) / len(colors), -0.25, c,
+                    ha="center", va="top", fontsize=8.5,
+                    transform=_ax_s.transAxes
+                )
+            st.pyplot(_fig_s)
+            st.code(f"colors = {colors}", language='python')
+            st.markdown("---")
 
 # --- 页脚 ---
 st.sidebar.markdown("---")
