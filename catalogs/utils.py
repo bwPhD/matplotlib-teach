@@ -7,12 +7,37 @@ import matplotlib.font_manager as fm
 import numpy as np
 from typing import Tuple
 import warnings
+from pathlib import Path
+
+LOCAL_CHINESE_FONT = Path(__file__).resolve().parent.parent / "LXGWWenKai-Regular.ttf"
+_local_chinese_font_name = None
+
+
+def _register_local_chinese_font():
+    global _local_chinese_font_name
+    if _local_chinese_font_name:
+        return _local_chinese_font_name
+
+    if not LOCAL_CHINESE_FONT.exists():
+        return None
+
+    try:
+        fm.fontManager.addfont(str(LOCAL_CHINESE_FONT))
+        _local_chinese_font_name = fm.FontProperties(fname=str(LOCAL_CHINESE_FONT)).get_name()
+        return _local_chinese_font_name
+    except Exception as exc:
+        warnings.warn(f"Failed to load local Chinese font: {exc}")
+        return None
 
 # 配置中文字体支持
 def setup_chinese_font():
     """设置中文字体，优先使用开源字体"""
+    local_font_name = _register_local_chinese_font()
+
     # 尝试的中文字体列表（按优先级排序）
     chinese_fonts = [
+        local_font_name,
+        'LXGW WenKai',
         'SimHei',           # 黑体（Windows）
         'Microsoft YaHei',  # 微软雅黑（Windows）
         'WenQuanYi Micro Hei',  # 文泉驿微米黑（Linux）
@@ -23,6 +48,7 @@ def setup_chinese_font():
         'Arial Unicode MS', # Arial Unicode（跨平台）
         'sans-serif',       # 回退到系统默认
     ]
+    chinese_fonts = [font for font in chinese_fonts if font]
     
     # 获取系统可用字体
     available_fonts = [f.name for f in fm.fontManager.ttflist]
