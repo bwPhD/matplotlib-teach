@@ -15,7 +15,11 @@ from catalogs.utils import setup_chinese_font, generate_sample_data, ensure_chin
 setup_chinese_font()
 
 # --- 页面配置 ---
-st.set_page_config(page_title="计算社会学可视化教学", layout="wide", page_icon="🎨")
+st.set_page_config(
+    page_title="东南大学AI-MUST核心课程｜大数据分析与计算社会学",
+    layout="wide",
+    page_icon="🎓",
+)
 
 # --- 全局样式优化 ---
 st.markdown("""
@@ -327,14 +331,101 @@ st.markdown("""
         visibility: hidden;
         display: none;
     }
+
+    /* ========== AI-MUST 课程品牌区 ========== */
+    .must-hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(15, 118, 110, 0.16);
+        border-radius: 8px;
+        padding: 1.35rem 1.5rem;
+        margin: 0 0 1.35rem 0;
+        background:
+            linear-gradient(135deg, rgba(15, 118, 110, 0.11), rgba(183, 121, 31, 0.10)),
+            linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        box-shadow: 0 14px 40px rgba(13, 23, 38, 0.08);
+    }
+
+    .must-hero:before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background: linear-gradient(90deg, #0f766e, #b7791f, #1f2937);
+    }
+
+    .must-kicker {
+        margin: 0 0 0.35rem 0;
+        color: #0f766e;
+        font-size: 0.86rem;
+        font-weight: 800;
+        letter-spacing: 0;
+    }
+
+    .must-hero h1 {
+        border-bottom: 0;
+        margin: 0;
+        padding: 0;
+        color: #0d1726;
+        font-size: clamp(1.7rem, 3.6vw, 2.75rem);
+        line-height: 1.12;
+        letter-spacing: 0;
+    }
+
+    .must-summary {
+        max-width: 860px;
+        margin: 0.7rem 0 0 0;
+        color: #586474;
+        font-size: 1.02rem;
+        line-height: 1.75;
+    }
+
+    .must-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding: 0.55rem 0.75rem;
+        border: 1px solid rgba(15, 118, 110, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.72);
+        color: #0d1726;
+        font-size: 0.94rem;
+        font-weight: 650;
+    }
+
+    .must-sidebar-card {
+        border: 1px solid rgba(15, 118, 110, 0.18);
+        border-radius: 8px;
+        padding: 1rem;
+        background: linear-gradient(135deg, rgba(15, 118, 110, 0.10), rgba(183, 121, 31, 0.08));
+    }
+
+    .must-sidebar-card h1 {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        color: #0d1726;
+        font-size: 1.15rem !important;
+        line-height: 1.28;
+        font-weight: 800;
+    }
+
+    .must-sidebar-card p {
+        margin: 0.45rem 0 0 0;
+        color: #586474;
+        font-size: 0.86rem;
+        line-height: 1.5;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 侧边栏导航 ---
 st.sidebar.markdown("""
-<div style='text-align: center; padding: 1rem 0;'>
-    <h1 style='margin: 0; color: #1f2937;'>计算社会学课程<br>网络实验室</h1>
-    <p style='color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;'>东南大学汪斌</p>
+<div class='must-sidebar-card'>
+    <h1>东南大学AI-MUST核心课程</h1>
+    <p>大数据分析与计算社会学</p>
+    <p><strong>负责人：</strong>东南大学社会学系 汪斌</p>
 </div>
 """, unsafe_allow_html=True)
 st.sidebar.markdown("---")
@@ -362,6 +453,18 @@ def get_random_data(points=100):
         'category': np.random.choice(['A', 'B', 'C'], points),
         'value': np.random.rand(points) * 100
     })
+
+st.markdown("""
+<section class='must-hero'>
+    <p class='must-kicker'>东南大学AI-MUST核心课程</p>
+    <h1>大数据分析与计算社会学</h1>
+    <p class='must-summary'>
+        以 Python 数据可视化为入口，连接大数据分析、计算社会学研究设计与可复用图表实践；
+        支持在线调参、即时看图、复制代码与课堂演示。
+    </p>
+    <div class='must-meta'>负责人：东南大学社会学系 汪斌</div>
+</section>
+""", unsafe_allow_html=True)
 
 # --- 章节 1: 生态全景 ---
 if menu == "1. 生态全景":
@@ -3132,7 +3235,8 @@ fig.savefig('figure.pdf', bbox_inches='tight')
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
 <div style='text-align: center; padding: 1rem 0; color: #6b7280; font-size: 0.85rem;'>
-    <p style='margin: 0;'>📚 计算社会学可视化教学</p>
-    <p style='margin: 0.5rem 0 0 0;'>Bin Wang, SEU</p>
+    <p style='margin: 0;'>东南大学AI-MUST核心课程</p>
+    <p style='margin: 0.5rem 0 0 0;'>大数据分析与计算社会学</p>
+    <p style='margin: 0.5rem 0 0 0;'>东南大学社会学系 汪斌</p>
 </div>
 """, unsafe_allow_html=True)

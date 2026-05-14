@@ -3,84 +3,327 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Matplotlib Teach</title>
+  <meta
+    name="description"
+    content="东南大学AI-MUST核心课程：大数据分析与计算社会学。负责人：东南大学社会学系 汪斌。"
+  />
+  <title>东南大学AI-MUST核心课程 | 大数据分析与计算社会学</title>
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f8fafc; color: #111827; }
-    a { color: #2563eb; text-decoration: none; }
-    header { background: linear-gradient(135deg, #2563eb, #22c55e); color: white; padding: 4rem 1.5rem 2rem; text-align: center; }
-    header h1 { margin: 0 0 1rem; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; }
-    header p { margin: 0 auto; max-width: 760px; font-size: 1.05rem; opacity: 0.95; }
-    .hero-button { display: inline-flex; align-items: center; justify-content: center; margin-top: 1.75rem; padding: 0.95rem 1.75rem; border-radius: 999px; background: white; color: #111827; font-weight: 700; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16); }
-    .section { padding: 3rem 1.5rem; max-width: 1200px; margin: 0 auto; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
-    .card { background: white; border-radius: 18px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); }
-    .card h3 { margin-top: 0; color: #111827; }
-    .card p { margin: 0.85rem 0 0; line-height: 1.75; color: #4b5563; }
-    .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
-    .feature-item { background: white; border-radius: 16px; padding: 1.25rem; border: 1px solid #e5e7eb; }
-    .feature-item h4 { margin: 0 0 0.75rem; }
-    .feature-item p { margin: 0; color: #4b5563; line-height: 1.8; }
-    .app-frame { margin-top: 2rem; border-radius: 24px; overflow: hidden; border: 1px solid #e2e8f0; height: 720px; }
-    .app-frame iframe { width: 100%; height: 100%; border: 0; }
-    .footer { padding: 2rem 1.5rem; text-align: center; color: #6b7280; font-size: 0.95rem; }
-    @media (max-width: 768px) { .section { padding: 2rem 1rem; } }
+    :root {
+      --ink: #0d1726;
+      --muted: #586474;
+      --line: rgba(13, 23, 38, 0.12);
+      --surface: rgba(255, 255, 255, 0.92);
+      --accent: #0f766e;
+      --accent-2: #b7791f;
+      --shadow: 0 20px 60px rgba(13, 23, 38, 0.14);
+      --header-h: 112px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100dvh;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 18%, rgba(15, 118, 110, 0.16), transparent 28%),
+        radial-gradient(circle at 86% 8%, rgba(183, 121, 31, 0.16), transparent 22%),
+        linear-gradient(135deg, #f7f4ee 0%, #eef5f4 42%, #f8fafc 100%);
+      font-family: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-shell {
+      display: grid;
+      grid-template-rows: var(--header-h) minmax(0, 1fr);
+      min-height: 100dvh;
+      padding: 12px;
+      gap: 12px;
+    }
+
+    .masthead {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgba(13, 23, 38, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .monogram {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(145deg, #0d9488, #1f2937);
+      box-shadow: 0 12px 26px rgba(15, 118, 110, 0.24);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 5px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.12;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .meta-panel {
+      display: grid;
+      gap: 6px;
+      min-width: 270px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(183, 121, 31, 0.08));
+    }
+
+    .meta-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .meta-value {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 15px;
+      border: 1px solid rgba(15, 118, 110, 0.22);
+      border-radius: 8px;
+      background: #fff;
+      color: #0f766e;
+      font-size: 14px;
+      font-weight: 760;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 118, 110, 0.42);
+      box-shadow: 0 10px 24px rgba(13, 23, 38, 0.11);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      background: #0f766e;
+      color: #fff;
+    }
+
+    .classroom {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .classroom::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0f766e, #b7791f, #1f2937);
+      z-index: 1;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: calc(100dvh - var(--header-h) - 36px);
+      border: 0;
+      background: #fff;
+    }
+
+    .fallback {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2;
+      border: 1px solid rgba(13, 23, 38, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--muted);
+      box-shadow: 0 10px 28px rgba(13, 23, 38, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .fallback:hover {
+      color: var(--ink);
+    }
+
+    @media (max-width: 980px) {
+      :root {
+        --header-h: auto;
+      }
+
+      body {
+        overflow: auto;
+      }
+
+      .site-shell {
+        grid-template-rows: auto minmax(720px, 1fr);
+      }
+
+      .masthead {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-panel {
+        min-width: 0;
+      }
+
+      iframe {
+        min-height: 720px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-shell {
+        padding: 8px;
+        gap: 8px;
+      }
+
+      .masthead {
+        padding: 16px;
+      }
+
+      .brand {
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .monogram {
+        width: 44px;
+        height: 44px;
+        font-size: 13px;
+      }
+
+      .subtitle,
+      .meta-value {
+        font-size: 14px;
+      }
+
+      .actions {
+        flex-wrap: wrap;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .fallback {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Matplotlib Teach</h1>
-    <p>基于 Matplotlib 的交互式可视化教学站点，覆盖参数百科、视觉策略和出版级图表设计。</p>
-    <a class="hero-button" href="https://matplotlib-teach.streamlit.app/?embed=true" target="_blank">打开交互式教学应用</a>
-  </header>
-
-  <section class="section">
-    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
-      <div style="flex: 1; min-width: 260px;">
-        <h2>你将学到什么</h2>
-        <p>从基础参数、线条与标记，到颜色、文本、轴与画布的完整设计；再到策略与尺度、论文/幻灯片输出、专业布局。</p>
-      </div>
-      <div style="flex: 1; min-width: 260px;">
-        <div class="feature-list">
-          <div class="feature-item"><h4>参数百科</h4><p>动态提取 Matplotlib API 选项，显示参数含义、预览与示例。</p></div>
-          <div class="feature-item"><h4>策略与尺度</h4><p>讲解图表选择原则、视觉编码优先级以及尺寸与 DPI 设计。</p></div>
-          <div class="feature-item"><h4>出版级输出</h4><p>提供论文、报告、幻灯片的保存方案和最佳实践。</p></div>
-          <div class="feature-item"><h4>课程导航</h4><p>分章节呈现生态、核心 API、基础笔触、布局美学、进阶案例与挑战。</p></div>
+  <main class="site-shell">
+    <header class="masthead" aria-label="课程信息">
+      <div class="brand">
+        <div class="monogram" aria-hidden="true">AI</div>
+        <div>
+          <p class="eyebrow">东南大学AI-MUST核心课程</p>
+          <h1>大数据分析与计算社会学</h1>
+          <p class="subtitle">面向社会科学研究的数据可视化、计算方法与交互式图表训练平台。</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="section" style="background: #f8fafc;">
-    <h2>课程亮点</h2>
-    <div class="cards">
-      <div class="card"><h3>交互式参数探索</h3><p>通过参数选择和实时预览，快速把握 linestyle、marker、colormap、fontfamily 等核心设置。</p></div>
-      <div class="card"><h3>图表策略与美学</h3><p>理解何时用线图、柱状图、散点图；如何平衡信息密度与可读性。</p></div>
-      <div class="card"><h3>布局与导出优化</h3><p>掌握 `figsize`、`dpi`、`tight_layout`、`constrained_layout` 的实战用法。</p></div>
-      <div class="card"><h3>实战案例与挑战</h3><p>提供复杂仪表盘、双轴图、GridSpec、动画等高级 Matplotlib 实例。</p></div>
-    </div>
-  </section>
+      <aside class="meta-panel" aria-label="课程负责人">
+        <span class="meta-label">负责人</span>
+        <span class="meta-value">东南大学社会学系 汪斌</span>
+        <div class="actions">
+          <a class="button primary" href="#classroom">进入课堂</a>
+          <a class="button" href="https://matplotlib-teach.streamlit.app/?embed=true" target="_blank" rel="noopener">独立打开</a>
+        </div>
+      </aside>
+    </header>
 
-  <section class="section">
-    <h2>快速入口</h2>
-    <div class="cards">
-      <div class="card"><h3>01. 生态全景</h3><p>了解 Python 可视化生态，选对工具比写代码更重要。</p></div>
-      <div class="card"><h3>02. Matplotlib 核心</h3><p>分解 Matplotlib 体系，掌握 Figure、Axes、Artist 三大对象。</p></div>
-      <div class="card"><h3>03. 布局与美学</h3><p>学习画布边距、网格、文本排版、图例与配色。</p></div>
-      <div class="card"><h3>04. 策略与尺度</h3><p>新增章节：让图表在论文、幻灯片与网页中都能符合视觉规范。</p></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2>交互式课堂</h2>
-    <p>下面为嵌入的交互式 Streamlit 教学页面，直接调参、看图、复制代码。</p>
-    <div class="app-frame">
-      <iframe title="Matplotlib Teach App" src="https://matplotlib-teach.streamlit.app/?embed=true" allow="clipboard-read; clipboard-write" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-  </section>
-
-  <footer class="footer">
-    本站为 Matplotlib 教学与可视化设计练习平台，适合科研、课堂和课程展示。<br />如果你希望继续扩展内容，我可以帮你加入更多章节与交互练习。
-  </footer>
+    <section id="classroom" class="classroom" aria-label="交互式 Streamlit 教学页面">
+      <iframe
+        title="东南大学AI-MUST核心课程：大数据分析与计算社会学"
+        src="https://matplotlib-teach.streamlit.app/?embed=true"
+        allow="clipboard-read; clipboard-write; fullscreen"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <a class="button fallback" href="https://matplotlib-teach.streamlit.app/?embed=true" target="_blank" rel="noopener">
+        打开完整课堂
+      </a>
+    </section>
+  </main>
 </body>
 </html>
