@@ -397,7 +397,7 @@ chapters = [
     "6. 其他库实战",
     "7. 进阶挑战：大师之路 🚀",
     "8. 可视化策略与尺度",
-    "📋 颜色速查手册",
+    "📋 参数速查手册",
 ]
 
 menu = st.sidebar.radio(
@@ -967,9 +967,7 @@ elif menu == "3. 基础笔触":
                     key="line_style",
                     help="'-' 实线 | '--' 虚线 | '-.' 点划线 | ':' 点线"
                 )
-                if st.button("📚 查看所有选项", key="btn_linestyle"):
-                    from catalogs.line import render_linestyle_gallery
-                    render_linestyle_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 线条」")
             
             # linewidth 参数
             with st.expander("📐 线宽 (linewidth)", expanded=True):
@@ -993,9 +991,7 @@ elif menu == "3. 基础笔触":
                     key="line_marker",
                     help="None 表示不显示标记点"
                 )
-                if st.button("📚 查看所有标记", key="btn_marker"):
-                    from catalogs.marker import render_marker_gallery
-                    render_marker_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 标记」")
             
             # drawstyle 参数
             with st.expander("📈 绘制样式 (drawstyle)", expanded=False):
@@ -1008,9 +1004,7 @@ elif menu == "3. 基础笔触":
                     key="line_drawstyle",
                     help="控制数据点的连接方式"
                 )
-                if st.button("📚 查看绘制样式选项", key="btn_drawstyle"):
-                    from catalogs.line import render_drawstyle_gallery
-                    render_drawstyle_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 线条」")
             
             # capstyle 参数（仅对粗线有效）
             with st.expander("🔲 线端样式 (capstyle)", expanded=False):
@@ -1023,9 +1017,7 @@ elif menu == "3. 基础笔触":
                     key="line_capstyle",
                     help="控制线条端点的形状（仅对粗线有效）"
                 )
-                if st.button("📚 查看线端样式选项", key="btn_capstyle"):
-                    from catalogs.line import render_capstyle_gallery
-                    render_capstyle_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 线条」")
             
             # joinstyle 参数（仅对折线有效）
             with st.expander("🔗 连接样式 (joinstyle)", expanded=False):
@@ -1038,9 +1030,7 @@ elif menu == "3. 基础笔触":
                     key="line_joinstyle",
                     help="控制线条转折处的连接方式（仅对折线有效）"
                 )
-                if st.button("📚 查看连接样式选项", key="btn_joinstyle"):
-                    from catalogs.line import render_joinstyle_gallery
-                    render_joinstyle_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 线条」")
         
         with col_view:
             st.markdown("#### 📊 实时预览")
@@ -1591,9 +1581,7 @@ plt.show()
                         index=0,
                         key="scatter_marker"
                     )
-                    if st.button("📚 查看所有标记", key="btn_scatter_marker"):
-                        from catalogs.marker import render_marker_gallery
-                        render_marker_gallery()
+                    st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 标记」")
                 
                 # fillstyle 参数（注意：scatter 支持有限，主要用于 plot）
                 with st.expander("🎨 填充样式 (fillstyle)", expanded=False):
@@ -1607,9 +1595,7 @@ plt.show()
                         key="scatter_fillstyle",
                         help="控制标记符号的填充样式。注意：scatter() 仅支持 'full' 和 'none'，其他样式主要用于 plot()"
                     )
-                    if st.button("📚 查看填充样式选项", key="btn_scatter_fillstyle"):
-                        from catalogs.marker import render_fillstyle_gallery
-                        render_fillstyle_gallery()
+                    st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 标记」")
                 
                 with st.expander("🌈 颜色映射 (cmap)", expanded=True):
                     cmap_choice = st.selectbox(
@@ -2138,21 +2124,15 @@ plt.show()
             
             with st.expander("📏 字体大小 (fontsize)", expanded=True):
                 fontsize_val = st.slider("字体大小", 8, 24, 12, key="text_fontsize")
-                if st.button("📚 查看字体大小选项", key="btn_fontsize"):
-                    from catalogs.text import render_fontsize_gallery
-                    render_fontsize_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 文本」")
             
             with st.expander("💪 字体粗细 (fontweight)", expanded=True):
                 fontweight_val = st.selectbox("字体粗细", ['normal', 'bold', 'light'], index=1, key="text_fontweight")
-                if st.button("📚 查看字体粗细选项", key="btn_fontweight"):
-                    from catalogs.text import render_fontweight_gallery
-                    render_fontweight_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 文本」")
             
             with st.expander("🔤 字体族 (fontfamily)", expanded=True):
                 fontfamily_val = st.selectbox("字体族", ['sans-serif', 'serif', 'monospace'], index=0, key="text_fontfamily")
-                if st.button("📚 查看字体族选项", key="btn_fontfamily"):
-                    from catalogs.text import render_fontfamily_gallery
-                    render_fontfamily_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 文本」")
         
         with col_view:
             ensure_chinese_font()
@@ -2201,23 +2181,17 @@ plt.show()
                 x_max = st.number_input("X 最大值", value=10.0, key="axes_xmax")
                 y_min = st.number_input("Y 最小值", value=-1.5, key="axes_ymin")
                 y_max = st.number_input("Y 最大值", value=1.5, key="axes_ymax")
-                if st.button("📚 查看坐标范围选项", key="btn_xlim"):
-                    from catalogs.axes import render_xlim_ylim_gallery
-                    render_xlim_ylim_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 坐标轴」")
             
             with st.expander("🔲 网格 (grid)", expanded=True):
                 show_grid = st.checkbox("显示网格", value=True, key="axes_grid")
                 grid_alpha = st.slider("网格透明度", 0.1, 1.0, 0.3, 0.1, key="grid_alpha")
-                if st.button("📚 查看网格选项", key="btn_grid"):
-                    from catalogs.axes import render_grid_gallery
-                    render_grid_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 坐标轴」")
             
             with st.expander("📐 边框 (spines)", expanded=True):
                 hide_top = st.checkbox("隐藏上边框", key="spine_top")
                 hide_right = st.checkbox("隐藏右边框", key="spine_right")
-                if st.button("📚 查看边框选项", key="btn_spines"):
-                    from catalogs.axes import render_spines_gallery
-                    render_spines_gallery()
+                st.caption("💡 完整参考 → 侧边栏「📋 参数速查手册 › 坐标轴」")
         
         with col_view:
             x, y = generate_sample_data(50)
@@ -3309,58 +3283,440 @@ fig.savefig('figure.pdf', bbox_inches='tight')
         - 网页：考虑响应式尺寸，并提供交互式图表作为补充。
         """)
 
-# --- 章节 9: 颜色速查手册 ---
-elif menu == "📋 颜色速查手册":
-    st.title("🎨 颜色速查手册")
+# --- 章节 9: 参数速查手册 ---
+elif menu == "📋 参数速查手册":
+    st.title("📋 Matplotlib 参数速查手册")
     st.markdown("""
-    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;'>
-        <p style='margin: 0; text-align: center; font-weight: 500;'>
-            所有章节通用的颜色参数与色彩映射完整参考，一处查阅，全局适用。
+    <div style='background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%);
+                color: white; padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;'>
+        <p style='margin: 0; font-weight: 500;'>
+            🗂️ 所有常用参数的完整选项一览——无需翻文档，选 Tab 即可查阅。
+            所有示例均可直接复制。
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    color_ref_tabs = st.tabs(["🎨 颜色参数 (color)", "🌈 色彩映射 (cmap)", "📋 常用配色方案"])
+    _ref_tabs = st.tabs([
+        "🎨 颜色",
+        "📏 线条",
+        "📍 标记",
+        "🔲 填充纹理",
+        "📝 文本",
+        "📐 坐标轴",
+        "🖼️ 画布",
+        "🗺️ 注解",
+        "🌊 透明度",
+    ])
 
-    with color_ref_tabs[0]:
-        from catalogs.color import render_color_gallery
-        render_color_gallery()
+    # ── Tab 0: 颜色 ──────────────────────────────────────
+    with _ref_tabs[0]:
+        _color_sub = st.tabs(["颜色参数 (color)", "色彩映射 (cmap)", "学术配色方案"])
+        with _color_sub[0]:
+            from catalogs.color import render_color_gallery
+            render_color_gallery()
+        with _color_sub[1]:
+            from catalogs.color import render_colormap_gallery
+            render_colormap_gallery()
+        with _color_sub[2]:
+            st.subheader("学术图表常用配色方案")
+            st.caption("以下配色均对色盲友好，适合论文、幻灯片和报告。")
+            ensure_chinese_font()
+            import matplotlib.patches as _mpatch
+            _schemes = {
+                "Tab10（Matplotlib 默认）": ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"],
+                "Set2（Seaborn 推荐）":     ["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"],
+                "Wong 色盲友好（8色）":     ["#000000","#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"],
+                "Okabe-Ito（国际推荐）":    ["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#000000"],
+                "科研蓝橙绿（6色）":        ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b"],
+            }
+            for _sname, _scols in _schemes.items():
+                st.markdown(f"**{_sname}**")
+                _fig_sch, _ax_sch = plt.subplots(figsize=(10, 0.75))
+                _ax_sch.axis("off")
+                for _ci, _cc in enumerate(_scols):
+                    _ax_sch.add_patch(_mpatch.Rectangle(
+                        (_ci / len(_scols), 0), 1 / len(_scols), 1,
+                        facecolor=_cc, transform=_ax_sch.transAxes, clip_on=False
+                    ))
+                    _ax_sch.text((_ci + 0.5) / len(_scols), -0.3, _cc,
+                                 ha="center", va="top", fontsize=8,
+                                 transform=_ax_sch.transAxes)
+                plt.tight_layout()
+                st.pyplot(_fig_sch)
+                st.code(f"colors = {_scols}", language='python')
+                st.markdown("---")
 
-    with color_ref_tabs[1]:
-        from catalogs.color import render_colormap_gallery
-        render_colormap_gallery()
+    # ── Tab 1: 线条 ──────────────────────────────────────
+    with _ref_tabs[1]:
+        _line_sub = st.tabs(["线型 linestyle", "绘制样式 drawstyle", "线端样式 capstyle", "连接样式 joinstyle"])
+        with _line_sub[0]:
+            from catalogs.line import render_linestyle_gallery
+            render_linestyle_gallery()
+        with _line_sub[1]:
+            from catalogs.line import render_drawstyle_gallery
+            render_drawstyle_gallery()
+        with _line_sub[2]:
+            from catalogs.line import render_capstyle_gallery
+            render_capstyle_gallery()
+        with _line_sub[3]:
+            from catalogs.line import render_joinstyle_gallery
+            render_joinstyle_gallery()
 
-    with color_ref_tabs[2]:
-        st.subheader("学术图表常用配色方案")
-        st.caption("以下配色对色盲友好，适合论文和报告。")
+    # ── Tab 2: 标记 ──────────────────────────────────────
+    with _ref_tabs[2]:
+        _marker_sub = st.tabs(["标记符号 marker", "填充样式 fillstyle"])
+        with _marker_sub[0]:
+            from catalogs.marker import render_marker_gallery
+            render_marker_gallery()
+        with _marker_sub[1]:
+            from catalogs.marker import render_fillstyle_gallery
+            render_fillstyle_gallery()
+
+    # ── Tab 3: 填充纹理 ──────────────────────────────────
+    with _ref_tabs[3]:
+        st.subheader("填充纹理 (hatch)")
+        st.info("""
+        **作用**：为条形图、直方图、多边形等 Patch 添加纹理填充，可在黑白打印时区分系列。
+
+        **适用范围**：`ax.bar()`, `ax.barh()`, `ax.fill_between()`, `ax.contourf()`, `Polygon` 等
+
+        **格式**：单字符或重复字符（重复越多纹理越密）
+
+        **默认值**：`None`（无纹理）
+        """)
         ensure_chinese_font()
 
-        _schemes = {
-            "Tab10 (Matplotlib 默认)": [f"C{i}" for i in range(10)],
-            "Set2 (Seaborn 推荐)":     ["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"],
-            "Colorblind Safe (Wong)":   ["#000000","#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"],
-            "科研常用 (蓝-橙-绿)":      ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f"],
-        }
+        _hatch_items = [
+            ('/', '正斜线'), ('\\\\', '反斜线'), ('|', '竖线'), ('-', '横线'),
+            ('+', '十字'), ('x', '交叉'), ('o', '小圆'), ('O', '大圆'),
+            ('.', '点状'), ('*', '星状'),
+            ('//', '密正斜线'), ('\\\\\\\\', '密反斜线'), ('||', '密竖线'), ('--', '密横线'),
+            ('++', '密十字'), ('xx', '密交叉'), ('oo', '密小圆'), ('OO', '密大圆'),
+            ('..', '密点'), ('**', '密星'),
+            ('/\\\\', '正反混合'), ('x+', '交叉加十字'), ('o.', '圆点混合'),
+        ]
 
-        import matplotlib.patches as _mpatches
-        for scheme_name, colors in _schemes.items():
-            st.markdown(f"**{scheme_name}**")
-            _fig_s, _ax_s = plt.subplots(figsize=(10, 0.8))
-            _ax_s.axis("off")
-            for i, c in enumerate(colors):
-                _ax_s.add_patch(_mpatches.Rectangle(
-                    (i / len(colors), 0), 1 / len(colors), 1,
-                    facecolor=c, transform=_ax_s.transAxes, clip_on=False
-                ))
-                _ax_s.text(
-                    (i + 0.5) / len(colors), -0.25, c,
-                    ha="center", va="top", fontsize=8.5,
-                    transform=_ax_s.transAxes
-                )
-            st.pyplot(_fig_s)
-            st.code(f"colors = {colors}", language='python')
-            st.markdown("---")
+        _n_h = len(_hatch_items)
+        _cols_h = 4
+        _rows_h = (_n_h + _cols_h - 1) // _cols_h
+        _fig_h, _axes_h = plt.subplots(_rows_h, _cols_h, figsize=(12, _rows_h * 2.2))
+        _axes_h = _axes_h.flatten()
+        _cats_h = ['A', 'B', 'C', 'D', 'E']
+        _vals_h = [3, 5, 4, 6, 2]
+        for _hi, (_hpat, _hdesc) in enumerate(_hatch_items):
+            _ax_h = _axes_h[_hi]
+            _ax_h.bar(_cats_h, _vals_h, hatch=_hpat, facecolor='white',
+                      edgecolor='#374151', linewidth=0.8)
+            _hshow = _hpat.replace('\\\\', '\\\\')
+            _ax_h.set_title(f"hatch='{_hshow}'\n{_hdesc}", fontsize=9)
+            _ax_h.set_ylim(0, 7)
+            _ax_h.axis('off')
+        for _hi in range(_n_h, len(_axes_h)):
+            _axes_h[_hi].axis('off')
+        plt.tight_layout()
+        st.pyplot(_fig_h)
+
+        st.markdown("### 📋 合法值")
+        _hatch_table = []
+        for _hpat, _hdesc in _hatch_items:
+            _hshow = _hpat.replace('\\\\', '\\')
+            _hatch_table.append({'hatch 值': f"'{_hshow}'", '说明': _hdesc,
+                                  '代码': f"ax.bar(x, y, hatch='{_hshow}', facecolor='white', edgecolor='black')"})
+        st.dataframe(pd.DataFrame(_hatch_table), use_container_width=True, hide_index=True)
+
+        st.markdown("### ⚠️ 常见坑")
+        st.warning("""
+        1. `facecolor` 建议设为 `'white'` 或浅色，否则纹理被覆盖
+        2. 反斜线在 Python 字符串中需转义：`hatch='\\\\'`（两个反斜线显示一个）
+        3. 重复字符使纹理更密，例如 `'///'` 比 `'/'` 更密
+        4. 纹理颜色跟随 `edgecolor`，与 `facecolor` 独立
+        """)
+
+    # ── Tab 4: 文本 ──────────────────────────────────────
+    with _ref_tabs[4]:
+        _text_sub = st.tabs(["字体大小 fontsize", "字体粗细 fontweight", "字体样式 fontstyle", "字体族 fontfamily", "对齐方式 ha/va"])
+        with _text_sub[0]:
+            from catalogs.text import render_fontsize_gallery
+            render_fontsize_gallery()
+        with _text_sub[1]:
+            from catalogs.text import render_fontweight_gallery
+            render_fontweight_gallery()
+        with _text_sub[2]:
+            from catalogs.text import render_fontstyle_gallery
+            render_fontstyle_gallery()
+        with _text_sub[3]:
+            from catalogs.text import render_fontfamily_gallery
+            render_fontfamily_gallery()
+        with _text_sub[4]:
+            st.subheader("文本对齐方式 (ha / va)")
+            st.info("""
+            **ha (horizontalalignment)**：水平对齐 — `'left'` | `'center'` | `'right'`
+
+            **va (verticalalignment)**：垂直对齐 — `'top'` | `'center'` | `'bottom'` | `'baseline'` | `'center_baseline'`
+
+            **默认值**：`ha='left'`, `va='baseline'`
+            """)
+            ensure_chinese_font()
+
+            _ha_vals = ['left', 'center', 'right']
+            _va_vals = ['top', 'center', 'bottom', 'baseline']
+
+            _fig_align, _axes_align = plt.subplots(len(_va_vals), len(_ha_vals),
+                                                    figsize=(9, len(_va_vals) * 2.2))
+            for _vi, _va in enumerate(_va_vals):
+                for _hi2, _ha in enumerate(_ha_vals):
+                    _ax_al = _axes_align[_vi, _hi2]
+                    _ax_al.set_xlim(0, 1); _ax_al.set_ylim(0, 1)
+                    _ax_al.axhline(0.5, color='#94a3b8', lw=0.8, ls='--')
+                    _ax_al.axvline({'left': 0.1, 'center': 0.5, 'right': 0.9}[_ha],
+                                   color='#94a3b8', lw=0.8, ls='--')
+                    _ax_al.text({'left': 0.1, 'center': 0.5, 'right': 0.9}[_ha], 0.5,
+                                f"ha='{_ha}'\nva='{_va}'", ha=_ha, va=_va,
+                                fontsize=9, fontweight='bold',
+                                bbox=dict(boxstyle='round,pad=0.3', facecolor='#dbeafe',
+                                          edgecolor='#3b82f6', alpha=0.9))
+                    _ax_al.set_title(f"ha='{_ha}', va='{_va}'", fontsize=8.5)
+                    _ax_al.axis('off')
+            plt.tight_layout()
+            st.pyplot(_fig_align)
+
+            st.code("""
+# 典型用法
+ax.text(0.5, 0.5, '居中文本', ha='center', va='center', transform=ax.transAxes)
+ax.set_title('标题', ha='center')        # 默认居中
+ax.annotate('标注', xy=(x, y), ha='left', va='top')
+            """, language='python')
+
+            st.markdown("### 📋 合法值")
+            _align_rows = []
+            for _h in ['left', 'center', 'right']:
+                _align_rows.append({'参数': 'ha', '合法值': f"'{_h}'",
+                                    '说明': {'left':'锚点在文字左边','center':'锚点在文字中间','right':'锚点在文字右边'}[_h]})
+            for _v in ['top', 'center', 'bottom', 'baseline', 'center_baseline']:
+                _align_rows.append({'参数': 'va', '合法值': f"'{_v}'",
+                                    '说明': {'top':'锚点在文字顶部','center':'锚点在文字中间',
+                                             'bottom':'锚点在文字底部','baseline':'锚点在基线（默认）',
+                                             'center_baseline':'中线对基线'}[_v]})
+            st.dataframe(pd.DataFrame(_align_rows), use_container_width=True, hide_index=True)
+
+    # ── Tab 5: 坐标轴 ────────────────────────────────────
+    with _ref_tabs[5]:
+        _axes_sub = st.tabs(["范围 xlim/ylim", "网格 grid", "边框 spines"])
+        with _axes_sub[0]:
+            from catalogs.axes import render_xlim_ylim_gallery
+            render_xlim_ylim_gallery()
+        with _axes_sub[1]:
+            from catalogs.axes import render_grid_gallery
+            render_grid_gallery()
+        with _axes_sub[2]:
+            from catalogs.axes import render_spines_gallery
+            render_spines_gallery()
+
+    # ── Tab 6: 画布 ──────────────────────────────────────
+    with _ref_tabs[6]:
+        _fig_sub = st.tabs(["尺寸 figsize", "分辨率 dpi", "背景色 facecolor"])
+        with _fig_sub[0]:
+            from catalogs.figure import render_figsize_gallery
+            render_figsize_gallery()
+        with _fig_sub[1]:
+            from catalogs.figure import render_dpi_gallery
+            render_dpi_gallery()
+        with _fig_sub[2]:
+            from catalogs.figure import render_facecolor_gallery
+            render_facecolor_gallery()
+
+    # ── Tab 7: 注解 ──────────────────────────────────────
+    with _ref_tabs[7]:
+        _anno_sub = st.tabs(["箭头样式 arrowstyle", "连线样式 connectionstyle"])
+
+        with _anno_sub[0]:
+            st.subheader("注解箭头样式 (arrowstyle)")
+            st.info("""
+            **作用**：控制 `ax.annotate()` 箭头的形状
+
+            **用法**：`arrowprops=dict(arrowstyle='->', color='red', lw=1.5)`
+
+            **默认值**：无（需显式指定才显示箭头）
+            """)
+            ensure_chinese_font()
+
+            _arrowstyles = [
+                ('-',      '直线，无箭头'),
+                ('->',     '标准单向箭头（最常用）'),
+                ('-[',     '方括号端点'),
+                ('|-|',    '两端竖线'),
+                ('-|>',    '实心单向箭头'),
+                ('<-',     '反向箭头'),
+                ('<->',    '双向箭头'),
+                ('<|-',    '实心反向箭头'),
+                ('<|-|>',  '实心双向箭头'),
+                ('fancy',  '花式曲线（需 connectionstyle）'),
+                ('simple', '简单三角箭头'),
+                ('wedge',  '楔形箭头'),
+            ]
+
+            _n_as = len(_arrowstyles)
+            _cols_as = 3
+            _rows_as = (_n_as + _cols_as - 1) // _cols_as
+            _fig_as, _axes_as = plt.subplots(_rows_as, _cols_as,
+                                             figsize=(12, _rows_as * 2.5))
+            _axes_as = _axes_as.flatten()
+
+            for _ai, (_astyle, _adesc) in enumerate(_arrowstyles):
+                _ax_as = _axes_as[_ai]
+                _ax_as.set_xlim(0, 10); _ax_as.set_ylim(0, 10)
+                _ax_as.axis('off')
+                try:
+                    _ax_as.annotate('', xy=(8, 5), xytext=(2, 5),
+                                    arrowprops=dict(arrowstyle=_astyle,
+                                                    color='#1d4ed8', lw=2,
+                                                    connectionstyle='arc3,rad=0'))
+                except Exception:
+                    _ax_as.annotate('', xy=(8, 5), xytext=(2, 5),
+                                    arrowprops=dict(arrowstyle='->',
+                                                    color='#94a3b8', lw=1))
+                _ax_as.text(5, 3, f"arrowstyle='{_astyle}'", ha='center',
+                            fontsize=9, fontweight='bold', color='#374151')
+                _ax_as.text(5, 1.5, _adesc, ha='center', fontsize=8, color='#6b7280')
+
+            for _ai in range(_n_as, len(_axes_as)):
+                _axes_as[_ai].axis('off')
+            plt.tight_layout()
+            st.pyplot(_fig_as)
+
+            st.markdown("### 📋 合法值")
+            _as_table = [{'arrowstyle 值': f"'{_s}'", '说明': _d,
+                          '代码': f"arrowprops=dict(arrowstyle='{_s}', color='red', lw=1.5)"}
+                         for _s, _d in _arrowstyles]
+            st.dataframe(pd.DataFrame(_as_table), use_container_width=True, hide_index=True)
+
+            st.markdown("### ⚠️ 常见坑")
+            st.warning("""
+            1. `fancy`、`simple`、`wedge` 必须配合 `connectionstyle` 使用，否则报错
+            2. `lw`（线宽）影响箭头粗细，推荐 1.5–2.5
+            3. 箭头颜色由 `color` 参数控制，独立于 `xycoords` 坐标系
+            """)
+
+        with _anno_sub[1]:
+            st.subheader("注解连线样式 (connectionstyle)")
+            st.info("""
+            **作用**：控制注解线从文字到目标点的路径形状
+
+            **用法**：`arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.3')`
+
+            **默认值**：`'arc3,rad=0'`（直线）
+            """)
+            ensure_chinese_font()
+
+            _conn_styles = [
+                ('arc3,rad=0',     '直线（默认）'),
+                ('arc3,rad=0.2',   '轻微弧线'),
+                ('arc3,rad=0.5',   '中等弧线'),
+                ('arc3,rad=-0.3',  '反向弧线'),
+                ('angle3,angleA=90,angleB=0',  '90°折角（3点控制）'),
+                ('angle,angleA=90,angleB=0,rad=5', '90°圆角折线'),
+                ('arc,angleA=0,angleB=180,armA=30,armB=30,rad=5', '弧形折线'),
+                ('bar,armA=30,armB=30,fraction=0.3', '条形折线'),
+            ]
+
+            _n_cs = len(_conn_styles)
+            _cols_cs = 2
+            _rows_cs = (_n_cs + _cols_cs - 1) // _cols_cs
+            _fig_cs, _axes_cs = plt.subplots(_rows_cs, _cols_cs,
+                                             figsize=(12, _rows_cs * 2.8))
+            _axes_cs = _axes_cs.flatten()
+
+            for _csi, (_cstyle, _cdesc) in enumerate(_conn_styles):
+                _ax_cs = _axes_cs[_csi]
+                _ax_cs.set_xlim(0, 10); _ax_cs.set_ylim(0, 10)
+                _ax_cs.axis('off')
+                try:
+                    _ax_cs.annotate('注解文字', xy=(7, 7), xytext=(2, 2),
+                                    fontsize=9, color='#374151',
+                                    arrowprops=dict(arrowstyle='->', color='#1d4ed8',
+                                                    lw=1.8,
+                                                    connectionstyle=_cstyle))
+                except Exception:
+                    _ax_cs.text(5, 5, '（不支持此样式）', ha='center', fontsize=8,
+                                color='#9ca3af')
+                _ax_cs.text(5, 0.5, f"'{_cstyle}'\n{_cdesc}",
+                            ha='center', fontsize=8, color='#374151')
+
+            for _csi in range(_n_cs, len(_axes_cs)):
+                _axes_cs[_csi].axis('off')
+            plt.tight_layout()
+            st.pyplot(_fig_cs)
+
+            st.code("""
+# 最常用：arc3 弧线注解
+ax.annotate(
+    '最大值',
+    xy=(peak_x, peak_y),       # 箭头指向的点
+    xytext=(peak_x+1, peak_y+0.5),  # 文字位置
+    arrowprops=dict(
+        arrowstyle='->',
+        color='red',
+        lw=1.5,
+        connectionstyle='arc3,rad=0.3'   # ← 弧线
+    ),
+    fontsize=11, color='red'
+)
+            """, language='python')
+
+    # ── Tab 8: 透明度 ────────────────────────────────────
+    with _ref_tabs[8]:
+        st.subheader("透明度 (alpha)")
+        st.info("""
+        **作用**：控制图元的不透明度，影响叠加效果和视觉层次
+
+        **范围**：`0.0`（完全透明）→ `1.0`（完全不透明）
+
+        **适用范围**：几乎所有绘图函数——`plot()`, `scatter()`, `bar()`, `fill_between()`, `grid()`, 文本框等
+
+        **默认值**：`1.0`（完全不透明）
+        """)
+        ensure_chinese_font()
+
+        _alpha_vals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        _n_al = len(_alpha_vals)
+        _fig_al, _axes_al = plt.subplots(2, 5, figsize=(12, 5))
+        _axes_al = _axes_al.flatten()
+        _x_al = np.linspace(0, 2 * np.pi, 60)
+
+        for _ali, _alpha in enumerate(_alpha_vals):
+            _ax_al = _axes_al[_ali]
+            _ax_al.plot(_x_al, np.sin(_x_al), color='#1d4ed8',
+                        linewidth=2.5, alpha=_alpha, label='sin(x)')
+            _ax_al.fill_between(_x_al, np.sin(_x_al), alpha=_alpha * 0.5,
+                                 color='#3b82f6')
+            _ax_al.set_title(f"alpha={_alpha}", fontsize=10, fontweight='bold')
+            _ax_al.set_ylim(-1.5, 1.5)
+            _ax_al.grid(True, alpha=0.3)
+            _ax_al.set_xticklabels([]); _ax_al.set_yticklabels([])
+
+        plt.tight_layout()
+        st.pyplot(_fig_al)
+
+        st.markdown("### 🎯 使用建议")
+
+        _alpha_table = [
+            ('0.05–0.15', '极淡背景、极淡网格', 'ax.grid(True, alpha=0.1)'),
+            ('0.2–0.35',  '背景参考线、阴影区域', 'ax.fill_between(x, y, alpha=0.25)'),
+            ('0.4–0.6',   '半透明叠加、置信区间', 'ax.plot(x, y, alpha=0.5)'),
+            ('0.7–0.8',   '多系列区分（推荐）', 'ax.bar(x, y, alpha=0.75)'),
+            ('0.9–1.0',   '主线/主图元（完全不透明）', 'ax.plot(x, y, alpha=1.0)'),
+        ]
+        st.dataframe(pd.DataFrame(_alpha_table,
+                                  columns=['alpha 范围', '典型场景', '代码示例']),
+                     use_container_width=True, hide_index=True)
+
+        st.markdown("### ⚠️ 常见坑")
+        st.warning("""
+        1. `alpha` 会同时影响线条、标记点和填充颜色——如只想改填充透明度，使用 RGBA 颜色：`color=(0.1, 0.4, 0.8, 0.3)`
+        2. `grid(True, alpha=0.3)` 的 0.3 是公认的最佳实践值，过高会遮挡数据
+        3. PNG 保存时透明度会保留；JPEG 不支持透明度（会变白底）
+        4. 多层叠加时最终视觉透明度 ≠ 单个 alpha 值（视觉叠加效果是累乘的）
+        """)
 
 # --- 页脚 ---
 st.sidebar.markdown("---")
