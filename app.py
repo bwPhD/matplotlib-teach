@@ -19,7 +19,9 @@ st.set_page_config(
     page_title="东南大学AI-MUST核心课程｜大数据分析与计算社会学",
     layout="wide",
     page_icon="🎓",
+    initial_sidebar_state="expanded",
 )
+st.set_option("client.toolbarMode", "minimal")
 
 # --- 全局样式优化 ---
 st.markdown("""
@@ -91,12 +93,35 @@ st.markdown("""
         padding: 0 !important;
     }
     
-    /* ========== 侧边栏样式 ========== */
+    /* ========== 侧边栏：锁定展开，禁止折叠 ========== */
     section[data-testid="stSidebar"] {
         background-color: #f9fafb;
         border-right: 1px solid #e5e7eb;
+        display: block !important;
+        visibility: visible !important;
+        min-width: 18rem !important;
+        width: 18rem !important;
+        transform: none !important;
+        transition: none !important;
     }
-    
+
+    section[data-testid="stSidebar"] > div:first-child {
+        width: 18rem !important;
+        min-width: 18rem !important;
+    }
+
+    /* 隐藏侧边栏折叠按钮（防止用户折叠侧边栏） */
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="collapsedControl"],
+    button[aria-label="Close sidebar"],
+    button[aria-label="收起侧边栏"],
+    button[aria-label="折叠侧边栏"] {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
     section[data-testid="stSidebar"] .stMarkdown h1 {
         font-size: 22px !important;
         font-weight: 700 !important;
@@ -105,7 +130,7 @@ st.markdown("""
         padding-bottom: 0.5rem !important;
         margin-bottom: 1rem !important;
     }
-    
+
     section[data-testid="stSidebar"] .stRadio label {
         font-size: 14px;
         padding: 0.5rem 0;
@@ -231,7 +256,6 @@ st.markdown("""
     /* ========== 隐藏 Streamlit 底部标识 ========== */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    header {visibility: hidden;}
     /* 隐藏 "Built with Streamlit" 文本 */
     footer:after {
         content: '';
@@ -250,41 +274,24 @@ st.markdown("""
         height: 0;
     }
     
-    /* ========== 隐藏 Streamlit 顶部菜单栏 ========== */
-    /* 隐藏顶部工具栏 */
+    /* ========== 完全移除顶部工具栏（含占位空间） ========== */
+    header[data-testid="stHeader"],
     [data-testid="stHeader"] {
-        visibility: hidden;
-        height: 0;
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
     }
-    /* 隐藏顶部工具栏容器 */
-    header[data-testid="stHeader"] {
-        visibility: hidden;
-        height: 0;
-    }
-    /* 隐藏右上角菜单按钮 */
     [data-testid="stToolbar"] {
-        visibility: hidden;
-        height: 0;
+        display: none !important;
+        height: 0 !important;
     }
-    /* 隐藏 Share 按钮和所有工具栏按钮 */
-    button[kind="header"] {
-        visibility: hidden;
-        display: none;
+    /* 消除 Streamlit 为工具栏预留的顶部 padding */
+    .stApp > .stAppHeader,
+    .stApp [data-testid="stDecoration"] {
+        display: none !important;
     }
-    /* 隐藏顶部所有按钮 */
-    .stApp header button {
-        visibility: hidden;
-        display: none;
-    }
-    /* 隐藏顶部工具栏区域 */
-    .stApp > header {
-        visibility: hidden;
-        height: 0;
-    }
-    /* 更彻底地隐藏整个顶部区域 */
-    [data-testid="stHeader"] > div {
-        visibility: hidden;
-        height: 0;
+    .block-container {
+        padding-top: 1rem !important;
     }
     
     /* ========== 隐藏右下角固定元素 ========== */
@@ -336,27 +343,17 @@ st.markdown("""
     .must-hero {
         position: relative;
         overflow: hidden;
-        border: 1px solid rgba(15, 118, 110, 0.16);
+        border: 1px solid rgba(140, 21, 21, 0.12);
         border-radius: 8px;
         padding: 1.35rem 1.5rem;
         margin: 0 0 1.35rem 0;
-        background:
-            linear-gradient(135deg, rgba(15, 118, 110, 0.11), rgba(183, 121, 31, 0.10)),
-            linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        background: linear-gradient(90deg, rgba(140, 21, 21, 0.055), rgba(255, 255, 255, 0) 48%), #ffffff;
         box-shadow: 0 14px 40px rgba(13, 23, 38, 0.08);
-    }
-
-    .must-hero:before {
-        content: "";
-        position: absolute;
-        inset: 0 0 auto 0;
-        height: 4px;
-        background: linear-gradient(90deg, #0f766e, #b7791f, #1f2937);
     }
 
     .must-kicker {
         margin: 0 0 0.35rem 0;
-        color: #0f766e;
+        color: #8f000b;
         font-size: 0.86rem;
         font-weight: 800;
         letter-spacing: 0;
@@ -366,18 +363,18 @@ st.markdown("""
         border-bottom: 0;
         margin: 0;
         padding: 0;
-        color: #0d1726;
-        font-size: clamp(1.7rem, 3.6vw, 2.75rem);
+        color: #8f000b;
+        font-size: clamp(1.9rem, 4vw, 3rem);
         line-height: 1.12;
         letter-spacing: 0;
     }
 
-    .must-summary {
-        max-width: 860px;
-        margin: 0.7rem 0 0 0;
-        color: #586474;
-        font-size: 1.02rem;
-        line-height: 1.75;
+    .must-course-title {
+        margin: 0.55rem 0 0 0;
+        color: #0d1726;
+        font-size: clamp(1.25rem, 2.3vw, 1.9rem);
+        font-weight: 780;
+        line-height: 1.25;
     }
 
     .must-meta {
@@ -386,19 +383,19 @@ st.markdown("""
         gap: 0.5rem;
         margin-top: 1rem;
         padding: 0.55rem 0.75rem;
-        border: 1px solid rgba(15, 118, 110, 0.18);
+        border: 1px solid rgba(143, 0, 11, 0.18);
         border-radius: 8px;
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.78);
         color: #0d1726;
         font-size: 0.94rem;
         font-weight: 650;
     }
 
     .must-sidebar-card {
-        border: 1px solid rgba(15, 118, 110, 0.18);
+        border: 1px solid rgba(143, 0, 11, 0.18);
         border-radius: 8px;
         padding: 1rem;
-        background: linear-gradient(135deg, rgba(15, 118, 110, 0.10), rgba(183, 121, 31, 0.08));
+        background: linear-gradient(135deg, rgba(143, 0, 11, 0.09), rgba(185, 151, 91, 0.08));
     }
 
     .must-sidebar-card h1 {
@@ -430,19 +427,24 @@ st.sidebar.markdown("""
 """, unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
+chapters = [
+    "1. 生态全景",
+    "2. Matplotlib 核心解构",
+    "3. 基础笔触",
+    "4. 布局与美学",
+    "5. 进阶画廊",
+    "6. 其他库实战",
+    "7. 进阶挑战：大师之路 🚀",
+    "8. 可视化策略与尺度"
+]
+
 menu = st.sidebar.radio(
     "课程章节",
-    [
-        "1. 生态全景",
-        "2. Matplotlib 核心解构",
-        "3. 基础笔触",
-        "4. 布局与美学",
-        "5. 进阶画廊",
-        "6. 其他库实战",
-        "7. 进阶挑战：大师之路 🚀",
-        "8. 可视化策略与尺度"
-    ]
+    chapters,
+    key="sidebar_chapter"
 )
+# Sync selectbox session state to sidebar so it doesn't override sidebar selection
+st.session_state["main_chapter"] = menu
 
 # --- 辅助函数：生成数据 ---
 @st.cache_data
@@ -456,15 +458,20 @@ def get_random_data(points=100):
 
 st.markdown("""
 <section class='must-hero'>
-    <p class='must-kicker'>东南大学AI-MUST核心课程</p>
-    <h1>大数据分析与计算社会学</h1>
-    <p class='must-summary'>
-        以 Python 数据可视化为入口，连接大数据分析、计算社会学研究设计与可复用图表实践；
-        支持在线调参、即时看图、复制代码与课堂演示。
-    </p>
+    <h1>东南大学AI-MUST核心课程</h1>
+    <p class='must-course-title'>大数据分析与计算社会学</p>
     <div class='must-meta'>负责人：东南大学社会学系 汪斌</div>
 </section>
 """, unsafe_allow_html=True)
+
+fallback_menu = st.selectbox(
+    "课程章节",
+    chapters,
+    index=chapters.index(menu),
+    key="main_chapter",
+    help="如果左侧章节栏未显示，可在这里切换章节。"
+)
+menu = fallback_menu
 
 # --- 章节 1: 生态全景 ---
 if menu == "1. 生态全景":

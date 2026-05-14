@@ -13,11 +13,10 @@
       --ink: #0d1726;
       --muted: #586474;
       --line: rgba(13, 23, 38, 0.12);
-      --surface: rgba(255, 255, 255, 0.92);
-      --accent: #0f766e;
-      --accent-2: #b7791f;
-      --shadow: 0 20px 60px rgba(13, 23, 38, 0.14);
-      --header-h: 112px;
+      --surface: rgba(255, 255, 255, 0.96);
+      --accent: #8c1515;
+      --accent-dark: #621010;
+      --shadow: 0 18px 48px rgba(13, 23, 38, 0.11);
     }
 
     * {
@@ -35,10 +34,7 @@
       min-height: 100dvh;
       overflow: hidden;
       color: var(--ink);
-      background:
-        radial-gradient(circle at 16% 18%, rgba(15, 118, 110, 0.16), transparent 28%),
-        radial-gradient(circle at 86% 8%, rgba(183, 121, 31, 0.16), transparent 22%),
-        linear-gradient(135deg, #f7f4ee 0%, #eef5f4 42%, #f8fafc 100%);
+      background: linear-gradient(135deg, #faf8f5 0%, #f5f1eb 48%, #f8fafc 100%);
       font-family: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
     }
 
@@ -49,7 +45,7 @@
 
     .site-shell {
       display: grid;
-      grid-template-rows: var(--header-h) minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
       min-height: 100dvh;
       padding: 12px;
       gap: 12px;
@@ -62,67 +58,63 @@
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
       gap: 20px;
-      padding: 20px 24px;
+      padding: 22px 28px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--surface);
+      background:
+        linear-gradient(90deg, rgba(140, 21, 21, 0.055), rgba(255, 255, 255, 0) 48%),
+        var(--surface);
       box-shadow: 0 12px 40px rgba(13, 23, 38, 0.08);
       backdrop-filter: blur(18px);
     }
 
     .brand {
       display: grid;
-      grid-template-columns: 52px minmax(0, 1fr);
+      grid-template-columns: 64px minmax(0, 1fr);
       align-items: center;
-      gap: 16px;
+      gap: 18px;
       min-width: 0;
     }
 
     .monogram {
       display: grid;
       place-items: center;
-      width: 52px;
-      height: 52px;
+      width: 64px;
+      height: 64px;
       border-radius: 8px;
       color: #fff;
-      background: linear-gradient(145deg, #0d9488, #1f2937);
-      box-shadow: 0 12px 26px rgba(15, 118, 110, 0.24);
+      background: linear-gradient(145deg, var(--accent), var(--accent-dark));
+      box-shadow: 0 12px 26px rgba(140, 21, 21, 0.18);
       font-weight: 800;
       letter-spacing: 0;
-    }
-
-    .eyebrow {
-      margin: 0 0 5px;
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 800;
-      line-height: 1.2;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(22px, 3vw, 34px);
-      line-height: 1.12;
+      color: var(--accent);
+      font-size: clamp(22px, 2.8vw, 40px);
+      line-height: 1.1;
       font-weight: 850;
       letter-spacing: 0;
     }
 
-    .subtitle {
-      margin: 7px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.45;
+    .course-title {
+      margin: 6px 0 0;
+      color: var(--ink);
+      font-size: clamp(15px, 1.7vw, 24px);
+      font-weight: 780;
+      line-height: 1.25;
       overflow-wrap: anywhere;
     }
 
     .meta-panel {
       display: grid;
       gap: 6px;
-      min-width: 270px;
-      padding: 14px 16px;
-      border: 1px solid rgba(15, 118, 110, 0.18);
+      min-width: 250px;
+      padding: 16px 18px;
+      border: 1px solid rgba(140, 21, 21, 0.13);
       border-radius: 8px;
-      background: linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(183, 121, 31, 0.08));
+      background: rgba(255, 255, 255, 0.74);
     }
 
     .meta-label {
@@ -138,40 +130,6 @@
       line-height: 1.45;
     }
 
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 2px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 0 15px;
-      border: 1px solid rgba(15, 118, 110, 0.22);
-      border-radius: 8px;
-      background: #fff;
-      color: #0f766e;
-      font-size: 14px;
-      font-weight: 760;
-      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-      border-color: rgba(15, 118, 110, 0.42);
-      box-shadow: 0 10px 24px rgba(13, 23, 38, 0.11);
-    }
-
-    .button.primary {
-      border-color: transparent;
-      background: #0f766e;
-      color: #fff;
-    }
-
     .classroom {
       position: relative;
       min-height: 0;
@@ -182,45 +140,16 @@
       box-shadow: var(--shadow);
     }
 
-    .classroom::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 4px;
-      background: linear-gradient(90deg, #0f766e, #b7791f, #1f2937);
-      z-index: 1;
-    }
-
     iframe {
       display: block;
       width: 100%;
       height: 100%;
-      min-height: calc(100dvh - var(--header-h) - 36px);
+      min-height: 600px;
       border: 0;
       background: #fff;
     }
 
-    .fallback {
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
-      z-index: 2;
-      border: 1px solid rgba(13, 23, 38, 0.12);
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--muted);
-      box-shadow: 0 10px 28px rgba(13, 23, 38, 0.12);
-      backdrop-filter: blur(14px);
-    }
-
-    .fallback:hover {
-      color: var(--ink);
-    }
-
     @media (max-width: 980px) {
-      :root {
-        --header-h: auto;
-      }
-
       body {
         overflow: auto;
       }
@@ -264,21 +193,11 @@
       }
 
       .subtitle,
+      .course-title,
       .meta-value {
         font-size: 14px;
       }
 
-      .actions {
-        flex-wrap: wrap;
-      }
-
-      .button {
-        width: 100%;
-      }
-
-      .fallback {
-        display: none;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -297,32 +216,24 @@
       <div class="brand">
         <div class="monogram" aria-hidden="true">AI</div>
         <div>
-          <p class="eyebrow">东南大学AI-MUST核心课程</p>
-          <h1>大数据分析与计算社会学</h1>
-          <p class="subtitle">面向社会科学研究的数据可视化、计算方法与交互式图表训练平台。</p>
+          <h1>东南大学AI-MUST核心课程</h1>
+          <p class="course-title">大数据分析与计算社会学</p>
         </div>
       </div>
 
       <aside class="meta-panel" aria-label="课程负责人">
         <span class="meta-label">负责人</span>
         <span class="meta-value">东南大学社会学系 汪斌</span>
-        <div class="actions">
-          <a class="button primary" href="#classroom">进入课堂</a>
-          <a class="button" href="https://matplotlib-teach.streamlit.app/?embed=true" target="_blank" rel="noopener">独立打开</a>
-        </div>
       </aside>
     </header>
 
     <section id="classroom" class="classroom" aria-label="交互式 Streamlit 教学页面">
       <iframe
         title="东南大学AI-MUST核心课程：大数据分析与计算社会学"
-        src="https://matplotlib-teach.streamlit.app/?embed=true"
+        src="https://matplotlib-teach.streamlit.app/"
         allow="clipboard-read; clipboard-write; fullscreen"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <a class="button fallback" href="https://matplotlib-teach.streamlit.app/?embed=true" target="_blank" rel="noopener">
-        打开完整课堂
-      </a>
     </section>
   </main>
 </body>
