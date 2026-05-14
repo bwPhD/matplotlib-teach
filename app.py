@@ -443,8 +443,6 @@ menu = st.sidebar.radio(
     chapters,
     key="sidebar_chapter"
 )
-# Sync selectbox session state to sidebar so it doesn't override sidebar selection
-st.session_state["main_chapter"] = menu
 
 # --- 辅助函数：生成数据 ---
 @st.cache_data
@@ -463,15 +461,6 @@ st.markdown("""
     <div class='must-meta'>负责人：东南大学社会学系 汪斌</div>
 </section>
 """, unsafe_allow_html=True)
-
-fallback_menu = st.selectbox(
-    "课程章节",
-    chapters,
-    index=chapters.index(menu),
-    key="main_chapter",
-    help="如果左侧章节栏未显示，可在这里切换章节。"
-)
-menu = fallback_menu
 
 # --- 章节 1: 生态全景 ---
 if menu == "1. 生态全景":
