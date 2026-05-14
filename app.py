@@ -32,10 +32,25 @@ st.markdown("""
     }
     
     /* ========== 主内容区域 ========== */
+    .stApp {
+        background:
+            linear-gradient(180deg, #f8fafc 0%, #ffffff 18rem),
+            #ffffff;
+    }
+
     .main .block-container {
-        padding-top: 2rem;
-        padding-bottom: 3rem;
-        max-width: 1200px;
+        padding: 1.35rem 2.25rem 3.5rem;
+        max-width: 1320px;
+    }
+
+    .stMarkdown p,
+    .stMarkdown li {
+        line-height: 1.72;
+    }
+
+    .stMarkdown ul,
+    .stMarkdown ol {
+        padding-left: 1.35rem;
     }
     
     /* ========== 标题样式 ========== */
@@ -133,7 +148,84 @@ st.markdown("""
 
     section[data-testid="stSidebar"] .stRadio label {
         font-size: 14px;
-        padding: 0.5rem 0;
+        padding: 0.35rem 0.15rem;
+        line-height: 1.35;
+    }
+
+    section[data-testid="stSidebar"] [role="radiogroup"] {
+        display: grid;
+        gap: 0.25rem;
+    }
+
+    section[data-testid="stSidebar"] [role="radiogroup"] label {
+        border-radius: 8px;
+        transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    section[data-testid="stSidebar"] [role="radiogroup"] label:hover {
+        background: rgba(143, 0, 11, 0.06);
+    }
+
+    .sidebar-course-card {
+        position: relative;
+        margin-top: 1.15rem;
+        padding: 1rem 0.95rem 1.05rem;
+        border: 1px solid rgba(143, 0, 11, 0.14);
+        border-radius: 8px;
+        background:
+            linear-gradient(135deg, rgba(143, 0, 11, 0.08), rgba(255, 255, 255, 0) 58%),
+            #ffffff;
+        box-shadow: 0 16px 36px rgba(13, 23, 38, 0.08);
+    }
+
+    .sidebar-course-card::before {
+        content: "";
+        position: absolute;
+        top: 0.8rem;
+        right: 0.9rem;
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: #8f000b;
+        box-shadow: 0 0 0 5px rgba(143, 0, 11, 0.08);
+    }
+
+    .sidebar-kicker {
+        color: #8f000b;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .sidebar-course-name {
+        margin-top: 0.45rem;
+        color: #111827;
+        font-size: 1.02rem;
+        font-weight: 780;
+        line-height: 1.28;
+    }
+
+    .sidebar-divider {
+        width: 2.5rem;
+        height: 2px;
+        margin: 0.75rem 0 0.72rem;
+        background: #8f000b;
+    }
+
+    .sidebar-topic {
+        color: #1f2937;
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1.45;
+    }
+
+    .sidebar-owner {
+        margin-top: 0.42rem;
+        color: #6b7280;
+        font-size: 0.78rem;
+        font-weight: 600;
+        line-height: 1.45;
     }
     
     /* ========== 信息框样式 ========== */
@@ -141,6 +233,7 @@ st.markdown("""
         border-radius: 8px;
         padding: 1rem;
         border-left: 4px solid;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
     }
     
     .stInfo {
@@ -187,12 +280,21 @@ st.markdown("""
     /* ========== Tab 样式 ========== */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
+        border-bottom: 1px solid #e5e7eb;
     }
     
     .stTabs [data-baseweb="tab"] {
-        border-radius: 6px 6px 0 0;
-        padding: 0.75rem 1.5rem;
-        font-weight: 500;
+        border-radius: 8px 8px 0 0;
+        padding: 0.7rem 1.2rem;
+        font-weight: 650;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-bottom: 0;
+    }
+
+    .stTabs [aria-selected="true"] {
+        background: #ffffff !important;
+        color: #8f000b !important;
     }
     
     /* ========== 表格样式 ========== */
@@ -204,7 +306,17 @@ st.markdown("""
     /* ========== 图表容器 ========== */
     .stPlotlyChart, [data-testid="stPyplot"] {
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+        overflow: hidden;
+    }
+
+    div[data-testid="stExpander"] {
+        border: 1px solid #e5e7eb !important;
+        border-radius: 8px !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
     }
     
     /* ========== 分隔线 ========== */
@@ -389,15 +501,15 @@ st.markdown("""
 # --- 侧边栏导航 ---
 
 chapters = [
-    "1. 生态全景",
-    "2. Matplotlib 核心解构",
-    "3. 基础笔触",
-    "4. 布局与美学",
-    "5. 进阶画廊",
-    "6. 其他库实战",
-    "7. 进阶挑战：大师之路 🚀",
-    "8. 可视化策略与尺度",
-    "📋 参数速查手册",
+    "1. 可视化生态导览",
+    "2. Matplotlib 底层架构",
+    "3. 基础图元与笔触",
+    "4. 布局系统与视觉美学",
+    "5. 高级图表画廊",
+    "6. 多库协同实战",
+    "7. 综合挑战：大师路径",
+    "8. 图表策略与发表尺度",
+    "9. 参数速查手册",
 ]
 
 menu = st.sidebar.radio(
@@ -425,7 +537,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- 章节 1: 生态全景 ---
-if menu == "1. 生态全景":
+if menu == "1. 可视化生态导览":
     st.title("Python 数据可视化生态全景")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
@@ -699,7 +811,7 @@ fig.show()
     """, unsafe_allow_html=True)
 
 # --- 章节 2: Matplotlib 核心解构 ---
-elif menu == "2. Matplotlib 核心解构":
+elif menu == "2. Matplotlib 底层架构":
     st.title("Matplotlib 从零到精通")
     
     st.markdown("### 1. 两种创作风格：Pyplot vs 面向对象 (OO)")
@@ -935,7 +1047,7 @@ plt.show()
         st.markdown(backend_info)
 
 # --- 章节 3: 基础笔触 ---
-elif menu == "3. 基础笔触":
+elif menu == "3. 基础图元与笔触":
     st.title("掌握笔触：Matplotlib 的核心绘图元素")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
@@ -2021,7 +2133,7 @@ plt.show()
                 """, language='python')
 
 # --- 章节 4: 布局与美学 ---
-elif menu == "4. 布局与美学":
+elif menu == "4. 布局系统与视觉美学":
     st.title("谋篇布局与画龙点睛")
     st.markdown("""
     <div style='background-color: #fffbeb; padding: 1rem; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 1.5rem;'>
@@ -2370,7 +2482,7 @@ ax.annotate('Mid Point', xy=(5, y[50]), xytext=(6, 0.5),
                 """, language='python')
 
 # --- 章节 5: 进阶画廊 ---
-elif menu == "5. 进阶画廊":
+elif menu == "5. 高级图表画廊":
     st.title("Matplotlib 官方画廊复刻 (Advanced)")
     st.markdown("""
     <div style='background-color: #f3f4f6; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;'>
@@ -2528,7 +2640,7 @@ fig.colorbar(im, ax=ax)
         st.code(code_display, language='python')
 
 # --- 章节 6: 其他库实战 ---
-elif menu == "6. 其他库实战":
+elif menu == "6. 多库协同实战":
     st.title("超越 Matplotlib：现代库体验")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
@@ -2715,7 +2827,7 @@ show(p)
         """)
 
 # --- 章节 7: 进阶挑战 (大师之路) ---
-elif menu == "7. 进阶挑战：大师之路 🚀":
+elif menu == "7. 综合挑战：大师路径":
     st.title("🏆 Matplotlib 大神进阶之路")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
@@ -3078,7 +3190,7 @@ ani.save('animation.html', writer=HTMLWriter())
             """)
 
 # --- 章节 8: 可视化策略与尺度 ---
-elif menu == "8. 可视化策略与尺度":
+elif menu == "8. 图表策略与发表尺度":
     st.title("📏 可视化策略与尺度")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #22c55e 0%, #14b8a6 100%); 
@@ -3284,7 +3396,7 @@ fig.savefig('figure.pdf', bbox_inches='tight')
         """)
 
 # --- 章节 9: 参数速查手册 ---
-elif menu == "📋 参数速查手册":
+elif menu == "9. 参数速查手册":
     st.title("📋 Matplotlib 参数速查手册")
     st.markdown("""
     <div style='background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%);
@@ -3719,11 +3831,12 @@ ax.annotate(
         """)
 
 # --- 页脚 ---
-st.sidebar.markdown("---")
 st.sidebar.markdown("""
-<div style='text-align: center; padding: 1rem 0; color: #6b7280; font-size: 0.85rem;'>
-    <p style='margin: 0;'>东南大学AI-MUST核心课程</p>
-    <p style='margin: 0.5rem 0 0 0;'>大数据分析与计算社会学</p>
-    <p style='margin: 0.5rem 0 0 0;'>东南大学社会学系 汪斌</p>
+<div class='sidebar-course-card'>
+    <div class='sidebar-kicker'>AI-MUST CORE</div>
+    <div class='sidebar-course-name'>东南大学<br>AI-MUST核心课程</div>
+    <div class='sidebar-divider'></div>
+    <div class='sidebar-topic'>大数据分析与计算社会学</div>
+    <div class='sidebar-owner'>东南大学社会学系 · 汪斌</div>
 </div>
 """, unsafe_allow_html=True)
