@@ -3210,7 +3210,7 @@ elif menu == "8. 可视化策略与尺度":
         _enc_ax.axis("off")
         _enc_items = ["① 位置", "② 长度", "③ 角度", "④ 颜色", "⑤ 面积", "⑥ 形状"]
         _enc_colors = ["#1d4ed8","#2563eb","#3b82f6","#60a5fa","#93c5fd","#bfdbfe"]
-        for i, (label, clr) in enumerate(_enc_items):
+        for i, (label, clr) in enumerate(zip(_enc_items, _enc_colors)):
             _enc_ax.add_patch(plt.Rectangle((i*1.45, 0), 1.2, 1.8 - i*0.22,
                                             facecolor=clr, edgecolor="white", linewidth=1.5))
             _enc_ax.text(i*1.45 + 0.6, 1.9 - i*0.22 + 0.1, label,
