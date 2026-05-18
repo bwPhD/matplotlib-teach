@@ -1,1 +1,41 @@
+name: Wake Streamlit app
 
+on:
+  schedule:
+    # Streamlit Community Cloud sleeps after 12 hours without traffic.
+    # Run every 6 hours to keep a public app warm.
+    - cron: "7 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wake-streamlit-app
+  cancel-in-progress: true
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      STREAMLIT_URL: ${{ secrets.STREAMLIT_URL || vars.STREAMLIT_URL || 'https://www.aimust.online/' }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Wake app
+        run: python .github/scripts/wake_up_app.py

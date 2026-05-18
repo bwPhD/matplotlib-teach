@@ -5,7 +5,3 @@ matplotlib
 seaborn
 plotly
 altair
-
-# GitHub Actions 自动唤醒系统依赖 (仅 CI 环境需要)
-selenium
-webdriver-manager
